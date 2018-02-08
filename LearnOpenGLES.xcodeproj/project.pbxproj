@@ -15,6 +15,10 @@
 		EA4603C2202C64050037EC15 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4603C1202C64050037EC15 /* main.m */; };
 		EA4603CC202C64060037EC15 /* LearnOpenGLESTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4603CB202C64060037EC15 /* LearnOpenGLESTests.m */; };
 		EA4603D7202C64060037EC15 /* LearnOpenGLESUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4603D6202C64060037EC15 /* LearnOpenGLESUITests.m */; };
+		EA4603E5202C64330037EC15 /* for_test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA4603E4202C64320037EC15 /* for_test.jpg */; };
+		EA4603E8202C643D0037EC15 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4603E6202C643D0037EC15 /* GLProgram.m */; };
+		EA4603EC202C647D0037EC15 /* shaderf.fsh in Resources */ = {isa = PBXBuildFile; fileRef = EA4603EA202C647D0037EC15 /* shaderf.fsh */; };
+		EA4603ED202C647D0037EC15 /* shaderv.vsh in Resources */ = {isa = PBXBuildFile; fileRef = EA4603EB202C647D0037EC15 /* shaderv.vsh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,11 @@
 		EA4603D2202C64060037EC15 /* LearnOpenGLESUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LearnOpenGLESUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA4603D6202C64060037EC15 /* LearnOpenGLESUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LearnOpenGLESUITests.m; sourceTree = "<group>"; };
 		EA4603D8202C64060037EC15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA4603E4202C64320037EC15 /* for_test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = for_test.jpg; sourceTree = "<group>"; };
+		EA4603E6202C643D0037EC15 /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLProgram.m; sourceTree = "<group>"; };
+		EA4603E7202C643D0037EC15 /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLProgram.h; sourceTree = "<group>"; };
+		EA4603EA202C647D0037EC15 /* shaderf.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf.fsh; sourceTree = "<group>"; };
+		EA4603EB202C647D0037EC15 /* shaderv.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv.vsh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +110,12 @@
 		EA4603B1202C64050037EC15 /* LearnOpenGLES */ = {
 			isa = PBXGroup;
 			children = (
+				EA4603EE202C64A70037EC15 /* resources */,
+				EA4603E9202C646F0037EC15 /* shader */,
 				EA4603B2202C64050037EC15 /* AppDelegate.h */,
 				EA4603B3202C64050037EC15 /* AppDelegate.m */,
+				EA4603E7202C643D0037EC15 /* GLProgram.h */,
+				EA4603E6202C643D0037EC15 /* GLProgram.m */,
 				EA4603B5202C64050037EC15 /* ViewController.h */,
 				EA4603B6202C64050037EC15 /* ViewController.m */,
 				EA4603B8202C64050037EC15 /* Main.storyboard */,
@@ -130,6 +143,23 @@
 				EA4603D8202C64060037EC15 /* Info.plist */,
 			);
 			path = LearnOpenGLESUITests;
+			sourceTree = "<group>";
+		};
+		EA4603E9202C646F0037EC15 /* shader */ = {
+			isa = PBXGroup;
+			children = (
+				EA4603EA202C647D0037EC15 /* shaderf.fsh */,
+				EA4603EB202C647D0037EC15 /* shaderv.vsh */,
+			);
+			path = shader;
+			sourceTree = "<group>";
+		};
+		EA4603EE202C64A70037EC15 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				EA4603E4202C64320037EC15 /* for_test.jpg */,
+			);
+			path = resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,7 +268,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA4603EC202C647D0037EC15 /* shaderf.fsh in Resources */,
 				EA4603BF202C64050037EC15 /* LaunchScreen.storyboard in Resources */,
+				EA4603E5202C64330037EC15 /* for_test.jpg in Resources */,
+				EA4603ED202C647D0037EC15 /* shaderv.vsh in Resources */,
 				EA4603BC202C64050037EC15 /* Assets.xcassets in Resources */,
 				EA4603BA202C64050037EC15 /* Main.storyboard in Resources */,
 			);
@@ -266,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA4603B7202C64050037EC15 /* ViewController.m in Sources */,
+				EA4603E8202C643D0037EC15 /* GLProgram.m in Sources */,
 				EA4603C2202C64050037EC15 /* main.m in Sources */,
 				EA4603B4202C64050037EC15 /* AppDelegate.m in Sources */,
 			);
@@ -433,6 +467,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P5T5EGX8G8;
 				INFOPLIST_FILE = LearnOpenGLES/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.erpapa.LearnOpenGLES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -447,6 +482,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P5T5EGX8G8;
 				INFOPLIST_FILE = LearnOpenGLES/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.erpapa.LearnOpenGLES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
