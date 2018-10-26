@@ -28,7 +28,9 @@
                        @{@"title":@"颜色",@"class":@"DemoViewController1"},
                        @{@"title":@"贴图",@"class":@"DemoViewController2"},
                        @{@"title":@"裁剪",@"class":@"DemoViewController3"},
-                       @{@"title":@"平移/旋转/缩放",@"class":@"DemoViewController4"}];
+                       @{@"title":@"平移/旋转/缩放",@"class":@"DemoViewController4"},
+                       @{@"title":@"GLKit",@"class":@"DemoViewController5"},
+                       @{@"title":@"3D字体",@"class":@"DemoViewController6"}];
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;

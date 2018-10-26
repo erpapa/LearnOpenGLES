@@ -61,8 +61,6 @@ const Vertex vertexData[] = {
     filterPositionAttribute = [self.program attributeIndex:@"position"];
     filterSourceColorAttribute = [self.program attributeIndex:@"sourceColor"];
     [self.program use]; // 加载并使用链接好的程序
-    glEnableVertexAttribArray(filterPositionAttribute); // 启用属性
-    glEnableVertexAttribArray(filterSourceColorAttribute); // 启用属性
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
@@ -70,11 +68,16 @@ const Vertex vertexData[] = {
     glClearColor(0.5, 0.5, 0.5, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
+    [self.program use];
+    glEnableVertexAttribArray(filterPositionAttribute); // 启用属性
+    glEnableVertexAttribArray(filterSourceColorAttribute); // 启用属性
     // 参数含义分别为：顶点属性索引（这里是位置）、3个分量的矢量、类型是浮点（GL_FLOAT）、填充时不需要单位化（GL_FALSE）； sizeof(Vertex)==4*8==32（GL_FLOAT占4个字节，每行有8个浮点数），如果数据连续存放，则为0；最后一个参数是一个偏移量的指针，用来确定“第一个数据”将从内存数据块的什么地方开始。
     glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(Vertex), (float *)vertexData + 0);
     glVertexAttribPointer(filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(Vertex), (float *)vertexData + 3);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glDisableVertexAttribArray(filterPositionAttribute);
+    glDisableVertexAttribArray(filterSourceColorAttribute);
 }
 
 - (void)dealloc

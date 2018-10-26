@@ -42,8 +42,6 @@
     [self.program link]; // 创建可执行的 OpenGL ES program
     filterPositionAttribute = [self.program attributeIndex:@"position"]; // 获取program对象的参数值
     [self.program use]; // 加载并使用链接好的程序
-    glEnableVertexAttribArray(filterPositionAttribute);// 启用属性
-    
     [self.glkView display];
 }
 
@@ -58,8 +56,10 @@
         1.0f, -1.0f, 0.0,  // 右下
         -1.0f,  1.0f, 0.0 // 左上
     };
+    glEnableVertexAttribArray(filterPositionAttribute);
     glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, 0, vertices);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
+    glDisableVertexAttribArray(filterPositionAttribute);
 }
 
 - (void)dealloc

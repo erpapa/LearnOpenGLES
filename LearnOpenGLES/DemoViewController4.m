@@ -24,6 +24,7 @@
 @property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic, strong) GLProgram *program;
 
+@property (nonatomic, assign) GLKMatrix4 matrix;
 
 @property (nonatomic, assign) CGPoint translateConstant; // 平移系数
 @property (nonatomic, assign) CGPoint translatePoint; // 平移
@@ -78,13 +79,8 @@
     filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
     filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
     filterTransformMatrix = [self.program uniformIndex:@"transformMatrix"];
+    self.matrix = GLKMatrix4MakeRotation(0.0, 0.0, 0.0, 1.0);
     [self.program use];
-    
-    // 启用
-    glEnableVertexAttribArray(filterPositionAttribute);
-    glEnableVertexAttribArray(filterTextureCoordinateAttribute);
-    GLKMatrix4 matrix = GLKMatrix4MakeRotation(0.0, 0.0, 0.0, 1.0);
-    glUniformMatrix4fv(filterTransformMatrix, 1, GL_FALSE, (GLfloat *)&matrix);
     
     // texture
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"for_test" ofType:@"jpg"];
@@ -131,22 +127,21 @@
         }
         self.translatePoint = CGPointMake(offsetX, offsetY);
         GLKMatrix4 matrix = GLKMatrix4MakeScale(scale, scale, 0.0); // 先缩放
-        matrix = GLKMatrix4Translate(matrix, self.translatePoint.x, self.translatePoint.y, 0.0);
-        glUniformMatrix4fv(filterTransformMatrix, 1, GL_FALSE, (GLfloat *)&matrix);
+        self.matrix = GLKMatrix4Translate(matrix, self.translatePoint.x, self.translatePoint.y, 0.0);
     } else if (self.segment.selectedSegmentIndex == 1) {
         // 设置旋转矩阵
         self.degree += 0.5;
-        if (self.degree >= 360.0) self.degree = 0.0;
-        
-        GLKMatrix4 matrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(self.degree), 0.0, 0.0, 1.0);
-        glUniformMatrix4fv(filterTransformMatrix, 1, GL_FALSE, (GLfloat *)&matrix);
+        if (self.degree >= 360.0) {
+            self.degree = 0.0;
+        }
+        self.matrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(self.degree), 0.0, 0.0, 1.0);
     } else if (self.segment.selectedSegmentIndex == 2) {
         // 设置缩放矩阵
         self.scale += self.scaleConstant;
-        if (self.scale <= 0.35 || self.scale >= 1.25) self.scaleConstant = -self.scaleConstant;
-        
-        GLKMatrix4 matrix = GLKMatrix4MakeScale(self.scale, self.scale, 0.0);
-        glUniformMatrix4fv(filterTransformMatrix, 1, GL_FALSE, (GLfloat *)&matrix);
+        if (self.scale <= 0.35 || self.scale >= 1.25) {
+            self.scaleConstant = -self.scaleConstant;
+        }
+        self.matrix = GLKMatrix4MakeScale(self.scale, self.scale, 0.0);
     }
     [self.glkView display];
 }
@@ -157,10 +152,16 @@
     glClearColor(0.5, 0.5, 0.5, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
+    // 启用
+    [self.program use];
+    glEnableVertexAttribArray(filterPositionAttribute);
+    glEnableVertexAttribArray(filterTextureCoordinateAttribute);
+    
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
     
     glUniform1i(filterInputTextureUniform, 2);
+    glUniformMatrix4fv(filterTransformMatrix, 1, GL_FALSE, (GLfloat *)&_matrix);
     
     static const GLfloat imageVertices[] = {
         -1.0f, -1.0f, 0.0,
@@ -178,6 +179,8 @@
     glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glDisableVertexAttribArray(filterPositionAttribute);
+    glDisableVertexAttribArray(filterTextureCoordinateAttribute);
 }
 
 - (void)segmentClick:(UISegmentedControl *)sender
