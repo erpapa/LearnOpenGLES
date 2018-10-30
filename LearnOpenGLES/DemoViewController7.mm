@@ -191,7 +191,7 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     [EAGLContext setCurrentContext:self.eglContext];
     
     // shader
-    self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_5" fragmentShaderFilename:@"shaderf_5"];
+    self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_7" fragmentShaderFilename:@"shaderf_7"];
     [self.program addAttribute:@"position"];
     [self.program addAttribute:@"inputTextureCoordinate"];
     [self.program link];

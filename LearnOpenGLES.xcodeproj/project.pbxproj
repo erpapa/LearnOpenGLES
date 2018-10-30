@@ -12,6 +12,8 @@
 		1800071321886D6700BC0EFC /* shaderf_6.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1800071121886D6600BC0EFC /* shaderf_6.fsh */; };
 		1800071421886D6700BC0EFC /* shaderv_6.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1800071221886D6600BC0EFC /* shaderv_6.vsh */; };
 		18000716218878CA00BC0EFC /* material.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18000715218878CA00BC0EFC /* material.jpg */; };
+		180007192188797100BC0EFC /* shaderf_7.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 180007172188797100BC0EFC /* shaderf_7.fsh */; };
+		1800071A2188797100BC0EFC /* shaderv_7.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 180007182188797100BC0EFC /* shaderv_7.vsh */; };
 		18379ADF21831F5C00383953 /* DemoViewController5.m in Sources */ = {isa = PBXBuildFile; fileRef = 18379ADE21831F5C00383953 /* DemoViewController5.m */; };
 		187654FC2181801800209E75 /* DemoViewController6.mm in Sources */ = {isa = PBXBuildFile; fileRef = 187654FB2181801800209E75 /* DemoViewController6.mm */; };
 		18765502218181AA00209E75 /* hwxk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18765501218181AA00209E75 /* hwxk.ttf */; };
@@ -121,6 +123,8 @@
 		1800071121886D6600BC0EFC /* shaderf_6.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_6.fsh; sourceTree = "<group>"; };
 		1800071221886D6600BC0EFC /* shaderv_6.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_6.vsh; sourceTree = "<group>"; };
 		18000715218878CA00BC0EFC /* material.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = material.jpg; sourceTree = "<group>"; };
+		180007172188797100BC0EFC /* shaderf_7.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_7.fsh; sourceTree = "<group>"; };
+		180007182188797100BC0EFC /* shaderv_7.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_7.vsh; sourceTree = "<group>"; };
 		18379ADD21831F5C00383953 /* DemoViewController5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController5.h; sourceTree = "<group>"; };
 		18379ADE21831F5C00383953 /* DemoViewController5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController5.m; sourceTree = "<group>"; };
 		187654FA2181801800209E75 /* DemoViewController6.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController6.h; sourceTree = "<group>"; };
@@ -839,6 +843,8 @@
 				1800070E218850F700BC0EFC /* shaderf_5.fsh */,
 				1800071221886D6600BC0EFC /* shaderv_6.vsh */,
 				1800071121886D6600BC0EFC /* shaderf_6.fsh */,
+				180007172188797100BC0EFC /* shaderf_7.fsh */,
+				180007182188797100BC0EFC /* shaderv_7.vsh */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -976,6 +982,7 @@
 				EA4603E5202C64330037EC15 /* for_test.jpg in Resources */,
 				18000716218878CA00BC0EFC /* material.jpg in Resources */,
 				EA4603ED202C647D0037EC15 /* shaderv_2.vsh in Resources */,
+				180007192188797100BC0EFC /* shaderf_7.fsh in Resources */,
 				EA46040C202DA7160037EC15 /* shaderv_4.vsh in Resources */,
 				EA460406202D8FB80037EC15 /* shaderv_3.vsh in Resources */,
 				1800071321886D6700BC0EFC /* shaderf_6.fsh in Resources */,
@@ -984,6 +991,7 @@
 				EA4603BC202C64050037EC15 /* Assets.xcassets in Resources */,
 				18D1B892218712D20071A7FE /* container_specular.jpg in Resources */,
 				EA46040D202DA7160037EC15 /* shaderf_4.fsh in Resources */,
+				1800071A2188797100BC0EFC /* shaderv_7.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

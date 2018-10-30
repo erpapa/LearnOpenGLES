@@ -43,7 +43,7 @@
     [EAGLContext setCurrentContext:self.eglContext];
     
     // shader
-    self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_5" fragmentShaderFilename:@"shaderf_5"];
+    self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_6" fragmentShaderFilename:@"shaderf_6"];
     [self.program addAttribute:@"position"];
     [self.program addAttribute:@"inputTextureCoordinate"];
     [self.program link];
