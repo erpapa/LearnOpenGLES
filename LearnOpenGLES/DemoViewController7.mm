@@ -274,9 +274,12 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     NSString *diffuseFilePath = [[NSBundle mainBundle] pathForResource:@"material" ofType:@"jpg"];
     self.textureInfo = [GLKTextureLoader textureWithContentsOfFile:diffuseFilePath options:[NSDictionary dictionaryWithObjectsAndKeys:@(1),GLKTextureLoaderOriginBottomLeft, nil] error:nil];
     
+    // 初始化模型矩阵
     modelMatrix = GLKMatrix4Identity;
-    viewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -3.0);
-    projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
+    // 设置摄像机在 0，0，3 坐标，看向 0，0，0点。Y轴正向为摄像机顶部指向的方向
+    viewMatrix = GLKMatrix4MakeLookAt(0, 0, 3, 0, 0, 0, 0, 1, 0);
+    // 使用透视投影矩阵
+    projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
     
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
     [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
