@@ -144,7 +144,15 @@
 
 - (void)update
 {
-    modelMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(self.degree), 0.5, 1.0, 0.0);
+    float radians = GLKMathDegreesToRadians(self.degree);
+    float cos = cosf(radians);
+    float sin = sinf(radians);
+    // 模型绕X轴旋转
+    // modelMatrix = GLKMatrix4MakeRotation(radians, 1.0, 0.0, 0.0);
+    // 模型在Y轴上下移动
+    modelMatrix = GLKMatrix4MakeTranslation(0.0, 3.0 * sin, 0.0);
+    // 摄像机绕模型旋转(改变X和Z,Y不变)
+    viewMatrix = GLKMatrix4MakeLookAt(3 * sin, 0, 3 * cos, 0, 0, 0, 0, 1, 0);
     [self.glkView display];
     self.degree += 0.5f;
 }
