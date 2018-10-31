@@ -34,19 +34,19 @@
 #include <ftglyph.h>
 #include <ftoutln.h>
 #include <fttrigon.h>
-
 #include "Point.h"
 
-/**
- * Contour class is a container of points that describe a vector font
- * outline. It is used as a container for the output of the bezier curve
- * evaluator in Vectoriser.
- *
- * @see OutlineGlyph
- * @see PolygonGlyph
- * @see Point
- */
 namespace ftgl {
+    
+    /**
+     * Contour class is a container of points that describe a vector font
+     * outline. It is used as a container for the output of the bezier curve
+     * evaluator in Vectoriser.
+     *
+     * @see OutlineGlyph
+     * @see PolygonGlyph
+     * @see Point
+     */
     class Contour {
     public:
         /**
@@ -55,6 +55,7 @@ namespace ftgl {
          * @param contour
          * @param pointTags
          * @param numberOfPoints
+         * @param bezierSteps
          */
         Contour(FT_Vector* contour, char* pointTags, unsigned int numberOfPoints, unsigned short bezierSteps);
         

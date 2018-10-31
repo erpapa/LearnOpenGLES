@@ -28,8 +28,9 @@
 #include "Vectoriser.h"
 
 namespace ftgl {
-    Vectoriser::Vectoriser(const FT_GlyphSlot glyph, unsigned short bezierSteps)
-    :   contourList(0),
+    
+    Vectoriser::Vectoriser(const FT_GlyphSlot glyph, unsigned short bezierSteps) :
+    contourList(0),
     ftContourCount(0),
     contourFlag(0)
     {

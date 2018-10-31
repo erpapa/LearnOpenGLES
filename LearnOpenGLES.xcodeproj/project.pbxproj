@@ -125,6 +125,7 @@
 		18000715218878CA00BC0EFC /* material.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = material.jpg; sourceTree = "<group>"; };
 		180007172188797100BC0EFC /* shaderf_7.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_7.fsh; sourceTree = "<group>"; };
 		180007182188797100BC0EFC /* shaderv_7.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_7.vsh; sourceTree = "<group>"; };
+		1800072021895A9600BC0EFC /* ftgl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ftgl.h; sourceTree = "<group>"; };
 		18379ADD21831F5C00383953 /* DemoViewController5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController5.h; sourceTree = "<group>"; };
 		18379ADE21831F5C00383953 /* DemoViewController5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController5.m; sourceTree = "<group>"; };
 		187654FA2181801800209E75 /* DemoViewController6.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController6.h; sourceTree = "<group>"; };
@@ -354,6 +355,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1800071F21895A2300BC0EFC /* ftgl */ = {
+			isa = PBXGroup;
+			children = (
+				1800072021895A9600BC0EFC /* ftgl.h */,
+				18D1B8872186FF090071A7FE /* Point.h */,
+				18D1B8852186FF090071A7FE /* Point.cpp */,
+				18D1B8882186FF0A0071A7FE /* Contour.h */,
+				18D1B8832186FF090071A7FE /* Contour.cpp */,
+				18D1B8862186FF090071A7FE /* Vectoriser.h */,
+				18D1B8842186FF090071A7FE /* Vectoriser.cpp */,
+			);
+			path = ftgl;
+			sourceTree = "<group>";
+		};
 		18D1B5752186F11C0071A7FE /* poly2tri */ = {
 			isa = PBXGroup;
 			children = (
@@ -768,20 +783,15 @@
 		EA4603B1202C64050037EC15 /* LearnOpenGLES */ = {
 			isa = PBXGroup;
 			children = (
-				18D1B5892186F1490071A7FE /* freetype */,
+				1800071F21895A2300BC0EFC /* ftgl */,
 				18D1B5752186F11C0071A7FE /* poly2tri */,
+				18D1B5892186F1490071A7FE /* freetype */,
 				EA4603EE202C64A70037EC15 /* resources */,
 				EA4603E9202C646F0037EC15 /* shaders */,
 				EA4603B2202C64050037EC15 /* AppDelegate.h */,
 				EA4603B3202C64050037EC15 /* AppDelegate.m */,
 				EA4603E7202C643D0037EC15 /* GLProgram.h */,
 				EA4603E6202C643D0037EC15 /* GLProgram.m */,
-				18D1B8872186FF090071A7FE /* Point.h */,
-				18D1B8852186FF090071A7FE /* Point.cpp */,
-				18D1B8882186FF0A0071A7FE /* Contour.h */,
-				18D1B8832186FF090071A7FE /* Contour.cpp */,
-				18D1B8862186FF090071A7FE /* Vectoriser.h */,
-				18D1B8842186FF090071A7FE /* Vectoriser.cpp */,
 				EA4603B5202C64050037EC15 /* ViewController.h */,
 				EA4603B6202C64050037EC15 /* ViewController.m */,
 				EA4603EF202D7A7B0037EC15 /* DemoViewController0.h */,
@@ -1244,6 +1254,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/LearnOpenGLES/freetype/include\"",
+					"\"$(SRCROOT)/LearnOpenGLES/ftgl\"",
 					"\"$(SRCROOT)/LearnOpenGLES/poly2tri\"",
 				);
 				INFOPLIST_FILE = LearnOpenGLES/Info.plist;
@@ -1270,6 +1281,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/LearnOpenGLES/freetype/include\"",
+					"\"$(SRCROOT)/LearnOpenGLES/ftgl\"",
 					"\"$(SRCROOT)/LearnOpenGLES/poly2tri\"",
 				);
 				INFOPLIST_FILE = LearnOpenGLES/Info.plist;

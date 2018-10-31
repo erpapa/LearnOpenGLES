@@ -26,10 +26,10 @@
  */
 
 #include "Contour.h"
-
 #include <math.h>
 
 namespace ftgl {
+    
     void Contour::AddPoint(Point point)
     {
         if(pointList.empty() || (point != pointList[pointList.size() - 1]

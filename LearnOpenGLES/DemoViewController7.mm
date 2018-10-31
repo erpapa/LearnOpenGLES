@@ -14,8 +14,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include "Point.h"
-#include "Vectoriser.h"
+#include "ftgl/ftgl.h"
 #include "poly2tri/poly2tri.h"
 
 struct Vector3df

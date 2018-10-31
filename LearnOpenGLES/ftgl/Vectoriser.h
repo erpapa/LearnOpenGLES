@@ -29,26 +29,23 @@
 
 #include <list>
 #include <vector>
-
 #include "Contour.h"
-
 
 const double FTGL_FRONT_FACING = 1.0;
 const double FTGL_BACK_FACING = -1.0;
 
-/**
- * Vectoriser class is a helper class that converts font outlines into
- * point data.
- *
- * @see ExtrudeGlyph
- * @see OutlineGlyph
- * @see PolygonGlyph
- * @see Contour
- * @see Point
- *
- */
-
 namespace ftgl {
+    /**
+     * Vectoriser class is a helper class that converts font outlines into
+     * point data.
+     *
+     * @see ExtrudeGlyph
+     * @see OutlineGlyph
+     * @see PolygonGlyph
+     * @see Contour
+     * @see Point
+     *
+     */
     class Vectoriser {
     public:
         /**
