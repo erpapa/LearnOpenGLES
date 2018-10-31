@@ -276,9 +276,9 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     
     // 初始化模型矩阵
     modelMatrix = GLKMatrix4Identity;
-    // 设置摄像机在 0，0，3 坐标，看向 0，0，0点。Y轴正向为摄像机顶部指向的方向
+    // 设置摄像机在(0，0，3)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
     viewMatrix = GLKMatrix4MakeLookAt(0, 0, 3, 0, 0, 0, 0, 1, 0);
-    // 使用透视投影矩阵
+    // 使用透视投影矩阵，视场角设置为90°
     projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
     
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
