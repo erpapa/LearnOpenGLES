@@ -29,11 +29,6 @@
 #define _DIFONT_CONTOUR_H_
 
 #include <vector>
-#include <ft2build.h>
-#include <freetype.h>
-#include <ftglyph.h>
-#include <ftoutln.h>
-#include <fttrigon.h>
 #include "Point.h"
 
 namespace ftgl {

@@ -14,8 +14,9 @@
 		18000716218878CA00BC0EFC /* material.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18000715218878CA00BC0EFC /* material.jpg */; };
 		180007192188797100BC0EFC /* shaderf_7.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 180007172188797100BC0EFC /* shaderf_7.fsh */; };
 		1800071A2188797100BC0EFC /* shaderv_7.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 180007182188797100BC0EFC /* shaderv_7.vsh */; };
+		18000724218AA1F200BC0EFC /* DemoViewController8.m in Sources */ = {isa = PBXBuildFile; fileRef = 18000723218AA1F200BC0EFC /* DemoViewController8.m */; };
 		18379ADF21831F5C00383953 /* DemoViewController5.m in Sources */ = {isa = PBXBuildFile; fileRef = 18379ADE21831F5C00383953 /* DemoViewController5.m */; };
-		187654FC2181801800209E75 /* DemoViewController6.mm in Sources */ = {isa = PBXBuildFile; fileRef = 187654FB2181801800209E75 /* DemoViewController6.mm */; };
+		187654FC2181801800209E75 /* DemoViewController6.m in Sources */ = {isa = PBXBuildFile; fileRef = 187654FB2181801800209E75 /* DemoViewController6.m */; };
 		18765502218181AA00209E75 /* hwxk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18765501218181AA00209E75 /* hwxk.ttf */; };
 		1876558B218198D700209E75 /* davlo.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1876558A218198D700209E75 /* davlo.otf */; };
 		18D1B5842186F11C0071A7FE /* shapes.cc in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B5792186F11C0071A7FE /* shapes.cc */; };
@@ -67,7 +68,6 @@
 		18D1B87A2186FB090071A7FE /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D1B8792186FB090071A7FE /* GLKit.framework */; };
 		18D1B87C2186FB140071A7FE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D1B87B2186FB140071A7FE /* OpenGLES.framework */; };
 		18D1B87E2186FE0F0071A7FE /* ftcache.c in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B87D2186FE0E0071A7FE /* ftcache.c */; };
-		18D1B87F2186FE280071A7FE /* libz.1.2.8.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D1B8772186F8A50071A7FE /* libz.1.2.8.tbd */; };
 		18D1B8822186FE910071A7FE /* DemoViewController7.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B8812186FE910071A7FE /* DemoViewController7.mm */; };
 		18D1B8892186FF0A0071A7FE /* Contour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B8832186FF090071A7FE /* Contour.cpp */; };
 		18D1B88A2186FF0A0071A7FE /* Vectoriser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B8842186FF090071A7FE /* Vectoriser.cpp */; };
@@ -126,10 +126,12 @@
 		180007172188797100BC0EFC /* shaderf_7.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_7.fsh; sourceTree = "<group>"; };
 		180007182188797100BC0EFC /* shaderv_7.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_7.vsh; sourceTree = "<group>"; };
 		1800072021895A9600BC0EFC /* ftgl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ftgl.h; sourceTree = "<group>"; };
+		18000722218AA1F200BC0EFC /* DemoViewController8.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController8.h; sourceTree = "<group>"; };
+		18000723218AA1F200BC0EFC /* DemoViewController8.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController8.m; sourceTree = "<group>"; };
 		18379ADD21831F5C00383953 /* DemoViewController5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController5.h; sourceTree = "<group>"; };
 		18379ADE21831F5C00383953 /* DemoViewController5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController5.m; sourceTree = "<group>"; };
 		187654FA2181801800209E75 /* DemoViewController6.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController6.h; sourceTree = "<group>"; };
-		187654FB2181801800209E75 /* DemoViewController6.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoViewController6.mm; sourceTree = "<group>"; };
+		187654FB2181801800209E75 /* DemoViewController6.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController6.m; sourceTree = "<group>"; };
 		18765501218181AA00209E75 /* hwxk.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = hwxk.ttf; sourceTree = "<group>"; };
 		1876558A218198D700209E75 /* davlo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = davlo.otf; sourceTree = "<group>"; };
 		18D1B5762186F11C0071A7FE /* poly2tri.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poly2tri.h; sourceTree = "<group>"; };
@@ -332,7 +334,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18D1B87F2186FE280071A7FE /* libz.1.2.8.tbd in Frameworks */,
 				18D1B87C2186FB140071A7FE /* OpenGLES.framework in Frameworks */,
 				18D1B87A2186FB090071A7FE /* GLKit.framework in Frameworks */,
 			);
@@ -807,9 +808,11 @@
 				18379ADD21831F5C00383953 /* DemoViewController5.h */,
 				18379ADE21831F5C00383953 /* DemoViewController5.m */,
 				187654FA2181801800209E75 /* DemoViewController6.h */,
-				187654FB2181801800209E75 /* DemoViewController6.mm */,
+				187654FB2181801800209E75 /* DemoViewController6.m */,
 				18D1B8802186FE910071A7FE /* DemoViewController7.h */,
 				18D1B8812186FE910071A7FE /* DemoViewController7.mm */,
+				18000722218AA1F200BC0EFC /* DemoViewController8.h */,
+				18000723218AA1F200BC0EFC /* DemoViewController8.m */,
 				EA4603BB202C64050037EC15 /* Assets.xcassets */,
 				EA4603BD202C64050037EC15 /* LaunchScreen.storyboard */,
 				EA4603C0202C64050037EC15 /* Info.plist */,
@@ -1060,6 +1063,7 @@
 				EA4603B7202C64050037EC15 /* ViewController.m in Sources */,
 				18D1B7B72186F14A0071A7FE /* winfnt.c in Sources */,
 				18D1B8482186F14A0071A7FE /* raster.c in Sources */,
+				18000724218AA1F200BC0EFC /* DemoViewController8.m in Sources */,
 				18D1B84C2186F14A0071A7FE /* psnames.c in Sources */,
 				EA4603F4202D7DED0037EC15 /* DemoViewController1.m in Sources */,
 				18D1B84F2186F14A0071A7FE /* ftfntfmt.c in Sources */,
@@ -1072,7 +1076,7 @@
 				18D1B80E2186F14A0071A7FE /* pfr.c in Sources */,
 				18D1B8032186F14A0071A7FE /* psaux.c in Sources */,
 				EA4603F1202D7A7B0037EC15 /* DemoViewController0.m in Sources */,
-				187654FC2181801800209E75 /* DemoViewController6.mm in Sources */,
+				187654FC2181801800209E75 /* DemoViewController6.m in Sources */,
 				18D1B8542186F14A0071A7FE /* ftbase.c in Sources */,
 				EA4603C2202C64050037EC15 /* main.m in Sources */,
 				18D1B88A2186FF0A0071A7FE /* Vectoriser.cpp in Sources */,
@@ -1245,9 +1249,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P5T5EGX8G8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					RENDER_PLATFORM_iOS,
 					FT2_BUILD_LIBRARY,
-					FT_CONFIG_OPTION_SYSTEM_ZLIB,
 					"DEBUG=1",
 					"$(inherited)",
 				);
@@ -1273,11 +1275,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P5T5EGX8G8;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					RENDER_PLATFORM_iOS,
-					FT2_BUILD_LIBRARY,
-					FT_CONFIG_OPTION_SYSTEM_ZLIB,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = FT2_BUILD_LIBRARY;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/LearnOpenGLES/freetype/include\"",
