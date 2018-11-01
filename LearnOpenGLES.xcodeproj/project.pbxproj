@@ -15,6 +15,17 @@
 		180007192188797100BC0EFC /* shaderf_7.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 180007172188797100BC0EFC /* shaderf_7.fsh */; };
 		1800071A2188797100BC0EFC /* shaderv_7.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 180007182188797100BC0EFC /* shaderv_7.vsh */; };
 		18000724218AA1F200BC0EFC /* DemoViewController8.m in Sources */ = {isa = PBXBuildFile; fileRef = 18000723218AA1F200BC0EFC /* DemoViewController8.m */; };
+		18000738218AE9DE00BC0EFC /* shaderf_8.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 18000736218AE9DE00BC0EFC /* shaderf_8.fsh */; };
+		18000739218AE9DE00BC0EFC /* shaderv_8.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 18000737218AE9DE00BC0EFC /* shaderv_8.vsh */; };
+		1800073B218AF3A600BC0EFC /* moon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1800073A218AF3A600BC0EFC /* moon.jpg */; };
+		1800073E218AF3E700BC0EFC /* earth_emissive.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1800073C218AF3E700BC0EFC /* earth_emissive.jpg */; };
+		1800073F218AF3E700BC0EFC /* earth_diffuse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1800073D218AF3E700BC0EFC /* earth_diffuse.jpg */; };
+		18000741218AF40200BC0EFC /* earth_reflective.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18000740218AF40200BC0EFC /* earth_reflective.jpg */; };
+		18000743218AF41500BC0EFC /* earth_specular.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18000742218AF41500BC0EFC /* earth_specular.jpg */; };
+		18000746218AF43600BC0EFC /* sun_halo.png in Resources */ = {isa = PBXBuildFile; fileRef = 18000744218AF43600BC0EFC /* sun_halo.png */; };
+		18000747218AF43600BC0EFC /* sun.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18000745218AF43600BC0EFC /* sun.jpg */; };
+		18000749218AF45900BC0EFC /* earth_bump.png in Resources */ = {isa = PBXBuildFile; fileRef = 18000748218AF45900BC0EFC /* earth_bump.png */; };
+		1800074B218AF9D700BC0EFC /* orbit.png in Resources */ = {isa = PBXBuildFile; fileRef = 1800074A218AF9D700BC0EFC /* orbit.png */; };
 		18379ADF21831F5C00383953 /* DemoViewController5.m in Sources */ = {isa = PBXBuildFile; fileRef = 18379ADE21831F5C00383953 /* DemoViewController5.m */; };
 		187654FC2181801800209E75 /* DemoViewController6.m in Sources */ = {isa = PBXBuildFile; fileRef = 187654FB2181801800209E75 /* DemoViewController6.m */; };
 		18765502218181AA00209E75 /* hwxk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18765501218181AA00209E75 /* hwxk.ttf */; };
@@ -128,6 +139,18 @@
 		1800072021895A9600BC0EFC /* ftgl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ftgl.h; sourceTree = "<group>"; };
 		18000722218AA1F200BC0EFC /* DemoViewController8.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController8.h; sourceTree = "<group>"; };
 		18000723218AA1F200BC0EFC /* DemoViewController8.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController8.m; sourceTree = "<group>"; };
+		18000735218AE9AC00BC0EFC /* sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sphere.h; sourceTree = "<group>"; };
+		18000736218AE9DE00BC0EFC /* shaderf_8.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_8.fsh; sourceTree = "<group>"; };
+		18000737218AE9DE00BC0EFC /* shaderv_8.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_8.vsh; sourceTree = "<group>"; };
+		1800073A218AF3A600BC0EFC /* moon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = moon.jpg; sourceTree = "<group>"; };
+		1800073C218AF3E700BC0EFC /* earth_emissive.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_emissive.jpg; sourceTree = "<group>"; };
+		1800073D218AF3E700BC0EFC /* earth_diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_diffuse.jpg; sourceTree = "<group>"; };
+		18000740218AF40200BC0EFC /* earth_reflective.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_reflective.jpg; sourceTree = "<group>"; };
+		18000742218AF41500BC0EFC /* earth_specular.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_specular.jpg; sourceTree = "<group>"; };
+		18000744218AF43600BC0EFC /* sun_halo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sun_halo.png; sourceTree = "<group>"; };
+		18000745218AF43600BC0EFC /* sun.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun.jpg; sourceTree = "<group>"; };
+		18000748218AF45900BC0EFC /* earth_bump.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth_bump.png; sourceTree = "<group>"; };
+		1800074A218AF9D700BC0EFC /* orbit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orbit.png; sourceTree = "<group>"; };
 		18379ADD21831F5C00383953 /* DemoViewController5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController5.h; sourceTree = "<group>"; };
 		18379ADE21831F5C00383953 /* DemoViewController5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController5.m; sourceTree = "<group>"; };
 		187654FA2181801800209E75 /* DemoViewController6.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController6.h; sourceTree = "<group>"; };
@@ -791,6 +814,7 @@
 				EA4603E9202C646F0037EC15 /* shaders */,
 				EA4603B2202C64050037EC15 /* AppDelegate.h */,
 				EA4603B3202C64050037EC15 /* AppDelegate.m */,
+				18000735218AE9AC00BC0EFC /* sphere.h */,
 				EA4603E7202C643D0037EC15 /* GLProgram.h */,
 				EA4603E6202C643D0037EC15 /* GLProgram.m */,
 				EA4603B5202C64050037EC15 /* ViewController.h */,
@@ -856,8 +880,10 @@
 				1800070E218850F700BC0EFC /* shaderf_5.fsh */,
 				1800071221886D6600BC0EFC /* shaderv_6.vsh */,
 				1800071121886D6600BC0EFC /* shaderf_6.fsh */,
-				180007172188797100BC0EFC /* shaderf_7.fsh */,
 				180007182188797100BC0EFC /* shaderv_7.vsh */,
+				180007172188797100BC0EFC /* shaderf_7.fsh */,
+				18000737218AE9DE00BC0EFC /* shaderv_8.vsh */,
+				18000736218AE9DE00BC0EFC /* shaderf_8.fsh */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -869,6 +895,15 @@
 				1876558A218198D700209E75 /* davlo.otf */,
 				EA4603E4202C64320037EC15 /* for_test.jpg */,
 				18000715218878CA00BC0EFC /* material.jpg */,
+				1800074A218AF9D700BC0EFC /* orbit.png */,
+				18000745218AF43600BC0EFC /* sun.jpg */,
+				18000744218AF43600BC0EFC /* sun_halo.png */,
+				18000748218AF45900BC0EFC /* earth_bump.png */,
+				1800073D218AF3E700BC0EFC /* earth_diffuse.jpg */,
+				1800073C218AF3E700BC0EFC /* earth_emissive.jpg */,
+				18000740218AF40200BC0EFC /* earth_reflective.jpg */,
+				18000742218AF41500BC0EFC /* earth_specular.jpg */,
+				1800073A218AF3A600BC0EFC /* moon.jpg */,
 				18D1B891218712D20071A7FE /* container_diffuse.jpg */,
 				18D1B890218712D20071A7FE /* container_specular.jpg */,
 			);
@@ -982,27 +1017,38 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA460401202D84F80037EC15 /* shaderf_0.fsh in Resources */,
+				18000741218AF40200BC0EFC /* earth_reflective.jpg in Resources */,
 				EA4603EC202C647D0037EC15 /* shaderf_2.fsh in Resources */,
+				18000743218AF41500BC0EFC /* earth_specular.jpg in Resources */,
 				EA460402202D84F80037EC15 /* shaderv_0.vsh in Resources */,
 				EA4603FE202D84240037EC15 /* shaderf_1.fsh in Resources */,
+				18000738218AE9DE00BC0EFC /* shaderf_8.fsh in Resources */,
 				18000710218850F700BC0EFC /* shaderf_5.fsh in Resources */,
 				1800071421886D6700BC0EFC /* shaderv_6.vsh in Resources */,
 				1800070F218850F700BC0EFC /* shaderv_5.vsh in Resources */,
 				EA4603BF202C64050037EC15 /* LaunchScreen.storyboard in Resources */,
 				EA460405202D8FB80037EC15 /* shaderf_3.fsh in Resources */,
+				18000747218AF43600BC0EFC /* sun.jpg in Resources */,
 				1876558B218198D700209E75 /* davlo.otf in Resources */,
 				18765502218181AA00209E75 /* hwxk.ttf in Resources */,
+				1800074B218AF9D700BC0EFC /* orbit.png in Resources */,
 				EA4603E5202C64330037EC15 /* for_test.jpg in Resources */,
 				18000716218878CA00BC0EFC /* material.jpg in Resources */,
 				EA4603ED202C647D0037EC15 /* shaderv_2.vsh in Resources */,
+				1800073B218AF3A600BC0EFC /* moon.jpg in Resources */,
 				180007192188797100BC0EFC /* shaderf_7.fsh in Resources */,
 				EA46040C202DA7160037EC15 /* shaderv_4.vsh in Resources */,
 				EA460406202D8FB80037EC15 /* shaderv_3.vsh in Resources */,
 				1800071321886D6700BC0EFC /* shaderf_6.fsh in Resources */,
 				18D1B893218712D20071A7FE /* container_diffuse.jpg in Resources */,
+				18000749218AF45900BC0EFC /* earth_bump.png in Resources */,
+				1800073E218AF3E700BC0EFC /* earth_emissive.jpg in Resources */,
+				18000746218AF43600BC0EFC /* sun_halo.png in Resources */,
 				EA4603FC202D840A0037EC15 /* shaderv_1.vsh in Resources */,
 				EA4603BC202C64050037EC15 /* Assets.xcassets in Resources */,
 				18D1B892218712D20071A7FE /* container_specular.jpg in Resources */,
+				18000739218AE9DE00BC0EFC /* shaderv_8.vsh in Resources */,
+				1800073F218AF3E700BC0EFC /* earth_diffuse.jpg in Resources */,
 				EA46040D202DA7160037EC15 /* shaderf_4.fsh in Resources */,
 				1800071A2188797100BC0EFC /* shaderv_7.vsh in Resources */,
 			);
