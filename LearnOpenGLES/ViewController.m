@@ -32,7 +32,8 @@
                        @{@"title":@"GLKit",@"class":@"DemoViewController5"},
                        @{@"title":@"3D盒子",@"class":@"DemoViewController6"},
                        @{@"title":@"3D字体",@"class":@"DemoViewController7"},
-                       @{@"title":@"太阳、地球、月亮",@"class":@"DemoViewController8"}];
+                       @{@"title":@"太阳、地球、月亮",@"class":@"DemoViewController8"},
+                       @{@"title":@"天空盒",@"class":@"DemoViewController9"}];
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
