@@ -25,8 +25,11 @@
 @property (nonatomic, strong) GLProgram *program;
 @property (nonatomic, assign) GLuint cubeTexture;
 
-@property (nonatomic, assign) float xDegree;
-@property (nonatomic, assign) float yDegree;
+//@property (nonatomic, assign) GLKMatrix4 rotationMatrix;
+@property (nonatomic, assign) GLKQuaternion endQuaternion;
+@property (nonatomic, assign) GLKVector3 cameraEye;
+@property (nonatomic, assign) GLKVector3 cameraForward;
+@property (nonatomic, assign) GLKVector3 cameraUp;
 
 @end
 
@@ -134,12 +137,18 @@
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
+    self.cameraEye = GLKVector3Make(0, 0, 0);
+    // 默认l看向(0，0，1)，需要Y轴旋转180°，看向(0，0，-1)
+    // self.rotationMatrix = GLKMatrix4MakeRotation(M_PI, 0, 1, 0);
+    self.endQuaternion = GLKQuaternionMakeWithAngleAndAxis(M_PI, 0, 1, 0);
+    self.cameraForward = GLKMatrix4MultiplyVector3(GLKMatrix4MakeWithQuaternion(self.endQuaternion), GLKVector3Make(0, 0, 1));
+    self.cameraUp = GLKVector3Make(0, 1, 0);
     // 初始化模型矩阵
     modelMatrix = GLKMatrix4Identity;
-    // 设置摄像机在(0, 0, 0)坐标，看向(0，0，-0.5)点。Y轴正向为摄像机顶部指向的方向
-    viewMatrix = GLKMatrix4MakeLookAt(0.0, 0.0, 0.0, 0, 0, -0.5, 0, 1, 0);
-    // 使用透视投影矩阵，视场角设置为90°
-    projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
+    // 设置摄像机在(0, 0, 0)坐标，看向(0，0，-1)点。Y轴正向为摄像机顶部指向的方向
+    viewMatrix = GLKMatrix4MakeLookAt(self.cameraEye.x, self.cameraEye.y, self.cameraEye.z, self.cameraForward.x, self.cameraForward.y, self.cameraForward.z, self.cameraUp.x, self.cameraUp.y, self.cameraUp.z);
+    // 使用透视投影矩阵，视场角设置为60°
+    projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(60.0), 1.0f, 0.1f, 100.0f);
     // 正交投影矩阵
     // projectionMatrix = GLKMatrix4MakeOrtho(-10.0, 10.0, -10.0, 10.0, 10.0, 100.0);
 }
@@ -156,14 +165,17 @@
     // 计算滑动
     CGPoint currentPoint = [[touches anyObject] locationInView:self.view];
     CGPoint previousPoint = [[touches anyObject] previousLocationInView:self.view];
-    // 左右滑动改变X轴
-    self.xDegree += (currentPoint.x - previousPoint.x) * 0.5;
-    CGFloat x = -0.5 * sin(GLKMathDegreesToRadians(self.xDegree));
-    // 上下滑动改变Y轴
-    self.yDegree += (currentPoint.y - previousPoint.y) * 0.5;
-    CGFloat y = 0.5 * sin(GLKMathDegreesToRadians(self.yDegree));
+    CGFloat rotx = GLKMathDegreesToRadians((currentPoint.y - previousPoint.y) * -0.1);
+    CGFloat roty = GLKMathDegreesToRadians((currentPoint.x - previousPoint.x) * 0.1);
+    
+    // 注意：会有万向节锁的问题，解决办法是使用四元数
+//    GLKMatrix4 rotation = GLKMatrix4Multiply(GLKMatrix4MakeRotation(roty, 0, 1, 0), GLKMatrix4MakeRotation(rotx, 1, 0, 0));
+//    self.rotationMatrix = GLKMatrix4Multiply(self.rotationMatrix, rotation);
+    GLKQuaternion quaternion = GLKQuaternionMultiply(GLKQuaternionMakeWithAngleAndAxis(roty, 0, 1, 0), GLKQuaternionMakeWithAngleAndAxis(rotx, 1, 0, 0));
+    self.endQuaternion = GLKQuaternionMultiply(self.endQuaternion, quaternion);
+    self.cameraForward = GLKMatrix4MultiplyVector3(GLKMatrix4MakeWithQuaternion(self.endQuaternion), GLKVector3Make(0, 0, 1));
     // 摄像机坐标不变，改变的看向的点
-    viewMatrix = GLKMatrix4MakeLookAt(0.0, 0.0, 0.0, x, y, -0.5, 0, 1, 0);
+    viewMatrix = GLKMatrix4MakeLookAt(self.cameraEye.x, self.cameraEye.y, self.cameraEye.z, self.cameraForward.x, self.cameraForward.y, self.cameraForward.z, self.cameraUp.x, self.cameraUp.y, self.cameraUp.z);
     
     [self.glkView display];
 }
@@ -197,8 +209,9 @@
     
     // cube
     glBindVertexArrayOES(VAO);
-    glActiveTexture(skyboxTextureUniform);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, _cubeTexture);
+    glUniform1i(skyboxTextureUniform, 0);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArrayOES(0);
     glDepthFunc(GL_LESS);
