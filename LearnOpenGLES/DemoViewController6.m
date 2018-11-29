@@ -171,8 +171,9 @@
     glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&projectionMatrix);
     
     // bind texture
-    glActiveTexture([self.program uniformIndex:@"inputImageTexture"]);
+    glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
+    glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
     
     glBindVertexArrayOES(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);

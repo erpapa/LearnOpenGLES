@@ -184,18 +184,21 @@
 
     int vert_count = sizeof(sphereVerts) / (sizeof(float) * 3);
     glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&sunModelMatrix);
-    glActiveTexture([self.program uniformIndex:@"inputImageTexture"]);
+    glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, self.sunInfo.name);
+    glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
     glDrawArrays(GL_TRIANGLES, 0, vert_count);
 
     glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&earthModelMatrix);
-    glActiveTexture([self.program uniformIndex:@"inputImageTexture"]);
+    glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, self.earthInfo.name);
+    glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
     glDrawArrays(GL_TRIANGLES, 0, vert_count);
 
     glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&moonModelMatrix);
-    glActiveTexture([self.program uniformIndex:@"inputImageTexture"]);
+    glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, self.moonInfo.name);
+    glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
     glDrawArrays(GL_TRIANGLES, 0, vert_count);
 
     glBindVertexArrayOES(0);

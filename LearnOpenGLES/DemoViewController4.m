@@ -160,7 +160,6 @@
     
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
-    
     glUniform1i(filterInputTextureUniform, 2);
     glUniformMatrix4fv(filterTransformMatrix, 1, GL_FALSE, (GLfloat *)&_matrix);
     
