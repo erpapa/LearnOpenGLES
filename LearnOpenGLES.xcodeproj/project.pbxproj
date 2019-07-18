@@ -26,8 +26,9 @@
 		18000747218AF43600BC0EFC /* sun.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18000745218AF43600BC0EFC /* sun.jpg */; };
 		18000749218AF45900BC0EFC /* earth_bump.png in Resources */ = {isa = PBXBuildFile; fileRef = 18000748218AF45900BC0EFC /* earth_bump.png */; };
 		1800074B218AF9D700BC0EFC /* orbit.png in Resources */ = {isa = PBXBuildFile; fileRef = 1800074A218AF9D700BC0EFC /* orbit.png */; };
+		18187CFB22E0C411004AF974 /* DemoViewController7.m in Sources */ = {isa = PBXBuildFile; fileRef = 18187CF822E0C410004AF974 /* DemoViewController7.m */; };
+		18187CFC22E0C411004AF974 /* DemoViewController6.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18187CF922E0C411004AF974 /* DemoViewController6.mm */; };
 		18379ADF21831F5C00383953 /* DemoViewController5.m in Sources */ = {isa = PBXBuildFile; fileRef = 18379ADE21831F5C00383953 /* DemoViewController5.m */; };
-		187654FC2181801800209E75 /* DemoViewController6.m in Sources */ = {isa = PBXBuildFile; fileRef = 187654FB2181801800209E75 /* DemoViewController6.m */; };
 		18765502218181AA00209E75 /* hwxk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18765501218181AA00209E75 /* hwxk.ttf */; };
 		1876558B218198D700209E75 /* davlo.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1876558A218198D700209E75 /* davlo.otf */; };
 		18A050FE2191A07800FB97D7 /* DemoViewController9.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A050FD2191A07800FB97D7 /* DemoViewController9.m */; };
@@ -89,7 +90,6 @@
 		18D1B87A2186FB090071A7FE /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D1B8792186FB090071A7FE /* GLKit.framework */; };
 		18D1B87C2186FB140071A7FE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D1B87B2186FB140071A7FE /* OpenGLES.framework */; };
 		18D1B87E2186FE0F0071A7FE /* ftcache.c in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B87D2186FE0E0071A7FE /* ftcache.c */; };
-		18D1B8822186FE910071A7FE /* DemoViewController7.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B8812186FE910071A7FE /* DemoViewController7.mm */; };
 		18D1B8892186FF0A0071A7FE /* Contour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B8832186FF090071A7FE /* Contour.cpp */; };
 		18D1B88A2186FF0A0071A7FE /* Vectoriser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B8842186FF090071A7FE /* Vectoriser.cpp */; };
 		18D1B88B2186FF0A0071A7FE /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B8852186FF090071A7FE /* Point.cpp */; };
@@ -161,10 +161,12 @@
 		18000745218AF43600BC0EFC /* sun.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun.jpg; sourceTree = "<group>"; };
 		18000748218AF45900BC0EFC /* earth_bump.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth_bump.png; sourceTree = "<group>"; };
 		1800074A218AF9D700BC0EFC /* orbit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orbit.png; sourceTree = "<group>"; };
+		18187CF722E0C410004AF974 /* DemoViewController7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewController7.h; sourceTree = "<group>"; };
+		18187CF822E0C410004AF974 /* DemoViewController7.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController7.m; sourceTree = "<group>"; };
+		18187CF922E0C411004AF974 /* DemoViewController6.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoViewController6.mm; sourceTree = "<group>"; };
+		18187CFA22E0C411004AF974 /* DemoViewController6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewController6.h; sourceTree = "<group>"; };
 		18379ADD21831F5C00383953 /* DemoViewController5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController5.h; sourceTree = "<group>"; };
 		18379ADE21831F5C00383953 /* DemoViewController5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController5.m; sourceTree = "<group>"; };
-		187654FA2181801800209E75 /* DemoViewController6.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController6.h; sourceTree = "<group>"; };
-		187654FB2181801800209E75 /* DemoViewController6.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController6.m; sourceTree = "<group>"; };
 		18765501218181AA00209E75 /* hwxk.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = hwxk.ttf; sourceTree = "<group>"; };
 		1876558A218198D700209E75 /* davlo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = davlo.otf; sourceTree = "<group>"; };
 		18A050FC2191A07800FB97D7 /* DemoViewController9.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController9.h; sourceTree = "<group>"; };
@@ -324,8 +326,6 @@
 		18D1B8792186FB090071A7FE /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		18D1B87B2186FB140071A7FE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		18D1B87D2186FE0E0071A7FE /* ftcache.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ftcache.c; sourceTree = "<group>"; };
-		18D1B8802186FE910071A7FE /* DemoViewController7.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController7.h; sourceTree = "<group>"; };
-		18D1B8812186FE910071A7FE /* DemoViewController7.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoViewController7.mm; sourceTree = "<group>"; };
 		18D1B8832186FF090071A7FE /* Contour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Contour.cpp; sourceTree = "<group>"; };
 		18D1B8842186FF090071A7FE /* Vectoriser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vectoriser.cpp; sourceTree = "<group>"; };
 		18D1B8852186FF090071A7FE /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Point.cpp; sourceTree = "<group>"; };
@@ -855,10 +855,10 @@
 				EA460408202D91BE0037EC15 /* DemoViewController4.m */,
 				18379ADD21831F5C00383953 /* DemoViewController5.h */,
 				18379ADE21831F5C00383953 /* DemoViewController5.m */,
-				187654FA2181801800209E75 /* DemoViewController6.h */,
-				187654FB2181801800209E75 /* DemoViewController6.m */,
-				18D1B8802186FE910071A7FE /* DemoViewController7.h */,
-				18D1B8812186FE910071A7FE /* DemoViewController7.mm */,
+				18187CFA22E0C411004AF974 /* DemoViewController6.h */,
+				18187CF922E0C411004AF974 /* DemoViewController6.mm */,
+				18187CF722E0C410004AF974 /* DemoViewController7.h */,
+				18187CF822E0C410004AF974 /* DemoViewController7.m */,
 				18000722218AA1F200BC0EFC /* DemoViewController8.h */,
 				18000723218AA1F200BC0EFC /* DemoViewController8.m */,
 				18A050FC2191A07800FB97D7 /* DemoViewController9.h */,
@@ -1131,7 +1131,7 @@
 				18D1B8702186F14A0071A7FE /* ftsynth.c in Sources */,
 				18D1B7C02186F14A0071A7FE /* smooth.c in Sources */,
 				18D1B5862186F11C0071A7FE /* sweep_context.cc in Sources */,
-				18D1B8822186FE910071A7FE /* DemoViewController7.mm in Sources */,
+				18187CFC22E0C411004AF974 /* DemoViewController6.mm in Sources */,
 				18D1B7E12186F14A0071A7FE /* ftlzw.c in Sources */,
 				18D1B85F2186F14A0071A7FE /* ftbdf.c in Sources */,
 				18D1B5842186F11C0071A7FE /* shapes.cc in Sources */,
@@ -1161,12 +1161,12 @@
 				18D1B7DE2186F14A0071A7FE /* ftgzip.c in Sources */,
 				EA4603E8202C643D0037EC15 /* GLProgram.m in Sources */,
 				18D1B86E2186F14A0071A7FE /* ftotval.c in Sources */,
+				18187CFB22E0C411004AF974 /* DemoViewController7.m in Sources */,
 				18D1B5882186F11C0071A7FE /* advancing_front.cc in Sources */,
 				18D1B80E2186F14A0071A7FE /* pfr.c in Sources */,
 				18A050FE2191A07800FB97D7 /* DemoViewController9.m in Sources */,
 				18D1B8032186F14A0071A7FE /* psaux.c in Sources */,
 				EA4603F1202D7A7B0037EC15 /* DemoViewController0.m in Sources */,
-				187654FC2181801800209E75 /* DemoViewController6.m in Sources */,
 				18D1B8542186F14A0071A7FE /* ftbase.c in Sources */,
 				EA4603C2202C64050037EC15 /* main.m in Sources */,
 				18D1B88A2186FF0A0071A7FE /* Vectoriser.cpp in Sources */,

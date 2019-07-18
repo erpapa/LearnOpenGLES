@@ -1,18 +1,18 @@
 //
-//  DemoViewController6.m
+//  DemoViewController7.m
 //  LearnOpenGLES
 //
 //  Created by apple on 2018/10/25.
 //  Copyright © 2018 erpapa. All rights reserved.
 //
 
-#import "DemoViewController6.h"
+#import "DemoViewController7.h"
 #import <GLKit/GLKit.h>
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import "GLProgram.h"
 
-@interface DemoViewController6 () <GLKViewDelegate>
+@interface DemoViewController7 () <GLKViewDelegate>
 {
     GLuint VAO, VBO;
     GLint positionAttribute, textureCoordinateAttribute;
@@ -27,7 +27,7 @@
 
 @end
 
-@implementation DemoViewController6
+@implementation DemoViewController7
 
 - (void)viewDidLoad
 {
@@ -125,8 +125,8 @@
     
     // 初始化模型矩阵
     modelMatrix = GLKMatrix4Identity;
-    // 设置摄像机在(0，0，3)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
-    viewMatrix = GLKMatrix4MakeLookAt(0, 0, 3, 0, 0, 0, 0, 1, 0);
+    // 设置摄像机在(1，1，1)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
+    viewMatrix = GLKMatrix4MakeLookAt(1, 1, 1, 0, 0, 0, 0, 1, 0);
     // 使用透视投影矩阵，视场角设置为90°
     projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
     
@@ -145,16 +145,10 @@
 - (void)update
 {
     float radians = GLKMathDegreesToRadians(self.degree);
-    float cos = cosf(radians);
-    float sin = sinf(radians);
-    // 模型绕X轴旋转
-    // modelMatrix = GLKMatrix4MakeRotation(radians, 1.0, 0.0, 0.0);
-    // 模型在Y轴上下移动
-    float modelY = 3.0 * sin;
-    modelMatrix = GLKMatrix4MakeTranslation(0.0, modelY, 0.0);
-    // 摄像机绕模型旋转(改变摄像机位置X和Z,Y不变)
-    // 摄像机指向模型中心点(0, modelY, 0)
-    viewMatrix = GLKMatrix4MakeLookAt(3 * sin, 0, 3 * cos, 0, modelY, 0, 0, 1, 0);
+    // 模型绕Y轴旋转
+    // modelMatrix = GLKMatrix4MakeRotation(radians, 0.0, 1.0, 0.0);
+    // 摄像机绕模型Y旋转(改变摄像机位置，模型不动)
+    viewMatrix = GLKMatrix4MakeLookAt(sqrt(2) * cos(radians), 1, sqrt(2) * sin(radians), 0, 0, 0, 0, 1, 0);
     [self.glkView display];
     self.degree += 0.5f;
 }

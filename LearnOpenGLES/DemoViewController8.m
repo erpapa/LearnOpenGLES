@@ -73,15 +73,15 @@
     glBufferData(GL_ARRAY_BUFFER, sizeof(sphereVerts), sphereVerts, GL_STATIC_DRAW);
     
     // 位置属性
-    glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(positionAttribute);
+    glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
     
     // 把顶点数组复制到缓冲中供OpenGL使用
     glBindBuffer(GL_ARRAY_BUFFER, VBO1);
     glBufferData(GL_ARRAY_BUFFER, sizeof(sphereTexCoords), sphereTexCoords, GL_STATIC_DRAW);
     // 纹理
-    glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(textureCoordinateAttribute);
+    glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
     
     // glBindBuffer(GL_ARRAY_BUFFER, 0); // 这个方法将顶点属性指针注册到VBO作为当前绑定顶点对象，然后我们就可以安全的解绑
     glBindVertexArrayOES(0); // 解绑 VAO (这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法)
@@ -137,11 +137,9 @@
         float radians = GLKMathDegreesToRadians(self.earthDegree);
         GLKMatrix4 rotation = GLKMatrix4MakeRotation(radians, 0.0, 1.0, 0.0);
         // 地球公转
-        float revolution = GLKMathDegreesToRadians(self.earthRevolution);
-        float cos = cosf(revolution);
-        float sin = sinf(revolution);
-        GLKMatrix4 translation = GLKMatrix4MakeTranslation(6.0 * sin, 0.0, 6.0 * cos);
-        earthModelMatrix = GLKMatrix4Multiply(GLKMatrix4Multiply(translation, rotation), scale);
+        float earthRevolution = GLKMathDegreesToRadians(self.earthRevolution);
+        GLKMatrix4 earthTranslation = GLKMatrix4MakeTranslation(6.0 * sinf(earthRevolution), 0.0, 6.0 * cosf(earthRevolution));
+        earthModelMatrix = GLKMatrix4Multiply(GLKMatrix4Multiply(earthTranslation, rotation), scale);
     }
     // 月球
     {

@@ -1,12 +1,12 @@
 //
-//  DemoViewController7.m
+//  DemoViewController6.m
 //  LearnOpenGLES
 //
 //  Created by apple on 2018/10/29.
 //  Copyright © 2018 erpapa. All rights reserved.
 //
 
-#import "DemoViewController7.h"
+#import "DemoViewController6.h"
 #import <GLKit/GLKit.h>
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
@@ -26,24 +26,6 @@ struct Tri
 {
     Vector3df a, b, c;
 };
-
-@interface DemoViewController7 () <GLKViewDelegate>
-{
-    GLuint VAO, VBO0, VBO1;
-    GLint positionAttribute, textureCoordinateAttribute;
-    GLKMatrix4 modelMatrix, viewMatrix, projectionMatrix;
-    int vert_ount, vert_size;
-}
-@property (nonatomic, strong) EAGLContext *eglContext;
-@property (nonatomic, strong) GLKView *glkView;
-@property (nonatomic, strong) GLKTextureInfo *textureInfo;
-@property (nonatomic, strong) CADisplayLink *displayLink;
-@property (nonatomic, strong) GLProgram *program;
-@property (nonatomic, assign) float degree; // 旋转
-
-@end
-
-@implementation DemoViewController7
 
 float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_steps, float extrude, float offset)
 {
@@ -175,6 +157,25 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     return offset + chSize;
 }
 
+
+@interface DemoViewController6 () <GLKViewDelegate>
+{
+    GLuint VAO, VBO0, VBO1;
+    GLint positionAttribute, textureCoordinateAttribute;
+    GLKMatrix4 modelMatrix, viewMatrix, projectionMatrix;
+    int vert_ount, vert_size;
+}
+@property (nonatomic, strong) EAGLContext *eglContext;
+@property (nonatomic, strong) GLKView *glkView;
+@property (nonatomic, strong) GLKTextureInfo *textureInfo;
+@property (nonatomic, strong) CADisplayLink *displayLink;
+@property (nonatomic, strong) GLProgram *program;
+@property (nonatomic, assign) float degree; // 旋转
+
+@end
+
+@implementation DemoViewController6
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -191,13 +192,13 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     // shader
     self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_7" fragmentShaderFilename:@"shaderf_7"];
     [self.program addAttribute:@"position"];
-    [self.program addAttribute:@"inputTextureCoordinate"];
+    // [self.program addAttribute:@"inputTextureCoordinate"];
     [self.program link];
     
     // 顶点
     positionAttribute = [self.program attributeIndex:@"position"];
-    textureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
-    
+    // textureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
+
     NSString *fontPath = [[NSBundle mainBundle] pathForResource:@"hwxk" ofType:@"ttf"];
     const char *char_font = [fontPath UTF8String];
     const char *char_str = "Hi";
@@ -239,7 +240,14 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
         vertices[j + 7] = t.c.y / char_size * 64.0;
         vertices[j + 8] = t.c.z / char_size * 64.0;
     }
-    float texCoords[] = {0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f};
+//    float texCoords[] = {
+//        0.0f, 0.0f,
+//        1.0f, 0.0f,
+//        1.0f, 1.0f,
+//        1.0f, 1.0f,
+//        0.0f, 1.0f,
+//        0.0f, 0.0f
+//    };
     
     // 创建索引缓冲对象
     glGenVertexArraysOES(1, &VAO);
@@ -254,18 +262,24 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     glBufferData(GL_ARRAY_BUFFER, vert_size * sizeof(float), vertices, GL_STATIC_DRAW);
     
     // 位置属性
-    glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(positionAttribute);
+    glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+    
+    // 颜色
+//    glBindBuffer(GL_ARRAY_BUFFER, VBO1);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(vertColors), vertColors, GL_STATIC_DRAW);
+//    glEnableVertexAttribArray(filterSourceColorAttribute);
+//    glVertexAttribPointer(filterSourceColorAttribute, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
     
     // 把顶点数组复制到缓冲中供OpenGL使用
-    glBindBuffer(GL_ARRAY_BUFFER, VBO1);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
+    // glBindBuffer(GL_ARRAY_BUFFER, VBO1);
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
     // 纹理
-    glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
-    glEnableVertexAttribArray(textureCoordinateAttribute);
+    // glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
+    // glEnableVertexAttribArray(textureCoordinateAttribute);
     
     // glBindBuffer(GL_ARRAY_BUFFER, 0); // 这个方法将顶点属性指针注册到VBO作为当前绑定顶点对象，然后我们就可以安全的解绑
-    glBindVertexArrayOES(0); // 解绑 VAO (这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法)
+    glBindVertexArrayOES(0); // 解绑VAO (这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法)
     glEnable(GL_DEPTH_TEST); // 启用深度测试，必须先设置drawableDepthFormat
     free(vertices);
     
@@ -275,8 +289,8 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     
     // 初始化模型矩阵
     modelMatrix = GLKMatrix4Identity;
-    // 设置摄像机在(0，0，3)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
-    viewMatrix = GLKMatrix4MakeLookAt(0, 0, 3, 0, 0, 0, 0, 1, 0);
+    // 设置摄像机在(0，0，1.5)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
+    viewMatrix = GLKMatrix4MakeLookAt(0, 0, 1.5, 0, 0, 0, 0, 1, 0);
     // 使用透视投影矩阵，视场角设置为90°
     projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
     
@@ -294,7 +308,7 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
 
 - (void)update
 {
-    modelMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(self.degree), -0.3, 1.0, 0.0);
+    modelMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(self.degree), 0.0, 1.0, 0.0);
     [self.glkView display];
     self.degree += 0.5f;
 }
@@ -309,14 +323,15 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&modelMatrix);
     glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&viewMatrix);
     glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&projectionMatrix);
+    glUniform4f([self.program uniformIndex:@"sourceColor"], 1.0f, 0.5f, 0.2f, 1.0f);
     
     // bind texture
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
-    glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
+    // glActiveTexture(GL_TEXTURE2);
+    // glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
+    // glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
 
     glBindVertexArrayOES(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, vert_ount);
+    glDrawArrays(GL_LINES, 0, vert_ount);
     glBindVertexArrayOES(0);
 }
 
