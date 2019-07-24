@@ -18,12 +18,12 @@
     GLuint VAO, VBO;
     GLint positionAttribute, skyboxTextureUniform;
     GLKMatrix4 modelMatrix, viewMatrix, projectionMatrix;
+    GLuint cubeTexture;
 }
 
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
 @property (nonatomic, strong) GLProgram *program;
-@property (nonatomic, assign) GLuint cubeTexture;
 
 //@property (nonatomic, assign) GLKMatrix4 rotationMatrix;
 @property (nonatomic, assign) GLKQuaternion endQuaternion;
@@ -117,14 +117,14 @@
     glEnableVertexAttribArray(positionAttribute);
     glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
     
-    // glBindBuffer(GL_ARRAY_BUFFER, 0); // 这个方法将顶点属性指针注册到VBO作为当前绑定顶点对象，然后我们就可以安全的解绑
-    glBindVertexArrayOES(0); // 解绑 VAO (这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法)
+    // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
+    glBindVertexArrayOES(0); // 解绑VAO（这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法）
     glEnable(GL_DEPTH_TEST); // 启用深度测试，必须先设置drawableDepthFormat
     
     // 加载纹理
     NSArray *images = [NSArray arrayWithObjects:@"skybox_right.jpg", @"skybox_left.jpg", @"skybox_top.jpg", @"skybox_bottom.jpg", @"skybox_front.jpg", @"skybox_back.jpg", nil];
-    glGenTextures(1, &_cubeTexture);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _cubeTexture);
+    glGenTextures(1, &cubeTexture);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, cubeTexture);
     for (unsigned int index = 0; index < images.count; index++) {
         NSString *imageName = [images objectAtIndex:index];
         GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:imageName] smoothlyScaleOutput:NO removePremultiplication:NO flipped:NO];
@@ -200,6 +200,7 @@
     glDepthMask(GL_FALSE);
     // 遮挡优化
     glDepthFunc(GL_LEQUAL);
+    // shader
     [self.program use];
     
     // model、view、projection
@@ -210,7 +211,7 @@
     // cube
     glBindVertexArrayOES(VAO);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _cubeTexture);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, cubeTexture);
     glUniform1i(skyboxTextureUniform, 0);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArrayOES(0);
@@ -231,9 +232,9 @@
         glDeleteBuffers(1, &VBO);
         VBO = 0;
     }
-    if (_cubeTexture) {
-        glDeleteTextures(1, &_cubeTexture);
-        _cubeTexture = 0;
+    if (cubeTexture) {
+        glDeleteTextures(1, &cubeTexture);
+        cubeTexture = 0;
     }
 }
 

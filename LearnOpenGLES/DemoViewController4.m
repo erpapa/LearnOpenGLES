@@ -26,12 +26,11 @@
 
 @property (nonatomic, assign) GLKMatrix4 matrix;
 
+@property (nonatomic, assign) CGPoint scaleConstant; // 缩放系数
 @property (nonatomic, assign) CGPoint translateConstant; // 平移系数
 @property (nonatomic, assign) CGPoint translatePoint; // 平移
 
 @property (nonatomic, assign) float degree; // 旋转
-
-@property (nonatomic, assign) float scaleConstant; // 系数
 @property (nonatomic, assign) float scale; // 缩放
 
 @end
@@ -42,10 +41,10 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.translateConstant = CGPointMake(0.05, 0.05);
+        self.scaleConstant = CGPointMake(0.01, 0.01);
+        self.translateConstant = CGPointMake(0.01, 0.01);
         self.translatePoint = CGPointMake(1.0, 0.0);
         self.degree = 0.0;
-        self.scaleConstant = -0.01;
         self.scale = 1.0;
     }
     return self;
@@ -57,7 +56,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     self.view.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0];
-    self.segment = [[UISegmentedControl alloc] initWithItems:@[@"平移",@"旋转",@"缩放"]];
+    self.segment = [[UISegmentedControl alloc] initWithItems:@[@"平移",@"旋转",@"缩放",@"平移->旋转",@"旋转->平移"]];
     self.segment.frame = CGRectMake(0, 0, 210, 26);
     [self.segment addTarget:self action:@selector(segmentClick:) forControlEvents:UIControlEventValueChanged];
     self.segment.selectedSegmentIndex = 0;
@@ -100,49 +99,92 @@
     self.displayLink = nil;
 }
 
+- (void)segmentClick:(UISegmentedControl *)sender
+{
+    NSLog(@"%ld",(long)sender.selectedSegmentIndex);
+}
+
 - (void)update
 {
     if (self.segment.selectedSegmentIndex == 0) {
         // 缩放，便于查看
         CGFloat scale = 0.25;
-        // 重新计算最大最小值，得到{-3.0,3.0}
-        CGFloat maxOffset = 1.0 / scale - 1.0;
-        CGFloat minOffset = -maxOffset;
-        CGFloat offsetX = self.translatePoint.x + self.translateConstant.x;
-        CGFloat offsetY = self.translatePoint.y + self.translateConstant.y;
-        if (offsetX <= minOffset) {
-            offsetX = minOffset;
+        GLKMatrix4 scaleMatrix = GLKMatrix4MakeScale(scale, scale, 0.0);
+
+        // 偏移量
+        CGFloat maxOffset = 1.0 - 0.25;
+        CGFloat minOffset = -1.0 + 0.25;
+        CGFloat translateX = self.translatePoint.x + self.translateConstant.x;
+        CGFloat translateY = self.translatePoint.y + self.translateConstant.y;
+        if (translateX <= minOffset) {
+            translateX = minOffset;
             self.translateConstant = CGPointMake(-self.translateConstant.x, self.translateConstant.y);
         }
-        if (offsetY <= minOffset) {
-            offsetY = minOffset;
+        if (translateY <= minOffset) {
+            translateY = minOffset;
             self.translateConstant = CGPointMake(self.translateConstant.x, -self.translateConstant.y);
         }
-        if (offsetX >= maxOffset) {
-            offsetX = maxOffset;
+        if (translateX >= maxOffset) {
+            translateX = maxOffset;
             self.translateConstant = CGPointMake(-self.translateConstant.x, self.translateConstant.y);
         }
-        if (offsetY >= maxOffset) {
-            offsetY = maxOffset;
+        if (translateY >= maxOffset) {
+            translateY = maxOffset;
             self.translateConstant = CGPointMake(self.translateConstant.x, -self.translateConstant.y);
         }
-        self.translatePoint = CGPointMake(offsetX, offsetY);
-        GLKMatrix4 matrix = GLKMatrix4MakeScale(scale, scale, 0.0); // 先缩放
-        self.matrix = GLKMatrix4Translate(matrix, self.translatePoint.x, self.translatePoint.y, 0.0);
+        self.translatePoint = CGPointMake(translateX, translateY);
+        GLKMatrix4 translationMatrix = GLKMatrix4MakeTranslation(self.translatePoint.x, self.translatePoint.y, 0);
+        self.matrix = GLKMatrix4Multiply(translationMatrix, scaleMatrix);
     } else if (self.segment.selectedSegmentIndex == 1) {
         // 设置旋转矩阵
         self.degree += 0.5;
         if (self.degree >= 360.0) {
-            self.degree = 0.0;
+            self.degree = self.degree - 360.0;
         }
         self.matrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(self.degree), 0.0, 0.0, 1.0);
     } else if (self.segment.selectedSegmentIndex == 2) {
         // 设置缩放矩阵
-        self.scale += self.scaleConstant;
+        self.scale += self.scaleConstant.x;
         if (self.scale <= 0.35 || self.scale >= 1.25) {
-            self.scaleConstant = -self.scaleConstant;
+            self.scaleConstant = CGPointMake(-self.scaleConstant.x, -self.scaleConstant.y);
         }
         self.matrix = GLKMatrix4MakeScale(self.scale, self.scale, 0.0);
+    } else if (self.segment.selectedSegmentIndex == 3) {
+        // 缩放，便于查看
+        CGFloat scale = 0.25;
+        GLKMatrix4 scaleMatrix = GLKMatrix4MakeScale(scale, scale, 0.0);
+        // 平移->旋转
+        GLKMatrix4 translationMatrix = GLKMatrix4MakeTranslation(1.0, 0, 0);
+        GLKMatrix4 rotationMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(45.0), 0.0, 0.0, 1.0);
+        self.matrix = GLKMatrix4Multiply(rotationMatrix, GLKMatrix4Multiply(translationMatrix, scaleMatrix));
+        // 等价于
+        {
+            self.matrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(45.0), 0.0, 0.0, 1.0);
+            self.matrix = GLKMatrix4Translate(self.matrix, 1.0, 0, 0);
+            self.matrix = GLKMatrix4Scale(self.matrix, scale, scale, 1.0);
+        }
+        // 区别在于：
+        // 1.GLKMatrix4Translate，GLKMatrix4Rotate，GLKMatrix4Scale是相对于当前模型坐标系
+        // 2.而GLKMatrix4Multiply是相对于世界坐标系，使用矩阵乘法(左乘)做变换
+        // 3.世界坐标系的x，y，x的方向是永远不变的，而模型坐标系的x，y，z在使用旋转矩阵GLKMatrix4Rotate后，方向会发生改变
+    } else if (self.segment.selectedSegmentIndex == 4) {
+        // 缩放，便于查看
+        CGFloat scale = 0.25;
+        GLKMatrix4 scaleMatrix = GLKMatrix4MakeScale(scale, scale, 0.0);
+        // 旋转->平移
+        GLKMatrix4 rotationMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(45.0), 0.0, 0.0, 1.0);
+        GLKMatrix4 translationMatrix = GLKMatrix4MakeTranslation(1.0, 0, 0);
+        self.matrix = GLKMatrix4Multiply(translationMatrix, GLKMatrix4Multiply(rotationMatrix, scaleMatrix));
+        // 等价于
+        {
+            self.matrix = GLKMatrix4MakeTranslation(1.0, 0, 0);
+            self.matrix = GLKMatrix4Rotate(self.matrix, GLKMathDegreesToRadians(45.0), 0.0, 0.0, 1.0);
+            self.matrix = GLKMatrix4Scale(self.matrix, scale, scale, 1.0);
+        }
+        // 区别在于：
+        // 1.GLKMatrix4Translate，GLKMatrix4Rotate，GLKMatrix4Scale是相对于当前模型坐标系
+        // 2.而GLKMatrix4Multiply是相对于世界坐标系，使用矩阵乘法(左乘)做变换
+        // 3.世界坐标系的x，y，x的方向是永远不变的，而模型坐标系的x，y，z在使用旋转矩阵GLKMatrix4Rotate后，方向会发生改变
     }
     [self.glkView display];
 }
@@ -181,11 +223,6 @@
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glDisableVertexAttribArray(filterPositionAttribute);
     glDisableVertexAttribArray(filterTextureCoordinateAttribute);
-}
-
-- (void)segmentClick:(UISegmentedControl *)sender
-{
-    NSLog(@"%ld",(long)sender.selectedSegmentIndex);
 }
 
 - (void)dealloc
