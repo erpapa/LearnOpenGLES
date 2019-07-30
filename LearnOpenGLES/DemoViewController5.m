@@ -21,7 +21,7 @@ typedef struct {
 // z取值[-1~1.0]，屏幕上方为正，宽度小于当前view宽度，如果为0，则显示的宽度为当前view的宽度
 // 在 GL_TRIANGLE_STRIP 状态下是: 0、1、2 ; 2、1、3 ; 2、3、4 ; 4、3、5 这4个三角形。
 // 在 GL_TRIANGLE_FAN 状态下是: 0、1、2 ; 0、2、3 ; 0、3、4 ; 0、4、5 这4个三角形。// 扇形
-const Vertex GL_TRIANGLES_VertexData[] = {
+static Vertex GL_TRIANGLES_VertexData[] = {
     
     0.5f, -0.5f, -0.9f,     1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 1.0f,   1.0f, 0.0f,// 0 右下
     -0.5f, 0.5f, -0.9f,     1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 1.0f,   0.0f, 1.0f,// 1 左上
@@ -32,7 +32,7 @@ const Vertex GL_TRIANGLES_VertexData[] = {
 };
 
 // 在 GL_TRIANGLE_STRIP 状态下是: 0、1、2 ; 2、1、3 这2个三角形。
-const Vertex GL_RIANGLE_STRIP_VertexData[] = {
+static Vertex GL_RIANGLE_STRIP_VertexData[] = {
     
     -0.5f, -0.5f, -0.9f,     1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 0.0f,   0.0f, 0.0f,// 0 左下
     -0.5f, 0.5f, -0.9f,     1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 1.0f,   0.0f, 1.0f,// 1 左上
@@ -42,7 +42,7 @@ const Vertex GL_RIANGLE_STRIP_VertexData[] = {
 };
 
 // 在 GL_TRIANGLE_FAN   状态下是: 0、1、2 ; 0、2、3 这2个三角形。
-const Vertex GL_TRIANGLE_FAN_VertexData[] = {
+static Vertex GL_TRIANGLE_FAN_VertexData[] = {
     
     0.5f, -0.5f, -0.9f,     1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 1.0f,   1.0f, 0.0f,// 0 右下
     -0.5f, -0.5f, -0.9f,    1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 0.0f,   0.0f, 0.0f,// 1 左下
@@ -50,7 +50,7 @@ const Vertex GL_TRIANGLE_FAN_VertexData[] = {
     0.5f, 0.5f, -0.9f,     1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 1.0f,   1.0f, 1.0f,// 3 右上
 };
 
-const GLubyte GL_ELEMENT_Indices[] = {
+static GLubyte GL_ELEMENT_Indices[] = {
     0, 1, 2,
     2, 1, 3
 };
@@ -112,8 +112,8 @@ const GLubyte GL_ELEMENT_Indices[] = {
      * 以后所有“GL”的指令均作用在这个“Context”上
      **/
     [EAGLContext setCurrentContext:self.context];
-    // 发送第一个“GL”指令：激活“深度检测”。
-    // 启用GL_DEPTH_TEST，必须先赋值drawableDepthFormat。
+    // 发送第一个“GL”指令：激活“深度检测”
+    // 启用GL_DEPTH_TEST，必须先设置drawableDepthFormat
     glEnable(GL_DEPTH_TEST);
     
     // 1.写入过程

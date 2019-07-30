@@ -17,7 +17,7 @@ typedef struct {
     GLfloat texCoord[2];//纹理
 } Vertex;
 
-const Vertex vertexData[] = {
+static Vertex vertexData[] = {
     -1.0f, -1.0f, 0.0,     1.0, 0.0, 0.0, 1.0,   1.0f, 0.0f, // 0 左下
     1.0f, -1.0f, 0.0,     1.0, 1.0, 0.0, 1.0,   0.0f, 1.0f, // 1 右下
     -1.0f, 1.0f, 0.0,    0.0, 0.0, 1.0, 1.0,   0.0f, 0.0f, // 2 左上
@@ -31,10 +31,7 @@ const Vertex vertexData[] = {
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
-@property (nonatomic, strong) GLKTextureInfo *textureInfo;
-@property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic, strong) GLProgram *program;
-@property (nonatomic, assign) float degree;
 
 @end
 

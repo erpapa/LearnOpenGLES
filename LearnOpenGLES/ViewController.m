@@ -28,12 +28,19 @@
                        @{@"title":@"颜色",@"class":@"DemoViewController1"},
                        @{@"title":@"贴图",@"class":@"DemoViewController2"},
                        @{@"title":@"裁剪",@"class":@"DemoViewController3"},
-                       @{@"title":@"平移/旋转/缩放",@"class":@"DemoViewController4"},
-                       @{@"title":@"GLKit",@"class":@"DemoViewController5"},
+                       @{@"title":@"平移、旋转、缩放",@"class":@"DemoViewController4"},
+                       @{@"title":@"GLKBaseEffect",@"class":@"DemoViewController5"},
                        @{@"title":@"3D字体",@"class":@"DemoViewController6"},
                        @{@"title":@"立方体盒子",@"class":@"DemoViewController7"},
                        @{@"title":@"太阳、地球、月亮",@"class":@"DemoViewController8"},
-                       @{@"title":@"天空盒",@"class":@"DemoViewController9"}];
+                       @{@"title":@"天空盒",@"class":@"DemoViewController9"},
+                       @{@"title":@"深度测试",@"class":@"DemoViewController10"},
+                       @{@"title":@"模板测试",@"class":@"DemoViewController11"},
+                       @{@"title":@"裁剪测试",@"class":@"DemoViewController12"},
+                       @{@"title":@"alpha测试",@"class":@"DemoViewController13"},
+                       @{@"title":@"blend混合",@"class":@"DemoViewController14"},
+                       @{@"title":@"面剔除",@"class":@"DemoViewController15"},
+                       @{@"title":@"光照",@"class":@"DemoViewController16"}];
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
@@ -55,7 +62,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *kResueIdentfier = @"kResueIdentfier";
+    static NSString *kResueIdentfier = @"kTableViewCellResueIdentfier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kResueIdentfier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kResueIdentfier];

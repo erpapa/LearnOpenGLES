@@ -104,7 +104,7 @@
     // 使用透视投影矩阵，视场角设置为90°
     projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
     // 正交投影矩阵
-    // projectionMatrix = GLKMatrix4MakeOrtho(-10.0, 10.0, -10.0, 10.0, 10.0, 100.0);
+    // projectionMatrix = GLKMatrix4MakeOrtho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
     
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
     [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];

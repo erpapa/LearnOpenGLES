@@ -150,7 +150,7 @@
     // 使用透视投影矩阵，视场角设置为60°
     projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(60.0), 1.0f, 0.1f, 100.0f);
     // 正交投影矩阵
-    // projectionMatrix = GLKMatrix4MakeOrtho(-10.0, 10.0, -10.0, 10.0, 10.0, 100.0);
+    // projectionMatrix = GLKMatrix4MakeOrtho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
 }
 
 #pragma mark - 处理触摸事件

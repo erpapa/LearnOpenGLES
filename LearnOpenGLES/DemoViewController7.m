@@ -17,6 +17,7 @@
     GLuint VAO, VBO;
     GLint positionAttribute, textureCoordinateAttribute;
     GLKMatrix4 modelMatrix, viewMatrix, projectionMatrix;
+    GLKVector3 cameraPos;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -43,7 +44,7 @@
     [EAGLContext setCurrentContext:self.eglContext];
     
     // shader
-    self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_6" fragmentShaderFilename:@"shaderf_6"];
+    self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_7" fragmentShaderFilename:@"shaderf_7"];
     [self.program addAttribute:@"position"];
     [self.program addAttribute:@"inputTextureCoordinate"];
     [self.program link];
@@ -123,10 +124,12 @@
     NSString *diffuseFilePath = [[NSBundle mainBundle] pathForResource:@"container_diffuse" ofType:@"jpg"];
     self.textureInfo = [GLKTextureLoader textureWithContentsOfFile:diffuseFilePath options:[NSDictionary dictionaryWithObjectsAndKeys:@(1),GLKTextureLoaderOriginBottomLeft, nil] error:nil];
     
+    // 摄像机位置
+    cameraPos = GLKVector3Make(1.0, 1.0, 1.0);
     // 初始化模型矩阵
     modelMatrix = GLKMatrix4Identity;
     // 设置摄像机在(1，1，1)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
-    viewMatrix = GLKMatrix4MakeLookAt(1, 1, 1, 0, 0, 0, 0, 1, 0);
+    viewMatrix = GLKMatrix4MakeLookAt(cameraPos.x, cameraPos.y, cameraPos.z, 0, 0, 0, 0, 1, 0);
     // 使用透视投影矩阵，视场角设置为90°
     projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
     
@@ -147,8 +150,9 @@
     float radians = GLKMathDegreesToRadians(self.degree);
     // 模型绕Y轴旋转
     // modelMatrix = GLKMatrix4MakeRotation(radians, 0.0, 1.0, 0.0);
-    // 摄像机绕模型Y旋转(改变摄像机位置，模型不动)
-    viewMatrix = GLKMatrix4MakeLookAt(sqrt(2) * cos(radians), 1, sqrt(2) * sin(radians), 0, 0, 0, 0, 1, 0);
+    // 摄像机绕模型Y旋转（改变摄像机位置，模型不动）
+    cameraPos = GLKMatrix4MultiplyVector3(GLKMatrix4MakeRotation(radians, 0.0, 1.0, 0.0), GLKVector3Make(1.0, 1.0, 1.0));
+    viewMatrix = GLKMatrix4MakeLookAt(cameraPos.x, cameraPos.y, cameraPos.z, 0, 0, 0, 0, 1, 0);
     [self.glkView display];
     self.degree += 0.5f;
 }

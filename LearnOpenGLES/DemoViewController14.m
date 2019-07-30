@@ -1,17 +1,17 @@
 //
-//  DemoViewController3.m
+//  DemoViewController14.m
 //  LearnOpenGLES
 //
-//  Created by erpapa on 2018/2/7.
-//  Copyright © 2018年 erpapa. All rights reserved.
+//  Created by apple on 2019/7/29.
+//  Copyright © 2019 erpapa. All rights reserved.
 //
 
-#import "DemoViewController3.h"
+#import "DemoViewController14.h"
 #import <GLKit/GLKit.h>
 #import <OpenGLES/ES2/gl.h>
 #import "GLProgram.h"
 
-@interface DemoViewController3 () <GLKViewDelegate>
+@interface DemoViewController14 () <GLKViewDelegate>
 {
     GLint filterPositionAttribute, filterTextureCoordinateAttribute;
     GLint filterInputTextureUniform;
@@ -19,11 +19,12 @@
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
 @property (nonatomic, strong) GLKTextureInfo *textureInfo;
+@property (nonatomic, strong) GLKTextureInfo *alphaTextureInfo;
 @property (nonatomic, strong) GLProgram *program;
 
 @end
 
-@implementation DemoViewController3
+@implementation DemoViewController14
 
 - (void)viewDidLoad
 {
@@ -39,7 +40,7 @@
     [EAGLContext setCurrentContext:self.eglContext];
     
     // shader
-    self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_3" fragmentShaderFilename:@"shaderf_3"];
+    self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_14" fragmentShaderFilename:@"shaderf_14"];
     [self.program addAttribute:@"position"];
     [self.program addAttribute:@"inputTextureCoordinate"];
     [self.program link];
@@ -47,47 +48,84 @@
     filterPositionAttribute = [self.program attributeIndex:@"position"];
     filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
     filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
-    [self.program use];
     
     // texture
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"for_test" ofType:@"jpg"];
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@(1),GLKTextureLoaderOriginBottomLeft, nil]; // 将纹理坐标原点改为左下角（GLKit加载纹理，默认都是把坐标设置在“左上角”。然而，OpenGL的纹理贴图坐标却是在左下角，这样刚好颠倒）
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"for_test" ofType:@"jpg"];
     self.textureInfo = [GLKTextureLoader textureWithContentsOfFile:filePath options:options error:nil];
+    
+    NSString *alphaFilePath = [[NSBundle mainBundle] pathForResource:@"for_test_blend" ofType:@"png"];
+    self.alphaTextureInfo = [GLKTextureLoader textureWithContentsOfFile:alphaFilePath options:options error:nil];
+    
+    [self.glkView display];
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    glClearColor(0.5, 0.5, 0.5, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT);
-    
-    [self.program use];
-    glEnableVertexAttribArray(filterPositionAttribute);
-    glEnableVertexAttribArray(filterTextureCoordinateAttribute);
-    
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
-    
-    glUniform1i(filterInputTextureUniform, 2);
-    
     static const GLfloat imageVertices[] = {
         -1.0f, -1.0f, 0.0,
         1.0f, -1.0f, 0.0,
         -1.0f, 1.0f, 0.0,
         1.0f, 1.0f, 0.0,
     };
-    // 裁剪上下左右各0.2，得到中间0.6的区域
-    static const GLfloat noRotationTextureCoordinates[] = {
-        0.2f, 0.2f,
-        0.8f, 0.2f,
-        0.2f, 0.8f,
-        0.8f, 0.8f,
+    static const GLfloat alphaImageVertices[] = {
+        -0.5f, -0.5f, 0.0,
+        0.5f, -0.5f, 0.0,
+        -0.5f, 0.5f, 0.0,
+        0.5f, 0.5f, 0.0,
     };
+    static const GLfloat noRotationTextureCoordinates[] = {
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+    };
+    
+    glClearColor(0.5, 0.5, 0.5, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    // 启用
+    [self.program use];
+    glEnableVertexAttribArray(filterPositionAttribute);
+    glEnableVertexAttribArray(filterTextureCoordinateAttribute);
+    
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
+    glUniform1i(filterInputTextureUniform, 2);
+    
     glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, 0, imageVertices);
     glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
-    
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
     glDisableVertexAttribArray(filterPositionAttribute);
     glDisableVertexAttribArray(filterTextureCoordinateAttribute);
+    
+    // 裁剪测试只是在原来的视口标准的绘制区域内开辟一块矩形区域来显示，而不是把内容放到裁剪的区域内来显示。
+    // 所以超出裁剪区域，之前绘制的内容不会受到影响
+    // 开启blend混合模式
+    glEnable(GL_BLEND);
+    // 预乘alpha（premultiply）
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    // 没有预乘alpha（unpremultiply）
+    // glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    
+    // 启用
+    [self.program use];
+    glEnableVertexAttribArray(filterPositionAttribute);
+    glEnableVertexAttribArray(filterTextureCoordinateAttribute);
+    
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, self.alphaTextureInfo.name);
+    glUniform1i(filterInputTextureUniform, 2);
+    
+    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, 0, alphaImageVertices);
+    glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    glDisableVertexAttribArray(filterPositionAttribute);
+    glDisableVertexAttribArray(filterTextureCoordinateAttribute);
+    // 关闭blend混合模式
+    glDisable(GL_BLEND);
 }
 
 - (void)dealloc
@@ -96,6 +134,5 @@
     self.program = nil;
 }
 
+
 @end
-
-

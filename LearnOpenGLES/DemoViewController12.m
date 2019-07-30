@@ -1,17 +1,17 @@
 //
-//  DemoViewController3.m
+//  DemoViewController12.m
 //  LearnOpenGLES
 //
-//  Created by erpapa on 2018/2/7.
-//  Copyright © 2018年 erpapa. All rights reserved.
+//  Created by apple on 2019/7/29.
+//  Copyright © 2019 erpapa. All rights reserved.
 //
 
-#import "DemoViewController3.h"
+#import "DemoViewController12.h"
 #import <GLKit/GLKit.h>
 #import <OpenGLES/ES2/gl.h>
 #import "GLProgram.h"
 
-@interface DemoViewController3 () <GLKViewDelegate>
+@interface DemoViewController12 () <GLKViewDelegate>
 {
     GLint filterPositionAttribute, filterTextureCoordinateAttribute;
     GLint filterInputTextureUniform;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation DemoViewController3
+@implementation DemoViewController12
 
 - (void)viewDidLoad
 {
@@ -39,7 +39,7 @@
     [EAGLContext setCurrentContext:self.eglContext];
     
     // shader
-    self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_3" fragmentShaderFilename:@"shaderf_3"];
+    self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_12" fragmentShaderFilename:@"shaderf_12"];
     [self.program addAttribute:@"position"];
     [self.program addAttribute:@"inputTextureCoordinate"];
     [self.program link];
@@ -53,41 +53,78 @@
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"for_test" ofType:@"jpg"];
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@(1),GLKTextureLoaderOriginBottomLeft, nil]; // 将纹理坐标原点改为左下角（GLKit加载纹理，默认都是把坐标设置在“左上角”。然而，OpenGL的纹理贴图坐标却是在左下角，这样刚好颠倒）
     self.textureInfo = [GLKTextureLoader textureWithContentsOfFile:filePath options:options error:nil];
+    [self.glkView display];
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    glClearColor(0.5, 0.5, 0.5, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT);
-    
-    [self.program use];
-    glEnableVertexAttribArray(filterPositionAttribute);
-    glEnableVertexAttribArray(filterTextureCoordinateAttribute);
-    
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
-    
-    glUniform1i(filterInputTextureUniform, 2);
-    
     static const GLfloat imageVertices[] = {
         -1.0f, -1.0f, 0.0,
         1.0f, -1.0f, 0.0,
         -1.0f, 1.0f, 0.0,
         1.0f, 1.0f, 0.0,
     };
-    // 裁剪上下左右各0.2，得到中间0.6的区域
-    static const GLfloat noRotationTextureCoordinates[] = {
-        0.2f, 0.2f,
-        0.8f, 0.2f,
-        0.2f, 0.8f,
-        0.8f, 0.8f,
+    static const GLfloat scissorImageVertices[] = {
+        -0.25f, -0.25f, 0.0,
+        0.25f, -0.25f, 0.0,
+        -0.25f, 0.25f, 0.0,
+        0.25f, 0.25f, 0.0,
     };
+    static const GLfloat noRotationTextureCoordinates[] = {
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+    };
+    
+    glClearColor(0.5, 0.5, 0.5, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    // 启用
+    [self.program use];
+    glEnableVertexAttribArray(filterPositionAttribute);
+    glEnableVertexAttribArray(filterTextureCoordinateAttribute);
+    
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
+    glUniform1i(filterInputTextureUniform, 2);
+    
     glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, 0, imageVertices);
     glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
-    
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
     glDisableVertexAttribArray(filterPositionAttribute);
     glDisableVertexAttribArray(filterTextureCoordinateAttribute);
+    
+    // 裁剪测试只是在原来的视口标准的绘制区域内开辟一块矩形区域来显示，而不是把内容放到裁剪的区域内来显示。
+    // 所以超出裁剪区域，之前绘制的内容不会受到影响
+    // 开启裁剪测试
+    glEnable(GL_SCISSOR_TEST);
+    // 指定开辟的矩形区域
+    CGRect scissorRect = CGRectInset(rect, 100, 100);
+    glScissor(scissorRect.origin.x * view.contentScaleFactor, scissorRect.origin.y * view.contentScaleFactor, scissorRect.size.width * view.contentScaleFactor, scissorRect.size.height * view.contentScaleFactor);
+    // 清除该区域内的颜色
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    // 在矩形局域内绘制内容
+    // 启用
+    [self.program use];
+    glEnableVertexAttribArray(filterPositionAttribute);
+    glEnableVertexAttribArray(filterTextureCoordinateAttribute);
+    
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
+    glUniform1i(filterInputTextureUniform, 2);
+    
+    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, 0, scissorImageVertices);
+    glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    glDisableVertexAttribArray(filterPositionAttribute);
+    glDisableVertexAttribArray(filterTextureCoordinateAttribute);
+    // 关闭裁剪测试
+    glDisable(GL_SCISSOR_TEST);
 }
 
 - (void)dealloc
@@ -97,5 +134,3 @@
 }
 
 @end
-
-
