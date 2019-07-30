@@ -280,7 +280,6 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     
     // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
     glBindVertexArrayOES(0); // 解绑VAO（这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法）
-    glEnable(GL_DEPTH_TEST); // 启用深度测试，必须先设置drawableDepthFormat
     free(vertices);
     
     // texture
@@ -318,6 +317,9 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+    // 启用深度测试，必须先设置drawableDepthFormat
+    glEnable(GL_DEPTH_TEST);
+    
     [self.program use];
     // model、view、projection
     glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&modelMatrix);
@@ -333,6 +335,8 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     glBindVertexArrayOES(VAO);
     glDrawArrays(GL_LINES, 0, vert_ount);
     glBindVertexArrayOES(0);
+    
+    glDisable(GL_DEPTH_TEST);
 }
 
 - (void)dealloc

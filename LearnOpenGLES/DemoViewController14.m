@@ -100,8 +100,6 @@
     glDisableVertexAttribArray(filterPositionAttribute);
     glDisableVertexAttribArray(filterTextureCoordinateAttribute);
     
-    // 裁剪测试只是在原来的视口标准的绘制区域内开辟一块矩形区域来显示，而不是把内容放到裁剪的区域内来显示。
-    // 所以超出裁剪区域，之前绘制的内容不会受到影响
     // 开启blend混合模式
     glEnable(GL_BLEND);
     // 预乘alpha（premultiply）

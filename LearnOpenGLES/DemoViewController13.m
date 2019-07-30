@@ -139,6 +139,8 @@
 
 - (void)dealloc
 {
+    [self.alphaProgram validate];
+    self.alphaProgram = nil;
     [self.program validate];
     self.program = nil;
 }
