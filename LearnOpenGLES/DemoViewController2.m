@@ -47,7 +47,6 @@
     filterPositionAttribute = [self.program attributeIndex:@"position"];
     filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
     filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
-    [self.program use];
     
     // texture
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"for_test" ofType:@"jpg"];
@@ -61,7 +60,7 @@
     glClearColor(0.5, 0.5, 0.5, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
-    // 启用
+    // 启用着色器
     [self.program use];
     glEnableVertexAttribArray(filterPositionAttribute);
     glEnableVertexAttribArray(filterTextureCoordinateAttribute);

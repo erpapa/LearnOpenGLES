@@ -47,12 +47,12 @@
     filterPositionAttribute = [self.program attributeIndex:@"position"];
     filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
     filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
-    [self.program use];
     
     // texture
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"for_test" ofType:@"jpg"];
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@(1),GLKTextureLoaderOriginBottomLeft, nil]; // 将纹理坐标原点改为左下角（GLKit加载纹理，默认都是把坐标设置在“左上角”。然而，OpenGL的纹理贴图坐标却是在左下角，这样刚好颠倒）
     self.textureInfo = [GLKTextureLoader textureWithContentsOfFile:filePath options:options error:nil];
+    [self.glkView display];
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
@@ -60,6 +60,7 @@
     glClearColor(0.5, 0.5, 0.5, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
+    // 启用着色器
     [self.program use];
     glEnableVertexAttribArray(filterPositionAttribute);
     glEnableVertexAttribArray(filterTextureCoordinateAttribute);

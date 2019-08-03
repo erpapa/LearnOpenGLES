@@ -102,6 +102,7 @@ static Vertex greenVertexData[] = {
     // 在OpenGL中深度指的就是在坐标系中像素Z的值，距离观察者的距离，观察者可以在任何位置，OpenGL中会有专门一块缓存区来存放Z值
     glDepthFunc(GL_LEQUAL);
     
+    // 启用着色器
     [self.program use];
     
     // model、view、projection

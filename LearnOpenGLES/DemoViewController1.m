@@ -58,7 +58,7 @@ static Vertex vertexData[] = {
     
     filterPositionAttribute = [self.program attributeIndex:@"position"];
     filterSourceColorAttribute = [self.program attributeIndex:@"sourceColor"];
-    [self.program use]; // 加载并使用链接好的程序
+    [self.glkView display];
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
@@ -66,6 +66,7 @@ static Vertex vertexData[] = {
     glClearColor(0.5, 0.5, 0.5, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
+    // 启用着色器
     [self.program use];
     glEnableVertexAttribArray(filterPositionAttribute); // 启用属性
     glEnableVertexAttribArray(filterSourceColorAttribute); // 启用属性

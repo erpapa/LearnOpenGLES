@@ -79,7 +79,6 @@
     filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
     filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
     filterTransformMatrix = [self.program uniformIndex:@"transformMatrix"];
-    [self.program use];
 
     // model
     self.matrix = GLKMatrix4MakeRotation(0.0, 0.0, 0.0, 1.0);
@@ -197,7 +196,7 @@
     glClearColor(0.5, 0.5, 0.5, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
-    // 启用
+    // 启用着色器
     [self.program use];
     glEnableVertexAttribArray(filterPositionAttribute);
     glEnableVertexAttribArray(filterTextureCoordinateAttribute);

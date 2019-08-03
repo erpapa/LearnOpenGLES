@@ -319,7 +319,7 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     
     // 启用深度测试，必须先设置drawableDepthFormat
     glEnable(GL_DEPTH_TEST);
-    
+    // 启用着色器
     [self.program use];
     // model、view、projection
     glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&modelMatrix);

@@ -41,8 +41,8 @@
     self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_0" fragmentShaderFilename:@"shaderf_0"];
     [self.program addAttribute:@"position"]; // 把program的顶点属性索引与顶点shader中的变量名进行绑定
     [self.program link]; // 创建可执行的 OpenGL ES program
+    
     filterPositionAttribute = [self.program attributeIndex:@"position"]; // 获取program对象的参数值
-    [self.program use]; // 加载并使用链接好的程序
     [self.glkView display];
 }
 

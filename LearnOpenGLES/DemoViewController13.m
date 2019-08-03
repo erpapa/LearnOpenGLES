@@ -97,7 +97,7 @@
     glClearColor(0.5, 0.5, 0.5, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
-    // 启用
+    // 启用着色器
     [self.program use];
     glEnableVertexAttribArray(filterPositionAttribute);
     glEnableVertexAttribArray(filterTextureCoordinateAttribute);
@@ -117,7 +117,7 @@
     // glEnable(GL_ALPHA_TEST); // 开启alpha测试
     // glAlphaFunc(GL_GEQUAL, 0.5f); // alpha大于等于0.5则通过（小于0.5则丢弃）
     
-    // 启用
+    // 启用着色器
     [self.alphaProgram use];
     glEnableVertexAttribArray(alphaPositionAttribute);
     glEnableVertexAttribArray(alphaTextureCoordinateAttribute);

@@ -178,7 +178,6 @@ static GLubyte GL_ELEMENT_Indices[] = {
     GLKTextureInfo *textureInfo = [GLKTextureLoader textureWithContentsOfFile:filePath options:options error:nil];
     self.effect.texture2d0.enabled = GL_TRUE;
     self.effect.texture2d0.name = textureInfo.name;
-    
 }
 
 - (void)update

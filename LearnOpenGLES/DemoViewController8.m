@@ -74,7 +74,7 @@ static const GLfloat noRotationTextureCoordinates[] = {
     // 顶点
     positionAttribute = [self.program attributeIndex:@"position"];
     textureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
-    [self.program use];
+    // 轨道VAO
     {
         // 创建索引缓冲对象
         glGenVertexArraysOES(1, &VAO);
@@ -86,15 +86,14 @@ static const GLfloat noRotationTextureCoordinates[] = {
         
         // 把顶点数组复制到缓冲中供OpenGL使用
         glBindBuffer(GL_ARRAY_BUFFER, VBO0);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(sphereVerts), sphereVerts, GL_STATIC_DRAW);
-        
+        glBufferData(GL_ARRAY_BUFFER, sizeof(imageVertices), imageVertices, GL_STATIC_DRAW);
         // 位置属性
         glEnableVertexAttribArray(positionAttribute);
         glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
         
         // 把顶点数组复制到缓冲中供OpenGL使用
         glBindBuffer(GL_ARRAY_BUFFER, VBO1);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(sphereTexCoords), sphereTexCoords, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(noRotationTextureCoordinates), noRotationTextureCoordinates, GL_STATIC_DRAW);
         // 纹理
         glEnableVertexAttribArray(textureCoordinateAttribute);
         glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
@@ -102,6 +101,7 @@ static const GLfloat noRotationTextureCoordinates[] = {
         // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
         glBindVertexArrayOES(0); // 解绑VAO（这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法）
     }
+    // 球体VAO
     {
         // 创建索引缓冲对象
         glGenVertexArraysOES(1, &VAO1);
@@ -113,15 +113,14 @@ static const GLfloat noRotationTextureCoordinates[] = {
         
         // 把顶点数组复制到缓冲中供OpenGL使用
         glBindBuffer(GL_ARRAY_BUFFER, VBO10);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(imageVertices), imageVertices, GL_STATIC_DRAW);
-        
+        glBufferData(GL_ARRAY_BUFFER, sizeof(sphereVerts), sphereVerts, GL_STATIC_DRAW);
         // 位置属性
         glEnableVertexAttribArray(positionAttribute);
         glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
         
         // 把顶点数组复制到缓冲中供OpenGL使用
         glBindBuffer(GL_ARRAY_BUFFER, VBO11);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(noRotationTextureCoordinates), noRotationTextureCoordinates, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(sphereTexCoords), sphereTexCoords, GL_STATIC_DRAW);
         // 纹理
         glEnableVertexAttribArray(textureCoordinateAttribute);
         glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
@@ -225,7 +224,7 @@ static const GLfloat noRotationTextureCoordinates[] = {
     glEnable(GL_DEPTH_TEST);
     // 当深度值小于等于的时候绘制，默认是GL_LESS
     glDepthFunc(GL_LEQUAL);
-    
+    // 启用着色器
     [self.program use];
     // model、view、projection
     glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&viewMatrix);
@@ -239,7 +238,7 @@ static const GLfloat noRotationTextureCoordinates[] = {
     // glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     
     // 绘制轨道
-    glBindVertexArrayOES(VAO1);
+    glBindVertexArrayOES(VAO);
     {
         glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&orbitModelMatrix);
         glActiveTexture(GL_TEXTURE2);
@@ -255,7 +254,7 @@ static const GLfloat noRotationTextureCoordinates[] = {
     // !!! 丢弃透明部分的原因是，片元被丢弃之后，不会写入深度值，这样之后绘制的球体不会被轨道遮挡
     
     // 绘制太阳、地球、月球
-    glBindVertexArrayOES(VAO);
+    glBindVertexArrayOES(VAO1);
     {
         glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&sunModelMatrix);
         glActiveTexture(GL_TEXTURE2);

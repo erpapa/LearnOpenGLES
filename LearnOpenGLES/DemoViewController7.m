@@ -52,7 +52,6 @@
     // 顶点
     positionAttribute = [self.program attributeIndex:@"position"];
     textureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
-    [self.program use];
 
     // 不使用索引缓冲对象用两个三角形绘制一个梯形
     // 设置顶点缓存和属性指针
@@ -166,7 +165,7 @@
     glEnable(GL_DEPTH_TEST);
     // 当深度值小于等于的时候绘制，默认是GL_LESS
     glDepthFunc(GL_LEQUAL);
-    
+    // 启用着色器
     [self.program use];
     // model、view、projection
     glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&modelMatrix);

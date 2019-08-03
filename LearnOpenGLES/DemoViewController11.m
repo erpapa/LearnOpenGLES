@@ -103,7 +103,6 @@ static Vertex blueVertexData[] = {
     
     filterPositionAttribute = [self.program attributeIndex:@"position"];
     filterSourceColorAttribute = [self.program attributeIndex:@"sourceColor"];
-    [self.program use]; // 加载并使用链接好的程序
     
     // 摄像机位置
     cameraPos = GLKVector3Make(0.0, 0.0, 1.0);
@@ -113,6 +112,7 @@ static Vertex blueVertexData[] = {
     viewMatrix = GLKMatrix4MakeLookAt(cameraPos.x, cameraPos.y, cameraPos.z, 0, 0, 0, 0, 1, 0);
     // 正交投影矩阵
     projectionMatrix = GLKMatrix4MakeOrtho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
+    [self.glkView display];
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
@@ -154,6 +154,7 @@ static Vertex blueVertexData[] = {
      **/
     glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
     
+    // 启用着色器
     [self.program use];
     
     // model、view、projection
