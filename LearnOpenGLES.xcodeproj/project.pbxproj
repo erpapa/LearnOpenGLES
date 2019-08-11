@@ -60,6 +60,8 @@
 		18A9F43222F02B8A006B104B /* shaderf_14.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 18A9F43022F02B89006B104B /* shaderf_14.fsh */; };
 		18A9F43322F02B8A006B104B /* shaderv_14.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 18A9F43122F02B89006B104B /* shaderv_14.vsh */; };
 		18A9F43522F034C5006B104B /* for_test_blend.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A9F43422F034C5006B104B /* for_test_blend.png */; };
+		18C07F3C22FB187000C60C13 /* shaderv_15.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 18C07F3A22FB187000C60C13 /* shaderv_15.vsh */; };
+		18C07F3D22FB187000C60C13 /* shaderf_15.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 18C07F3B22FB187000C60C13 /* shaderf_15.fsh */; };
 		18D1B5842186F11C0071A7FE /* shapes.cc in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B5792186F11C0071A7FE /* shapes.cc */; };
 		18D1B5852186F11C0071A7FE /* sweep.cc in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B57C2186F11C0071A7FE /* sweep.cc */; };
 		18D1B5862186F11C0071A7FE /* sweep_context.cc in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B57D2186F11C0071A7FE /* sweep_context.cc */; };
@@ -226,6 +228,8 @@
 		18A9F43022F02B89006B104B /* shaderf_14.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_14.fsh; sourceTree = "<group>"; };
 		18A9F43122F02B89006B104B /* shaderv_14.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_14.vsh; sourceTree = "<group>"; };
 		18A9F43422F034C5006B104B /* for_test_blend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = for_test_blend.png; sourceTree = "<group>"; };
+		18C07F3A22FB187000C60C13 /* shaderv_15.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_15.vsh; sourceTree = "<group>"; };
+		18C07F3B22FB187000C60C13 /* shaderf_15.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_15.fsh; sourceTree = "<group>"; };
 		18D1B5762186F11C0071A7FE /* poly2tri.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poly2tri.h; sourceTree = "<group>"; };
 		18D1B5782186F11C0071A7FE /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		18D1B5792186F11C0071A7FE /* shapes.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shapes.cc; sourceTree = "<group>"; };
@@ -981,6 +985,8 @@
 				18A9F42D22F02B7C006B104B /* shaderf_13.fsh */,
 				18A9F43122F02B89006B104B /* shaderv_14.vsh */,
 				18A9F43022F02B89006B104B /* shaderf_14.fsh */,
+				18C07F3B22FB187000C60C13 /* shaderf_15.fsh */,
+				18C07F3A22FB187000C60C13 /* shaderv_15.vsh */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -1129,6 +1135,7 @@
 				18000743218AF41500BC0EFC /* earth_specular.jpg in Resources */,
 				1851C15122EEEAEA00535AC3 /* shaderv_11.vsh in Resources */,
 				18A9F43222F02B8A006B104B /* shaderf_14.fsh in Resources */,
+				18C07F3D22FB187000C60C13 /* shaderf_15.fsh in Resources */,
 				18A9F42B22F022B1006B104B /* waiting.png in Resources */,
 				EA460402202D84F80037EC15 /* shaderv_0.vsh in Resources */,
 				EA4603FE202D84240037EC15 /* shaderf_1.fsh in Resources */,
@@ -1152,6 +1159,7 @@
 				18000716218878CA00BC0EFC /* material.jpg in Resources */,
 				EA4603ED202C647D0037EC15 /* shaderv_2.vsh in Resources */,
 				1851C14E22EECAE800535AC3 /* shaderf_10.fsh in Resources */,
+				18C07F3C22FB187000C60C13 /* shaderv_15.vsh in Resources */,
 				18A051092191A13700FB97D7 /* skybox_right.jpg in Resources */,
 				18A9F43522F034C5006B104B /* for_test_blend.png in Resources */,
 				1800073B218AF3A600BC0EFC /* moon.jpg in Resources */,
