@@ -15,13 +15,13 @@ typedef struct {
     GLfloat Normal[3];   // 法线
     GLfloat Color[4];    // 颜色
     GLfloat TexCoord[2]; // 纹理
-} Vertex;
+} ScenceVertex;
 
 // 顶点坐标既法线和纹理
 // z取值[-1~1.0]，屏幕上方为正，宽度小于当前view宽度，如果为0，则显示的宽度为当前view的宽度
 // 在 GL_TRIANGLE_STRIP 状态下是: 0、1、2 ; 2、1、3 ; 2、3、4 ; 4、3、5 这4个三角形。
 // 在 GL_TRIANGLE_FAN 状态下是: 0、1、2 ; 0、2、3 ; 0、3、4 ; 0、4、5 这4个三角形。// 扇形
-static Vertex GL_TRIANGLES_VertexData[] = {
+static ScenceVertex GL_TRIANGLES_VertexData[] = {
     
     0.5f, -0.5f, -0.9f,     1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 1.0f,   1.0f, 0.0f,// 0 右下
     -0.5f, 0.5f, -0.9f,     1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 1.0f,   0.0f, 1.0f,// 1 左上
@@ -32,7 +32,7 @@ static Vertex GL_TRIANGLES_VertexData[] = {
 };
 
 // 在 GL_TRIANGLE_STRIP 状态下是: 0、1、2 ; 2、1、3 这2个三角形。
-static Vertex GL_RIANGLE_STRIP_VertexData[] = {
+static ScenceVertex GL_RIANGLE_STRIP_VertexData[] = {
     
     -0.5f, -0.5f, -0.9f,     1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 0.0f,   0.0f, 0.0f,// 0 左下
     -0.5f, 0.5f, -0.9f,     1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 1.0f,   0.0f, 1.0f,// 1 左上
@@ -42,7 +42,7 @@ static Vertex GL_RIANGLE_STRIP_VertexData[] = {
 };
 
 // 在 GL_TRIANGLE_FAN   状态下是: 0、1、2 ; 0、2、3 这2个三角形。
-static Vertex GL_TRIANGLE_FAN_VertexData[] = {
+static ScenceVertex GL_TRIANGLE_FAN_VertexData[] = {
     
     0.5f, -0.5f, -0.9f,     1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 1.0f,   1.0f, 0.0f,// 0 右下
     -0.5f, -0.5f, -0.9f,    1.0f, 1.0f, 1.0f, 1.0f,     0.0f, 0.0f, 0.0f,   0.0f, 0.0f,// 1 左下
@@ -70,7 +70,7 @@ static GLubyte GL_ELEMENT_Indices[] = {
 
 @interface DemoViewController5 ()
 {
-    GLuint VAO, VBO, EBO;
+    GLuint _VAO, _VBO, _EBO;
 }
 @property (nonatomic, strong) EAGLContext *context;
 @property (nonatomic, strong) GLKBaseEffect *effect;
@@ -122,12 +122,12 @@ static GLubyte GL_ELEMENT_Indices[] = {
 
     // 2.顶点数组对象
     // 2.1.创建顶点数组对象VAO，一个VAO可以保存一组VBO和一个EBO
-    glGenVertexArraysOES(1, &VAO);
-    glBindVertexArrayOES(VAO);
+    glGenVertexArraysOES(1, &_VAO);
+    glBindVertexArrayOES(_VAO);
     
     // 2.2.创建顶点缓冲对象VBO
-    glGenBuffers(1, &VBO); // 让OpenGL自动分配一个缓冲区并且返回这个标识的值
-    glBindBuffer(GL_ARRAY_BUFFER, VBO); // 绑定这个缓冲区到当前context
+    glGenBuffers(1, &_VBO); // 让OpenGL自动分配一个缓冲区并且返回这个标识的值
+    glBindBuffer(GL_ARRAY_BUFFER, _VBO); // 绑定这个缓冲区到当前context
     // 预先定义的顶点数据“VertexData”复制进这个缓冲区中
     // 注：参数“GL_STATIC_DRAW”，它表示此缓冲区内容只能被修改一次，但可以无限次读取。
     glBufferData(GL_ARRAY_BUFFER, sizeof(GL_RIANGLE_STRIP_VertexData), GL_RIANGLE_STRIP_VertexData, GL_STATIC_DRAW);
@@ -139,11 +139,11 @@ static GLubyte GL_ELEMENT_Indices[] = {
     // 参数含义分别为：顶点属性索引（这里是位置）、3个分量的矢量、类型是浮点（GL_FLOAT）、填充时不需要单位化（GL_FALSE）
     // sizeof(Vertex)==4*12==48（GL_FLOAT占4个字节，每行有12个浮点数，如果数据连续存放，则为0）
     // 最后一个参数是一个偏移量的指针，用来确定“第一个数据”将从内存数据块的什么地方开始
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (float *)NULL + 0);
+    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(ScenceVertex), (float *)NULL + 0);
     
     // 法线，3个分量
     glEnableVertexAttribArray(GLKVertexAttribNormal); // 法线
-    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (float *)NULL + 3);
+    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, sizeof(ScenceVertex), (float *)NULL + 3);
     
     // 颜色，4个分量
     // 由于使用贴图，所以禁用GLKVertexAttribColor
@@ -152,11 +152,11 @@ static GLubyte GL_ELEMENT_Indices[] = {
     
     // 纹理，纹理坐标只有S和T，2个分量
     glEnableVertexAttribArray(GLKVertexAttribTexCoord0); // 纹理
-    glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (float *)NULL + 10);
+    glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, sizeof(ScenceVertex), (float *)NULL + 10);
     
     // 2.3.创建顶点索引对象EBO，可供glDrawElements使用
-    glGenBuffers(1, &EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glGenBuffers(1, &_EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GL_ELEMENT_Indices), GL_ELEMENT_Indices, GL_STATIC_DRAW);
     
     // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
@@ -230,7 +230,7 @@ static GLubyte GL_ELEMENT_Indices[] = {
      **/
     
     // 绑定VAO
-    glBindVertexArrayOES(VAO);
+    glBindVertexArrayOES(_VAO);
     
     // 1.使用glDrawElements绘制
     // glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -245,17 +245,17 @@ static GLubyte GL_ELEMENT_Indices[] = {
 
 - (void)dealloc
 {
-    if (VAO) {
-        glDeleteVertexArraysOES(1, &VAO);
-        VAO = 0;
+    if (_VAO) {
+        glDeleteVertexArraysOES(1, &_VAO);
+        _VAO = 0;
     }
-    if (VBO) {
-        glDeleteBuffers(1, &VBO);
-        VBO = 0;
+    if (_VBO) {
+        glDeleteBuffers(1, &_VBO);
+        _VBO = 0;
     }
-    if (EBO) {
-        glDeleteBuffers(1, &EBO);
-        EBO = 0;
+    if (_EBO) {
+        glDeleteBuffers(1, &_EBO);
+        _EBO = 0;
     }
 }
 

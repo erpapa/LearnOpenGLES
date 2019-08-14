@@ -11,9 +11,15 @@
 #import <OpenGLES/ES2/gl.h>
 #import "GLProgram.h"
 
+static const GLfloat vertices[] = {
+    -1.0f, -1.0f, 0.0, // 左下
+    1.0f, -1.0f, 0.0,  // 右下
+    -1.0f,  1.0f, 0.0 // 左上
+};
+
 @interface DemoViewController0 () <GLKViewDelegate>
 {
-    GLint filterPositionAttribute;
+    GLint _filterPositionAttribute;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -42,7 +48,7 @@
     [self.program addAttribute:@"position"]; // 把program的顶点属性索引与顶点shader中的变量名进行绑定
     [self.program link]; // 创建可执行的 OpenGL ES program
     
-    filterPositionAttribute = [self.program attributeIndex:@"position"]; // 获取program对象的参数值
+    _filterPositionAttribute = [self.program attributeIndex:@"position"]; // 获取program对象的参数值
     [self.glkView display];
 }
 
@@ -52,21 +58,10 @@
     glClear(GL_COLOR_BUFFER_BIT);
     
     [self.program use];
-    static const GLfloat vertices[] = {
-        -1.0f, -1.0f, 0.0, // 左下
-        1.0f, -1.0f, 0.0,  // 右下
-        -1.0f,  1.0f, 0.0 // 左上
-    };
-    glEnableVertexAttribArray(filterPositionAttribute);
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, 0, vertices);
+    glEnableVertexAttribArray(_filterPositionAttribute);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, 0, vertices);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
-    glDisableVertexAttribArray(filterPositionAttribute);
-}
-
-- (void)dealloc
-{
-    [self.program validate];
-    self.program = nil;
+    glDisableVertexAttribArray(_filterPositionAttribute);
 }
 
 @end

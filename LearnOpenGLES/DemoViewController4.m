@@ -11,11 +11,25 @@
 #import <OpenGLES/ES2/gl.h>
 #import "GLProgram.h"
 
+static const GLfloat imageVertices[] = {
+    -1.0f, -1.0f, 0.0,
+    1.0f, -1.0f, 0.0,
+    -1.0f, 1.0f, 0.0,
+    1.0f, 1.0f, 0.0,
+};
+
+static const GLfloat noRotationTextureCoordinates[] = {
+    0.0f, 0.0f,
+    1.0f, 0.0f,
+    0.0f, 1.0f,
+    1.0f, 1.0f,
+};
+
 @interface DemoViewController4 () <GLKViewDelegate>
 {
-    GLint filterPositionAttribute, filterTextureCoordinateAttribute;
-    GLint filterInputTextureUniform;
-    GLint filterTransformMatrix;
+    GLint _filterPositionAttribute, _filterTextureCoordinateAttribute;
+    GLint _filterInputTextureUniform;
+    GLint _filterTransformMatrix;
 }
 @property (nonatomic, strong) UISegmentedControl *segment;
 @property (nonatomic, strong) EAGLContext *eglContext;
@@ -75,10 +89,10 @@
     [self.program addAttribute:@"inputTextureCoordinate"];
     [self.program link];
     
-    filterPositionAttribute = [self.program attributeIndex:@"position"];
-    filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
-    filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
-    filterTransformMatrix = [self.program uniformIndex:@"transformMatrix"];
+    _filterPositionAttribute = [self.program attributeIndex:@"position"];
+    _filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
+    _filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
+    _filterTransformMatrix = [self.program uniformIndex:@"transformMatrix"];
 
     // model
     self.matrix = GLKMatrix4MakeRotation(0.0, 0.0, 0.0, 1.0);
@@ -198,41 +212,26 @@
     
     // 启用着色器
     [self.program use];
-    glEnableVertexAttribArray(filterPositionAttribute);
-    glEnableVertexAttribArray(filterTextureCoordinateAttribute);
+    glEnableVertexAttribArray(_filterPositionAttribute);
+    glEnableVertexAttribArray(_filterTextureCoordinateAttribute);
     
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
-    glUniform1i(filterInputTextureUniform, 2);
-    glUniformMatrix4fv(filterTransformMatrix, 1, GL_FALSE, (GLfloat *)&_matrix);
+    glUniform1i(_filterInputTextureUniform, 2);
+    glUniformMatrix4fv(_filterTransformMatrix, 1, GL_FALSE, (GLfloat *)&_matrix);
     
-    static const GLfloat imageVertices[] = {
-        -1.0f, -1.0f, 0.0,
-        1.0f, -1.0f, 0.0,
-        -1.0f, 1.0f, 0.0,
-        1.0f, 1.0f, 0.0,
-    };
-    static const GLfloat noRotationTextureCoordinates[] = {
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-    };
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, 0, imageVertices);
-    glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, 0, imageVertices);
+    glVertexAttribPointer(_filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    glDisableVertexAttribArray(filterPositionAttribute);
-    glDisableVertexAttribArray(filterTextureCoordinateAttribute);
+    glDisableVertexAttribArray(_filterPositionAttribute);
+    glDisableVertexAttribArray(_filterTextureCoordinateAttribute);
 }
 
 - (void)dealloc
 {
     [self.displayLink invalidate];
     self.displayLink = nil;
-    
-    [self.program validate];
-    self.program = nil;
 }
 
 @end

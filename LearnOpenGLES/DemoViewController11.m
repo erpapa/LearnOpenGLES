@@ -15,23 +15,23 @@ typedef struct {
     GLfloat positon[3];//位置
     GLfloat color[4];//颜色
     GLfloat texCoord[2];//纹理
-} Vertex;
+} ScenceVertex;
 
-static Vertex redVertexData[] = {
+static ScenceVertex redVertexData[] = {
     -0.75f, -0.75f, 0.0,     1.0, 0.0, 0.0, 1.0,   1.0f, 0.0f, // 0 左下
     0.25f, -0.75f, 0.0,     1.0, 0.0, 0.0, 1.0,   0.0f, 1.0f, // 1 右下
     -0.75f, 0.25f, 0.0,    1.0, 0.0, 0.0, 1.0,   0.0f, 0.0f, // 2 左上
     0.25f, 0.25f, 0.0,    1.0, 0.0, 0.0, 1.0,   0.0f, 1.0f // 3 右上
 };
 
-static Vertex greenVertexData[] = {
+static ScenceVertex greenVertexData[] = {
     -0.25f, -0.25f, -0.5,     0.0, 1.0, 0.0, 1.0,   1.0f, 0.0f, // 0 左下
     0.75f, -0.25f, -0.5,     0.0, 1.0, 0.0, 1.0,   0.0f, 1.0f, // 1 右下
     -0.25f, 0.75f, -0.5,    0.0, 1.0, 0.0, 1.0,   0.0f, 0.0f, // 2 左上
     0.75f, 0.75f, -0.5,    0.0, 1.0, 0.0, 1.0,   0.0f, 1.0f // 3 右上
 };
 
-static Vertex blueVertexData[] = {
+static ScenceVertex blueVertexData[] = {
     -1.0f, -1.0f, 0.5,     0.0, 0.0, 1.0, 1.0,   1.0f, 0.0f, // 0 左下
     1.0f, -1.0f, 0.5,     0.0, 0.0, 1.0, 1.0,   0.0f, 1.0f, // 1 右下
     -1.0f, 0.0f, 0.5,    0.0, 0.0, 1.0, 1.0,   0.0f, 0.0f, // 2 左上
@@ -40,13 +40,10 @@ static Vertex blueVertexData[] = {
 
 @interface DemoViewController11 () <GLKViewDelegate>
 {
-    GLint filterPositionAttribute;
-    GLint filterSourceColorAttribute;
-    GLuint defaultFrameBuffer;
-    GLuint colorRenderBuffer;
-    GLuint depthRenderBuffer;
-    GLKMatrix4 modelMatrix, viewMatrix, projectionMatrix;
-    GLKVector3 cameraPos;
+    GLint _filterPositionAttribute;
+    GLint _filterSourceColorAttribute;
+    GLKMatrix4 _modelMatrix, _viewMatrix, _projectionMatrix;
+    GLKVector3 _cameraPos;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -73,23 +70,23 @@ static Vertex blueVertexData[] = {
     
     /*
     // FBO
-    glGenFramebuffers(1, &defaultFrameBuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, defaultFrameBuffer);
+    glGenFramebuffers(1, &_defaultFrameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, _defaultFrameBuffer);
     
-    glGenRenderbuffers(1, &colorRenderBuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, colorRenderBuffer);
+    glGenRenderbuffers(1, &_colorRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, self.glkView.bounds.size.width, self.glkView.bounds.size.height);
     // 附加颜色缓冲
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderBuffer);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorRenderBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
      
-    glGenRenderbuffers(1, &depthRenderBuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
+    glGenRenderbuffers(1, &_depthRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, self.glkView.bounds.size.width, self.glkView.bounds.size.height);
     // 附加深度缓冲
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
     // 附加模板缓冲，可以与深度缓冲共用一个depthRenderBuffer
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -101,17 +98,17 @@ static Vertex blueVertexData[] = {
     [self.program addAttribute:@"sourceColor"];
     [self.program link];
     
-    filterPositionAttribute = [self.program attributeIndex:@"position"];
-    filterSourceColorAttribute = [self.program attributeIndex:@"sourceColor"];
+    _filterPositionAttribute = [self.program attributeIndex:@"position"];
+    _filterSourceColorAttribute = [self.program attributeIndex:@"sourceColor"];
     
     // 摄像机位置
-    cameraPos = GLKVector3Make(0.0, 0.0, 1.0);
+    _cameraPos = GLKVector3Make(0.0, 0.0, 1.0);
     // 初始化模型矩阵
-    modelMatrix = GLKMatrix4Identity;
+    _modelMatrix = GLKMatrix4Identity;
     // 设置摄像机在(0，0，1)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
-    viewMatrix = GLKMatrix4MakeLookAt(cameraPos.x, cameraPos.y, cameraPos.z, 0, 0, 0, 0, 1, 0);
+    _viewMatrix = GLKMatrix4MakeLookAt(_cameraPos.x, _cameraPos.y, _cameraPos.z, 0, 0, 0, 0, 1, 0);
     // 正交投影矩阵
-    projectionMatrix = GLKMatrix4MakeOrtho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
+    _projectionMatrix = GLKMatrix4MakeOrtho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
     [self.glkView display];
 }
 
@@ -158,24 +155,24 @@ static Vertex blueVertexData[] = {
     [self.program use];
     
     // model、view、projection
-    glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&modelMatrix);
-    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&viewMatrix);
-    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&projectionMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&_modelMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&_viewMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&_projectionMatrix);
     
-    glEnableVertexAttribArray(filterPositionAttribute); // 启用属性
-    glEnableVertexAttribArray(filterSourceColorAttribute); // 启用属性
+    glEnableVertexAttribArray(_filterPositionAttribute); // 启用属性
+    glEnableVertexAttribArray(_filterSourceColorAttribute); // 启用属性
     
     // 绘制【红色方块】和【绿色方块】，中间有0.5x0.5区域重叠
     // 虽然【绿色方块】在【红色方块】之后绘制，但是由于【绿色方块】的深度值大于【红色方块】，导致【绿色方块】有部分被遮挡
     
     // 1.绘制红色方块
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(Vertex), (float *)redVertexData + 0);
-    glVertexAttribPointer(filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(Vertex), (float *)redVertexData + 3);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)redVertexData + 0);
+    glVertexAttribPointer(_filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)redVertexData + 3);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     // 2.绘制绿色方块
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(Vertex), (float *)greenVertexData + 0);
-    glVertexAttribPointer(filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(Vertex), (float *)greenVertexData + 3);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)greenVertexData + 0);
+    glVertexAttribPointer(_filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)greenVertexData + 3);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     // 2.绘制蓝色方块
@@ -183,12 +180,12 @@ static Vertex blueVertexData[] = {
     glStencilFunc(GL_LEQUAL, 1, 1);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
     
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(Vertex), (float *)blueVertexData + 0);
-    glVertexAttribPointer(filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(Vertex), (float *)blueVertexData + 3);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)blueVertexData + 0);
+    glVertexAttribPointer(_filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)blueVertexData + 3);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
-    glDisableVertexAttribArray(filterPositionAttribute);
-    glDisableVertexAttribArray(filterSourceColorAttribute);
+    glDisableVertexAttribArray(_filterPositionAttribute);
+    glDisableVertexAttribArray(_filterSourceColorAttribute);
     
     glDisable(GL_STENCIL_TEST);
     glDisable(GL_DEPTH_TEST);
@@ -196,12 +193,6 @@ static Vertex blueVertexData[] = {
     // 总结一下，最开始全屏的蒙板值是0，然后我们采用总是通过的方式画了红色正方形和绿色正方形，并设置蒙板值为1，
     // 这之后，红色正方形和绿色正方形的部分蒙板值为1，剩下地方仍然为0。接着以小于等于的形式来画蓝色正方形，比较值为1，
     // 这样，只有蓝色正方形和红色绿色正方形相交的地方，蓝色正方形才能画上去。
-}
-
-- (void)dealloc
-{
-    [self.program validate];
-    self.program = nil;
 }
 
 @end

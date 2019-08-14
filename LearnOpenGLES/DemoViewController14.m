@@ -11,11 +11,25 @@
 #import <OpenGLES/ES2/gl.h>
 #import "GLProgram.h"
 
+static const GLfloat imageVertices[] = {
+    -1.0f, -1.0f, 0.0,
+    1.0f, -1.0f, 0.0,
+    -1.0f, 1.0f, 0.0,
+    1.0f, 1.0f, 0.0,
+};
+
+static const GLfloat noRotationTextureCoordinates[] = {
+    0.0f, 0.0f,
+    1.0f, 0.0f,
+    0.0f, 1.0f,
+    1.0f, 1.0f,
+};
+
 @interface DemoViewController14 () <GLKViewDelegate>
 {
-    GLint filterPositionAttribute, filterTextureCoordinateAttribute;
-    GLint filterInputTextureUniform;
-    GLuint alphaTexture0, alphaTexture1;
+    GLint _filterPositionAttribute, _filterTextureCoordinateAttribute;
+    GLint _filterInputTextureUniform;
+    GLuint _alphaTexture0, _alphaTexture1;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -47,9 +61,9 @@
     [self.program addAttribute:@"inputTextureCoordinate"];
     [self.program link];
     
-    filterPositionAttribute = [self.program attributeIndex:@"position"];
-    filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
-    filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
+    _filterPositionAttribute = [self.program attributeIndex:@"position"];
+    _filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
+    _filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
     
     // texture
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@(1),GLKTextureLoaderOriginBottomLeft, nil]; // 将纹理坐标原点改为左下角（GLKit加载纹理，默认都是把坐标设置在“左上角”。然而，OpenGL的纹理贴图坐标却是在左下角，这样刚好颠倒）
@@ -67,8 +81,8 @@
         textureData0[i + 2] = 0;
         textureData0[i + 3] = 64;
     }
-    glGenTextures(1, &alphaTexture0);
-    glBindTexture(GL_TEXTURE_2D, alphaTexture0);
+    glGenTextures(1, &_alphaTexture0);
+    glBindTexture(GL_TEXTURE_2D, _alphaTexture0);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 256, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -84,8 +98,8 @@
         textureData0[i + 2] = 0;
         textureData0[i + 3] = 127;
     }
-    glGenTextures(1, &alphaTexture1);
-    glBindTexture(GL_TEXTURE_2D, alphaTexture1);
+    glGenTextures(1, &_alphaTexture1);
+    glBindTexture(GL_TEXTURE_2D, _alphaTexture1);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 256, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData1);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -99,12 +113,6 @@
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    static const GLfloat imageVertices[] = {
-        -1.0f, -1.0f, 0.0,
-        1.0f, -1.0f, 0.0,
-        -1.0f, 1.0f, 0.0,
-        1.0f, 1.0f, 0.0,
-    };
     // 居中
     static const GLfloat alphaImageVertices[] = {
         -0.5f, -0.5f, 0.0,
@@ -125,12 +133,6 @@
         1.0f, -1.0f, 0.0,
         0.0f, 0.0f, 0.0,
         1.0f, 0.0f, 0.0,
-    };
-    static const GLfloat noRotationTextureCoordinates[] = {
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
     };
     
     // glkView背景必须要设置为clearColor，才能透出glkView的父视图
@@ -158,8 +160,8 @@
     glEnable(GL_BLEND);
     // 启用着色器
     [self.program use];
-    glEnableVertexAttribArray(filterPositionAttribute);
-    glEnableVertexAttribArray(filterTextureCoordinateAttribute);
+    glEnableVertexAttribArray(_filterPositionAttribute);
+    glEnableVertexAttribArray(_filterTextureCoordinateAttribute);
     
     // 预乘alpha（premultiply）
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
@@ -167,34 +169,34 @@
     // glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, self.alphaTextureInfo.name);
-    glUniform1i(filterInputTextureUniform, 2);
+    glUniform1i(_filterInputTextureUniform, 2);
 
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, 0, alphaImageVertices);
-    glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, 0, alphaImageVertices);
+    glVertexAttribPointer(_filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     // 预乘alpha（premultiply）
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, alphaTexture0);
-    glUniform1i(filterInputTextureUniform, 2);
+    glBindTexture(GL_TEXTURE_2D, _alphaTexture0);
+    glUniform1i(_filterInputTextureUniform, 2);
     
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, 0, alphaCustomVertices0);
-    glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, 0, alphaCustomVertices0);
+    glVertexAttribPointer(_filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     // 没有预乘alpha（unpremultiply）
     glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, alphaTexture1);
-    glUniform1i(filterInputTextureUniform, 2);
+    glBindTexture(GL_TEXTURE_2D, _alphaTexture1);
+    glUniform1i(_filterInputTextureUniform, 2);
     
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, 0, alphaCustomVertices1);
-    glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, 0, alphaCustomVertices1);
+    glVertexAttribPointer(_filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
-    glDisableVertexAttribArray(filterPositionAttribute);
-    glDisableVertexAttribArray(filterTextureCoordinateAttribute);
+    glDisableVertexAttribArray(_filterPositionAttribute);
+    glDisableVertexAttribArray(_filterTextureCoordinateAttribute);
     // 关闭blend混合模式
     glDisable(GL_BLEND);
     
@@ -229,16 +231,13 @@
 
 - (void)dealloc
 {
-    [self.program validate];
-    self.program = nil;
-    
-    if (alphaTexture0) {
-        glDeleteTextures(1, &alphaTexture0);
-        alphaTexture0 = 0;
+    if (_alphaTexture0) {
+        glDeleteTextures(1, &_alphaTexture0);
+        _alphaTexture0 = 0;
     }
-    if (alphaTexture1) {
-        glDeleteTextures(1, &alphaTexture1);
-        alphaTexture1 = 0;
+    if (_alphaTexture1) {
+        glDeleteTextures(1, &_alphaTexture1);
+        _alphaTexture1 = 0;
     }
 }
 

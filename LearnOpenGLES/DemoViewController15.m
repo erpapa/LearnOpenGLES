@@ -15,16 +15,16 @@ typedef struct {
     GLfloat positon[3];//位置
     GLfloat color[4];//颜色
     GLfloat texCoord[2];//纹理
-} Vertex;
+} ScenceVertex;
 
-static Vertex ccwVertexData[] = { // 逆时针（0->1->2 2->1->3）
+static ScenceVertex ccwVertexData[] = { // 逆时针（0->1->2 2->1->3）
     -0.75f, -0.75f, 0.0,     1.0, 0.0, 0.0, 1.0,   1.0f, 0.0f, // 0 左下
     0.25f, -0.75f, 0.0,     1.0, 0.0, 0.0, 1.0,   0.0f, 1.0f, // 1 右下
     -0.75f, 0.25f, 0.0,    1.0, 0.0, 0.0, 1.0,   0.0f, 0.0f, // 2 左上
     0.25f, 0.25f, 0.0,    1.0, 0.0, 0.0, 1.0,   0.0f, 1.0f // 3 右上
 };
 
-static Vertex cwVertexData[] = { // 顺时针（0->1->2 2->1->3）
+static ScenceVertex cwVertexData[] = { // 顺时针（0->1->2 2->1->3）
     -0.25f, 0.75f, -0.5,     0.0, 1.0, 0.0, 1.0,   0.0f, 0.0f, // 0 左上
     0.75f, 0.75f, -0.5,     0.0, 1.0, 0.0, 1.0,   0.0f, 1.0f // 1 右上
     -0.25f, -0.25f, -0.5,   0.0, 1.0, 0.0, 1.0,   1.0f, 0.0f, // 2 左下
@@ -33,10 +33,10 @@ static Vertex cwVertexData[] = { // 顺时针（0->1->2 2->1->3）
 
 @interface DemoViewController15 () <GLKViewDelegate>
 {
-    GLint filterPositionAttribute;
-    GLint filterSourceColorAttribute;
-    GLKMatrix4 modelMatrix, viewMatrix, projectionMatrix;
-    GLKVector3 cameraPos;
+    GLint _filterPositionAttribute;
+    GLint _filterSourceColorAttribute;
+    GLKMatrix4 _modelMatrix, _viewMatrix, _projectionMatrix;
+    GLKVector3 _cameraPos;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -66,18 +66,18 @@ static Vertex cwVertexData[] = { // 顺时针（0->1->2 2->1->3）
     [self.program addAttribute:@"sourceColor"];
     [self.program link];
     
-    filterPositionAttribute = [self.program attributeIndex:@"position"];
-    filterSourceColorAttribute = [self.program attributeIndex:@"sourceColor"];
+    _filterPositionAttribute = [self.program attributeIndex:@"position"];
+    _filterSourceColorAttribute = [self.program attributeIndex:@"sourceColor"];
     [self.program use]; // 加载并使用链接好的程序
     
     // 摄像机位置
-    cameraPos = GLKVector3Make(0.0, 0.0, 1.0);
+    _cameraPos = GLKVector3Make(0.0, 0.0, 1.0);
     // 初始化模型矩阵
-    modelMatrix = GLKMatrix4Identity;
+    _modelMatrix = GLKMatrix4Identity;
     // 设置摄像机在(0，0，1)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
-    viewMatrix = GLKMatrix4MakeLookAt(cameraPos.x, cameraPos.y, cameraPos.z, 0, 0, 0, 0, 1, 0);
+    _viewMatrix = GLKMatrix4MakeLookAt(_cameraPos.x, _cameraPos.y, _cameraPos.z, 0, 0, 0, 0, 1, 0);
     // 正交投影矩阵
-    projectionMatrix = GLKMatrix4MakeOrtho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
+    _projectionMatrix = GLKMatrix4MakeOrtho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
@@ -113,33 +113,28 @@ static Vertex cwVertexData[] = { // 顺时针（0->1->2 2->1->3）
     [self.program use];
     
     // model、view、projection
-    glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&modelMatrix);
-    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&viewMatrix);
-    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&projectionMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&_modelMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&_viewMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&_projectionMatrix);
     
-    glEnableVertexAttribArray(filterPositionAttribute); // 启用属性
-    glEnableVertexAttribArray(filterSourceColorAttribute); // 启用属性
+    glEnableVertexAttribArray(_filterPositionAttribute); // 启用属性
+    glEnableVertexAttribArray(_filterSourceColorAttribute); // 启用属性
     
     // 1.绘制红色方块（顶点的排列顺序是逆时针，不会被剔除）
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(Vertex), (float *)ccwVertexData + 0);
-    glVertexAttribPointer(filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(Vertex), (float *)ccwVertexData + 3);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)ccwVertexData + 0);
+    glVertexAttribPointer(_filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)ccwVertexData + 3);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     // 2.绘制绿色方块（顶点的排列顺序是顺时针，会被剔除）
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(Vertex), (float *)cwVertexData + 0);
-    glVertexAttribPointer(filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(Vertex), (float *)cwVertexData + 3);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)cwVertexData + 0);
+    glVertexAttribPointer(_filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)cwVertexData + 3);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
-    glDisableVertexAttribArray(filterPositionAttribute);
-    glDisableVertexAttribArray(filterSourceColorAttribute);
+    glDisableVertexAttribArray(_filterPositionAttribute);
+    glDisableVertexAttribArray(_filterSourceColorAttribute);
     
     glDisable(GL_CULL_FACE);
     glDisable(GL_DEPTH_TEST);
 }
 
-- (void)dealloc
-{
-    [self.program validate];
-    self.program = nil;
-}
 @end

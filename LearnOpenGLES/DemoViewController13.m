@@ -13,10 +13,10 @@
 
 @interface DemoViewController13 () <GLKViewDelegate>
 {
-    GLint filterPositionAttribute, filterTextureCoordinateAttribute;
-    GLint filterInputTextureUniform;
-    GLint alphaPositionAttribute, alphaTextureCoordinateAttribute;
-    GLint alphaInputTextureUniform;
+    GLint _filterPositionAttribute, _filterTextureCoordinateAttribute;
+    GLint _filterInputTextureUniform;
+    GLint _alphaPositionAttribute, _alphaTextureCoordinateAttribute;
+    GLint _alphaInputTextureUniform;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -49,18 +49,18 @@
     [self.program addAttribute:@"inputTextureCoordinate"];
     [self.program link];
     
-    filterPositionAttribute = [self.program attributeIndex:@"position"];
-    filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
-    filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
+    _filterPositionAttribute = [self.program attributeIndex:@"position"];
+    _filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
+    _filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
     
     self.alphaProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_13" fragmentShaderFilename:@"shaderf_13"];
     [self.alphaProgram addAttribute:@"position"];
     [self.alphaProgram addAttribute:@"inputTextureCoordinate"];
     [self.alphaProgram link];
     
-    alphaPositionAttribute = [self.alphaProgram attributeIndex:@"position"];
-    alphaTextureCoordinateAttribute = [self.alphaProgram attributeIndex:@"inputTextureCoordinate"];
-    alphaInputTextureUniform = [self.alphaProgram uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
+    _alphaPositionAttribute = [self.alphaProgram attributeIndex:@"position"];
+    _alphaTextureCoordinateAttribute = [self.alphaProgram attributeIndex:@"inputTextureCoordinate"];
+    _alphaInputTextureUniform = [self.alphaProgram uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
     
     // texture
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@(1),GLKTextureLoaderOriginBottomLeft, nil]; // 将纹理坐标原点改为左下角（GLKit加载纹理，默认都是把坐标设置在“左上角”。然而，OpenGL的纹理贴图坐标却是在左下角，这样刚好颠倒）
@@ -99,19 +99,19 @@
     
     // 启用着色器
     [self.program use];
-    glEnableVertexAttribArray(filterPositionAttribute);
-    glEnableVertexAttribArray(filterTextureCoordinateAttribute);
+    glEnableVertexAttribArray(_filterPositionAttribute);
+    glEnableVertexAttribArray(_filterTextureCoordinateAttribute);
     
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
-    glUniform1i(filterInputTextureUniform, 2);
+    glUniform1i(_filterInputTextureUniform, 2);
     
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, 0, imageVertices);
-    glVertexAttribPointer(filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, 0, imageVertices);
+    glVertexAttribPointer(_filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
-    glDisableVertexAttribArray(filterPositionAttribute);
-    glDisableVertexAttribArray(filterTextureCoordinateAttribute);
+    glDisableVertexAttribArray(_filterPositionAttribute);
+    glDisableVertexAttribArray(_filterTextureCoordinateAttribute);
     
     // GLES没有alpha测试，只能使用shader的discard关键字来实现
     // glEnable(GL_ALPHA_TEST); // 开启alpha测试
@@ -119,30 +119,22 @@
     
     // 启用着色器
     [self.alphaProgram use];
-    glEnableVertexAttribArray(alphaPositionAttribute);
-    glEnableVertexAttribArray(alphaTextureCoordinateAttribute);
+    glEnableVertexAttribArray(_alphaPositionAttribute);
+    glEnableVertexAttribArray(_alphaTextureCoordinateAttribute);
     
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, self.alphaTextureInfo.name);
-    glUniform1i(alphaInputTextureUniform, 2);
+    glUniform1i(_alphaInputTextureUniform, 2);
     
-    glVertexAttribPointer(alphaPositionAttribute, 3, GL_FLOAT, 0, 0, alphaImageVertices);
-    glVertexAttribPointer(alphaTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
+    glVertexAttribPointer(_alphaPositionAttribute, 3, GL_FLOAT, 0, 0, alphaImageVertices);
+    glVertexAttribPointer(_alphaTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
-    glDisableVertexAttribArray(alphaPositionAttribute);
-    glDisableVertexAttribArray(alphaTextureCoordinateAttribute);
+    glDisableVertexAttribArray(_alphaPositionAttribute);
+    glDisableVertexAttribArray(_alphaTextureCoordinateAttribute);
     
     // 关闭alpha测试
     // glDisable(GL_ALPHA_TEST);
-}
-
-- (void)dealloc
-{
-    [self.alphaProgram validate];
-    self.alphaProgram = nil;
-    [self.program validate];
-    self.program = nil;
 }
 
 @end

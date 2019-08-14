@@ -160,9 +160,9 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
 
 @interface DemoViewController6 () <GLKViewDelegate>
 {
-    GLuint VAO, VBO0, VBO1;
-    GLint positionAttribute, textureCoordinateAttribute;
-    GLKMatrix4 modelMatrix, viewMatrix, projectionMatrix;
+    GLuint _VAO, _VBO0, _VBO1;
+    GLint _positionAttribute, _textureCoordinateAttribute;
+    GLKMatrix4 _modelMatrix, _viewMatrix, _projectionMatrix;
     int vert_ount, vert_size;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
@@ -196,8 +196,8 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     [self.program link];
     
     // 顶点
-    positionAttribute = [self.program attributeIndex:@"position"];
-    // textureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
+    _positionAttribute = [self.program attributeIndex:@"position"];
+    // _textureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
 
     NSString *fontPath = [[NSBundle mainBundle] pathForResource:@"hwxk" ofType:@"ttf"];
     const char *char_font = [fontPath UTF8String];
@@ -250,33 +250,33 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
 //    };
     
     // 创建索引缓冲对象
-    glGenVertexArraysOES(1, &VAO);
-    glGenBuffers(1, &VBO0);
-    glGenBuffers(1, &VBO1);
+    glGenVertexArraysOES(1, &_VAO);
+    glGenBuffers(1, &_VBO0);
+    glGenBuffers(1, &_VBO1);
     
     // 绑定VAO
-    glBindVertexArrayOES(VAO);
+    glBindVertexArrayOES(_VAO);
     
     // 把顶点数组复制到缓冲中供OpenGL使用
-    glBindBuffer(GL_ARRAY_BUFFER, VBO0);
+    glBindBuffer(GL_ARRAY_BUFFER, _VBO0);
     glBufferData(GL_ARRAY_BUFFER, vert_size * sizeof(float), vertices, GL_STATIC_DRAW);
     
     // 位置属性
-    glEnableVertexAttribArray(positionAttribute);
-    glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+    glEnableVertexAttribArray(_positionAttribute);
+    glVertexAttribPointer(_positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
     
     // 颜色
 //    glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 //    glBufferData(GL_ARRAY_BUFFER, sizeof(vertColors), vertColors, GL_STATIC_DRAW);
-//    glEnableVertexAttribArray(filterSourceColorAttribute);
-//    glVertexAttribPointer(filterSourceColorAttribute, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
+//    glEnableVertexAttribArray(_filterSourceColorAttribute);
+//    glVertexAttribPointer(_filterSourceColorAttribute, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
     
     // 把顶点数组复制到缓冲中供OpenGL使用
     // glBindBuffer(GL_ARRAY_BUFFER, VBO1);
     // glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
     // 纹理
-    // glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
-    // glEnableVertexAttribArray(textureCoordinateAttribute);
+    // glVertexAttribPointer(_textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
+    // glEnableVertexAttribArray(_textureCoordinateAttribute);
     
     // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
     glBindVertexArrayOES(0); // 解绑VAO（这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法）
@@ -287,11 +287,11 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     self.textureInfo = [GLKTextureLoader textureWithContentsOfFile:diffuseFilePath options:[NSDictionary dictionaryWithObjectsAndKeys:@(1),GLKTextureLoaderOriginBottomLeft, nil] error:nil];
     
     // 初始化模型矩阵
-    modelMatrix = GLKMatrix4Identity;
+    _modelMatrix = GLKMatrix4Identity;
     // 设置摄像机在(0，0，1.5)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
-    viewMatrix = GLKMatrix4MakeLookAt(0, 0, 1.5, 0, 0, 0, 0, 1, 0);
+    _viewMatrix = GLKMatrix4MakeLookAt(0, 0, 1.5, 0, 0, 0, 0, 1, 0);
     // 使用透视投影矩阵，视场角设置为90°
-    projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
+    _projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
     
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
     [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
@@ -307,7 +307,7 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
 
 - (void)update
 {
-    modelMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(self.degree), 0.0, 1.0, 0.0);
+    _modelMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(self.degree), 0.0, 1.0, 0.0);
     [self.glkView display];
     self.degree += 0.5f;
 }
@@ -322,9 +322,9 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     // 启用着色器
     [self.program use];
     // model、view、projection
-    glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&modelMatrix);
-    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&viewMatrix);
-    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&projectionMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&_modelMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&_viewMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&_projectionMatrix);
     glUniform4f([self.program uniformIndex:@"sourceColor"], 1.0f, 0.5f, 0.2f, 1.0f);
     
     // bind texture
@@ -332,7 +332,7 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
     // glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
     // glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
 
-    glBindVertexArrayOES(VAO);
+    glBindVertexArrayOES(_VAO);
     glDrawArrays(GL_LINES, 0, vert_ount);
     glBindVertexArrayOES(0);
     
@@ -341,20 +341,17 @@ float add_character(std::vector<Tri> &tris, FT_Face face, char ch, int bezier_st
 
 - (void)dealloc
 {
-    [self.program validate];
-    self.program = nil;
-    
-    if (VAO) {
-        glDeleteVertexArraysOES(1, &VAO);
-        VAO = 0;
+    if (_VAO) {
+        glDeleteVertexArraysOES(1, &_VAO);
+        _VAO = 0;
     }
-    if (VBO0) {
-        glDeleteBuffers(1, &VBO0);
-        VBO0 = 0;
+    if (_VBO0) {
+        glDeleteBuffers(1, &_VBO0);
+        _VBO0 = 0;
     }
-    if (VBO1) {
-        glDeleteBuffers(1, &VBO1);
-        VBO1 = 0;
+    if (_VBO1) {
+        glDeleteBuffers(1, &_VBO1);
+        _VBO1 = 0;
     }
 }
 

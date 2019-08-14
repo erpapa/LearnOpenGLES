@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  DemoViewController.h
 //  LearnOpenGLES
 //
 //  Created by erpapa on 2018/2/8.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface DemoViewController : UIViewController
 
 
 @end

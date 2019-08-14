@@ -19,6 +19,7 @@ static const GLfloat imageVertices[] = {
     -1.0f, 1.0f, 0.0,
     1.0f, 1.0f, 0.0,
 };
+
 static const GLfloat noRotationTextureCoordinates[] = {
     0.0f, 0.0f,
     1.0f, 0.0f,
@@ -28,10 +29,10 @@ static const GLfloat noRotationTextureCoordinates[] = {
 
 @interface DemoViewController8 () <GLKViewDelegate>
 {
-    GLuint VAO, VBO0, VBO1, VAO1, VBO10, VBO11;
-    GLint positionAttribute, textureCoordinateAttribute;
-    GLKMatrix4 sunModelMatrix, earthModelMatrix, moonModelMatrix, orbitModelMatrix;
-    GLKMatrix4 viewMatrix, projectionMatrix;
+    GLuint _VAO, _VBO0, _VBO1, _VAO1, _VBO10, _VBO11;
+    GLint _positionAttribute, _textureCoordinateAttribute;
+    GLKMatrix4 _sunModelMatrix, _earthModelMatrix, _moonModelMatrix, _orbitModelMatrix;
+    GLKMatrix4 _viewMatrix, _projectionMatrix;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -72,31 +73,31 @@ static const GLfloat noRotationTextureCoordinates[] = {
     [self.program link];
     
     // 顶点
-    positionAttribute = [self.program attributeIndex:@"position"];
-    textureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
+    _positionAttribute = [self.program attributeIndex:@"position"];
+    _textureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
     // 轨道VAO
     {
         // 创建索引缓冲对象
-        glGenVertexArraysOES(1, &VAO);
-        glGenBuffers(1, &VBO0);
-        glGenBuffers(1, &VBO1);
+        glGenVertexArraysOES(1, &_VAO);
+        glGenBuffers(1, &_VBO0);
+        glGenBuffers(1, &_VBO1);
         
         // 绑定VAO
-        glBindVertexArrayOES(VAO);
+        glBindVertexArrayOES(_VAO);
         
         // 把顶点数组复制到缓冲中供OpenGL使用
-        glBindBuffer(GL_ARRAY_BUFFER, VBO0);
+        glBindBuffer(GL_ARRAY_BUFFER, _VBO0);
         glBufferData(GL_ARRAY_BUFFER, sizeof(imageVertices), imageVertices, GL_STATIC_DRAW);
         // 位置属性
-        glEnableVertexAttribArray(positionAttribute);
-        glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(_positionAttribute);
+        glVertexAttribPointer(_positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
         
         // 把顶点数组复制到缓冲中供OpenGL使用
-        glBindBuffer(GL_ARRAY_BUFFER, VBO1);
+        glBindBuffer(GL_ARRAY_BUFFER, _VBO1);
         glBufferData(GL_ARRAY_BUFFER, sizeof(noRotationTextureCoordinates), noRotationTextureCoordinates, GL_STATIC_DRAW);
         // 纹理
-        glEnableVertexAttribArray(textureCoordinateAttribute);
-        glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(_textureCoordinateAttribute);
+        glVertexAttribPointer(_textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
         
         // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
         glBindVertexArrayOES(0); // 解绑VAO（这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法）
@@ -104,26 +105,26 @@ static const GLfloat noRotationTextureCoordinates[] = {
     // 球体VAO
     {
         // 创建索引缓冲对象
-        glGenVertexArraysOES(1, &VAO1);
-        glGenBuffers(1, &VBO10);
-        glGenBuffers(1, &VBO11);
+        glGenVertexArraysOES(1, &_VAO1);
+        glGenBuffers(1, &_VBO10);
+        glGenBuffers(1, &_VBO11);
         
         // 绑定VAO1
-        glBindVertexArrayOES(VAO1);
+        glBindVertexArrayOES(_VAO1);
         
         // 把顶点数组复制到缓冲中供OpenGL使用
-        glBindBuffer(GL_ARRAY_BUFFER, VBO10);
+        glBindBuffer(GL_ARRAY_BUFFER, _VBO10);
         glBufferData(GL_ARRAY_BUFFER, sizeof(sphereVerts), sphereVerts, GL_STATIC_DRAW);
         // 位置属性
-        glEnableVertexAttribArray(positionAttribute);
-        glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(_positionAttribute);
+        glVertexAttribPointer(_positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
         
         // 把顶点数组复制到缓冲中供OpenGL使用
-        glBindBuffer(GL_ARRAY_BUFFER, VBO11);
+        glBindBuffer(GL_ARRAY_BUFFER, _VBO11);
         glBufferData(GL_ARRAY_BUFFER, sizeof(sphereTexCoords), sphereTexCoords, GL_STATIC_DRAW);
         // 纹理
-        glEnableVertexAttribArray(textureCoordinateAttribute);
-        glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(_textureCoordinateAttribute);
+        glVertexAttribPointer(_textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
         
         // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
         glBindVertexArrayOES(0); // 解绑VAO（这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法）
@@ -140,16 +141,16 @@ static const GLfloat noRotationTextureCoordinates[] = {
     self.orbitInfo = [GLKTextureLoader textureWithContentsOfFile:orbitFilePath options:[NSDictionary dictionaryWithObjectsAndKeys:@(1),GLKTextureLoaderOriginBottomLeft, nil] error:nil];
     
     // 初始化模型矩阵
-    sunModelMatrix = GLKMatrix4Identity;
-    earthModelMatrix = GLKMatrix4Identity;
-    moonModelMatrix = GLKMatrix4Identity;
-    orbitModelMatrix = GLKMatrix4Identity;
+    _sunModelMatrix = GLKMatrix4Identity;
+    _earthModelMatrix = GLKMatrix4Identity;
+    _moonModelMatrix = GLKMatrix4Identity;
+    _orbitModelMatrix = GLKMatrix4Identity;
     // 设置摄像机在(0，3.0，9.0)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
-    viewMatrix = GLKMatrix4MakeLookAt(0.0, 3.0, 9.0, 0, 0, 0, 0, 1, 0);
+    _viewMatrix = GLKMatrix4MakeLookAt(0.0, 3.0, 9.0, 0, 0, 0, 0, 1, 0);
     // 使用透视投影矩阵，视场角设置为90°
-    projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
+    _projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
     // 正交投影矩阵
-    // projectionMatrix = GLKMatrix4MakeOrtho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
+    // _projectionMatrix = GLKMatrix4MakeOrtho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
     
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
     [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
@@ -172,7 +173,7 @@ static const GLfloat noRotationTextureCoordinates[] = {
         // 太阳自转
         float radians = GLKMathDegreesToRadians(self.sunDegree);
         GLKMatrix4 rotation = GLKMatrix4MakeRotation(radians, 0.0, 1.0, 0.0);
-        sunModelMatrix = GLKMatrix4Multiply(rotation, scale);
+        _sunModelMatrix = GLKMatrix4Multiply(rotation, scale);
     }
     // 地球
     {
@@ -184,8 +185,8 @@ static const GLfloat noRotationTextureCoordinates[] = {
         // 地球公转
         float earthRevolution = GLKMathDegreesToRadians(self.earthRevolution);
         GLKMatrix4 earthTranslation = GLKMatrix4MakeTranslation(6.0 * sinf(earthRevolution), 0.0, 6.0 * cosf(earthRevolution));
-        earthModelMatrix = GLKMatrix4Multiply(GLKMatrix4Multiply(earthTranslation, rotation), scale);
-        orbitModelMatrix = GLKMatrix4Multiply(GLKMatrix4MakeRotation(GLKMathDegreesToRadians(90.0), 1.0, 0.0, 0.0), GLKMatrix4MakeScale(6.25, 6.25, 1.0));
+        _earthModelMatrix = GLKMatrix4Multiply(GLKMatrix4Multiply(earthTranslation, rotation), scale);
+        _orbitModelMatrix = GLKMatrix4Multiply(GLKMatrix4MakeRotation(GLKMathDegreesToRadians(90.0), 1.0, 0.0, 0.0), GLKMatrix4MakeScale(6.25, 6.25, 1.0));
     }
     // 月球
     {
@@ -201,7 +202,7 @@ static const GLfloat noRotationTextureCoordinates[] = {
         // 计算月球公转
         float moonRevolution = GLKMathDegreesToRadians(self.moonRevolution);
         GLKMatrix4 moonTranslation = GLKMatrix4MakeTranslation(1.2 * sinf(moonRevolution), 0.0, 1.2 * cosf(moonRevolution));
-        moonModelMatrix = GLKMatrix4Multiply(GLKMatrix4Multiply(GLKMatrix4Multiply(earthTranslation, moonTranslation), rotation), scale);
+        _moonModelMatrix = GLKMatrix4Multiply(GLKMatrix4Multiply(GLKMatrix4Multiply(earthTranslation, moonTranslation), rotation), scale);
     }
     
     [self.glkView display];
@@ -227,8 +228,8 @@ static const GLfloat noRotationTextureCoordinates[] = {
     // 启用着色器
     [self.program use];
     // model、view、projection
-    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&viewMatrix);
-    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&projectionMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&_viewMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&_projectionMatrix);
     
     // 开启blend混合模式
     glEnable(GL_BLEND);
@@ -238,9 +239,9 @@ static const GLfloat noRotationTextureCoordinates[] = {
     // glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     
     // 绘制轨道
-    glBindVertexArrayOES(VAO);
+    glBindVertexArrayOES(_VAO);
     {
-        glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&orbitModelMatrix);
+        glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&_orbitModelMatrix);
         glActiveTexture(GL_TEXTURE2);
         glBindTexture(GL_TEXTURE_2D, self.orbitInfo.name);
         glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
@@ -254,23 +255,23 @@ static const GLfloat noRotationTextureCoordinates[] = {
     // !!! 丢弃透明部分的原因是，片元被丢弃之后，不会写入深度值，这样之后绘制的球体不会被轨道遮挡
     
     // 绘制太阳、地球、月球
-    glBindVertexArrayOES(VAO1);
+    glBindVertexArrayOES(_VAO1);
     {
-        glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&sunModelMatrix);
+        glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&_sunModelMatrix);
         glActiveTexture(GL_TEXTURE2);
         glBindTexture(GL_TEXTURE_2D, self.sunInfo.name);
         glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
         glDrawArrays(GL_TRIANGLES, 0, vert_count);
     }
     {
-        glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&earthModelMatrix);
+        glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&_earthModelMatrix);
         glActiveTexture(GL_TEXTURE2);
         glBindTexture(GL_TEXTURE_2D, self.earthInfo.name);
         glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
         glDrawArrays(GL_TRIANGLES, 0, vert_count);
     }
     {
-        glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&moonModelMatrix);
+        glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&_moonModelMatrix);
         glActiveTexture(GL_TEXTURE2);
         glBindTexture(GL_TEXTURE_2D, self.moonInfo.name);
         glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
@@ -282,33 +283,30 @@ static const GLfloat noRotationTextureCoordinates[] = {
 
 - (void)dealloc
 {
-    [self.program validate];
-    self.program = nil;
-    
-    if (VAO) {
-        glDeleteVertexArraysOES(1, &VAO);
-        VAO = 0;
+    if (_VAO) {
+        glDeleteVertexArraysOES(1, &_VAO);
+        _VAO = 0;
     }
-    if (VBO0) {
-        glDeleteBuffers(1, &VBO0);
-        VBO0 = 0;
+    if (_VBO0) {
+        glDeleteBuffers(1, &_VBO0);
+        _VBO0 = 0;
     }
-    if (VBO1) {
-        glDeleteBuffers(1, &VBO1);
-        VBO1 = 0;
+    if (_VBO1) {
+        glDeleteBuffers(1, &_VBO1);
+        _VBO1 = 0;
     }
     
-    if (VAO1) {
-        glDeleteVertexArraysOES(1, &VAO1);
-        VAO1 = 0;
+    if (_VAO1) {
+        glDeleteVertexArraysOES(1, &_VAO1);
+        _VAO1 = 0;
     }
-    if (VBO10) {
-        glDeleteBuffers(1, &VBO10);
-        VBO10 = 0;
+    if (_VBO10) {
+        glDeleteBuffers(1, &_VBO10);
+        _VBO10 = 0;
     }
-    if (VBO11) {
-        glDeleteBuffers(1, &VBO11);
-        VBO11 = 0;
+    if (_VBO11) {
+        glDeleteBuffers(1, &_VBO11);
+        _VBO11 = 0;
     }
 }
 

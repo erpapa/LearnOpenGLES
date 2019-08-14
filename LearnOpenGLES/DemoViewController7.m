@@ -12,12 +12,56 @@
 #import <OpenGLES/ES2/glext.h>
 #import "GLProgram.h"
 
+static GLfloat boxVertices[] = {
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+    0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+    
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+    0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    
+    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+    0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+};
+
 @interface DemoViewController7 () <GLKViewDelegate>
 {
-    GLuint VAO, VBO;
-    GLint positionAttribute, textureCoordinateAttribute;
-    GLKMatrix4 modelMatrix, viewMatrix, projectionMatrix;
-    GLKVector3 cameraPos;
+    GLuint _VAO, _VBO;
+    GLint _positionAttribute, _textureCoordinateAttribute;
+    GLKMatrix4 _modelMatrix, _viewMatrix, _projectionMatrix;
+    GLKVector3 _cameraPos;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -50,71 +94,25 @@
     [self.program link];
     
     // 顶点
-    positionAttribute = [self.program attributeIndex:@"position"];
-    textureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
-
-    // 不使用索引缓冲对象用两个三角形绘制一个梯形
-    // 设置顶点缓存和属性指针
-    GLfloat vertices[] = {
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-        
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-    };
+    _positionAttribute = [self.program attributeIndex:@"position"];
+    _textureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
+    
     // 创建索引缓冲对象
-    glGenVertexArraysOES(1, &VAO);
-    glGenBuffers(1, &VBO);
+    glGenVertexArraysOES(1, &_VAO);
+    glGenBuffers(1, &_VBO);
     
     // 绑定VAO
-    glBindVertexArrayOES(VAO);
-
+    glBindVertexArrayOES(_VAO);
     // 把顶点数组复制到缓冲中供OpenGL使用
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, _VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(boxVertices), boxVertices, GL_STATIC_DRAW);
     
     // 位置属性
-    glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
-    glEnableVertexAttribArray(positionAttribute);
+    glVertexAttribPointer(_positionAttribute, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
+    glEnableVertexAttribArray(_positionAttribute);
     // 纹理
-    glVertexAttribPointer(textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(textureCoordinateAttribute);
+    glVertexAttribPointer(_textureCoordinateAttribute, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(_textureCoordinateAttribute);
     
     // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
     glBindVertexArrayOES(0); // 解绑VAO（这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法）
@@ -124,13 +122,13 @@
     self.textureInfo = [GLKTextureLoader textureWithContentsOfFile:diffuseFilePath options:[NSDictionary dictionaryWithObjectsAndKeys:@(1),GLKTextureLoaderOriginBottomLeft, nil] error:nil];
     
     // 摄像机位置
-    cameraPos = GLKVector3Make(1.0, 1.0, 1.0);
+    _cameraPos = GLKVector3Make(1.0, 1.0, 1.0);
     // 初始化模型矩阵
-    modelMatrix = GLKMatrix4Identity;
+    _modelMatrix = GLKMatrix4Identity;
     // 设置摄像机在(1，1，1)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
-    viewMatrix = GLKMatrix4MakeLookAt(cameraPos.x, cameraPos.y, cameraPos.z, 0, 0, 0, 0, 1, 0);
+    _viewMatrix = GLKMatrix4MakeLookAt(_cameraPos.x, _cameraPos.y, _cameraPos.z, 0, 0, 0, 0, 1, 0);
     // 使用透视投影矩阵，视场角设置为90°
-    projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
+    _projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
     
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
     [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
@@ -150,8 +148,8 @@
     // 模型绕Y轴旋转
     // modelMatrix = GLKMatrix4MakeRotation(radians, 0.0, 1.0, 0.0);
     // 摄像机绕模型Y旋转（改变摄像机位置，模型不动）
-    cameraPos = GLKMatrix4MultiplyVector3(GLKMatrix4MakeRotation(radians, 0.0, 1.0, 0.0), GLKVector3Make(1.0, 1.0, 1.0));
-    viewMatrix = GLKMatrix4MakeLookAt(cameraPos.x, cameraPos.y, cameraPos.z, 0, 0, 0, 0, 1, 0);
+    _cameraPos = GLKMatrix4MultiplyVector3(GLKMatrix4MakeRotation(radians, 0.0, 1.0, 0.0), GLKVector3Make(1.0, 1.0, 1.0));
+    _viewMatrix = GLKMatrix4MakeLookAt(_cameraPos.x, _cameraPos.y, _cameraPos.z, 0, 0, 0, 0, 1, 0);
     [self.glkView display];
     self.degree += 0.5f;
 }
@@ -168,16 +166,16 @@
     // 启用着色器
     [self.program use];
     // model、view、projection
-    glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&modelMatrix);
-    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&viewMatrix);
-    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&projectionMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&_modelMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&_viewMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&_projectionMatrix);
     
     // bind texture
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
     glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
     
-    glBindVertexArrayOES(VAO);
+    glBindVertexArrayOES(_VAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArrayOES(0);
     
@@ -186,16 +184,13 @@
 
 - (void)dealloc
 {
-    [self.program validate];
-    self.program = nil;
-    
-    if (VAO) {
-        glDeleteVertexArraysOES(1, &VAO);
-        VAO = 0;
+    if (_VAO) {
+        glDeleteVertexArraysOES(1, &_VAO);
+        _VAO = 0;
     }
-    if (VBO) {
-        glDeleteBuffers(1, &VBO);
-        VBO = 0;
+    if (_VBO) {
+        glDeleteBuffers(1, &_VBO);
+        _VBO = 0;
     }
 }
 

@@ -59,10 +59,10 @@ static float skyboxVertices[] = {
 
 @interface DemoViewController9 () <GLKViewDelegate>
 {
-    GLuint VAO, VBO;
-    GLint positionAttribute, skyboxTextureUniform;
-    GLKMatrix4 modelMatrix, viewMatrix, projectionMatrix;
-    GLuint cubeTexture;
+    GLuint _VAO, _VBO;
+    GLint _positionAttribute, _skyboxTextureUniform;
+    GLKMatrix4 _modelMatrix, _viewMatrix, _projectionMatrix;
+    GLuint _cubeTexture;
 }
 
 @property (nonatomic, strong) EAGLContext *eglContext;
@@ -98,30 +98,30 @@ static float skyboxVertices[] = {
     [self.program link];
     
     // 顶点
-    positionAttribute = [self.program attributeIndex:@"position"];
-    skyboxTextureUniform = [self.program uniformIndex:@"skyboxTexture"];
+    _positionAttribute = [self.program attributeIndex:@"position"];
+    _skyboxTextureUniform = [self.program uniformIndex:@"skyboxTexture"];
     
     // 创建索引缓冲对象
-    glGenVertexArraysOES(1, &VAO);
-    glGenBuffers(1, &VBO);
+    glGenVertexArraysOES(1, &_VAO);
+    glGenBuffers(1, &_VBO);
     
     // 绑定VAO
-    glBindVertexArrayOES(VAO);
+    glBindVertexArrayOES(_VAO);
     
     // 把顶点数组复制到缓冲中供OpenGL使用
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, _VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), skyboxVertices, GL_STATIC_DRAW);
     // 位置属性
-    glEnableVertexAttribArray(positionAttribute);
-    glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+    glEnableVertexAttribArray(_positionAttribute);
+    glVertexAttribPointer(_positionAttribute, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
     
     // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
     glBindVertexArrayOES(0); // 解绑VAO（这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法）
     
     // 加载纹理
     NSArray *images = [NSArray arrayWithObjects:@"skybox_right.jpg", @"skybox_left.jpg", @"skybox_top.jpg", @"skybox_bottom.jpg", @"skybox_front.jpg", @"skybox_back.jpg", nil];
-    glGenTextures(1, &cubeTexture);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, cubeTexture);
+    glGenTextures(1, &_cubeTexture);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _cubeTexture);
     for (unsigned int index = 0; index < images.count; index++) {
         NSString *imageName = [images objectAtIndex:index];
         GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:imageName] smoothlyScaleOutput:NO removePremultiplication:NO flipped:NO];
@@ -141,11 +141,11 @@ static float skyboxVertices[] = {
     self.cameraForward = GLKMatrix4MultiplyVector3(GLKMatrix4MakeWithQuaternion(self.endQuaternion), GLKVector3Make(0, 0, 1));
     self.cameraUp = GLKVector3Make(0, 1, 0);
     // 初始化模型矩阵
-    modelMatrix = GLKMatrix4Identity;
+    _modelMatrix = GLKMatrix4Identity;
     // 设置摄像机在(0, 0, 0)坐标，看向(0，0，-1)点。Y轴正向为摄像机顶部指向的方向
-    viewMatrix = GLKMatrix4MakeLookAt(self.cameraEye.x, self.cameraEye.y, self.cameraEye.z, self.cameraForward.x, self.cameraForward.y, self.cameraForward.z, self.cameraUp.x, self.cameraUp.y, self.cameraUp.z);
+    _viewMatrix = GLKMatrix4MakeLookAt(self.cameraEye.x, self.cameraEye.y, self.cameraEye.z, self.cameraForward.x, self.cameraForward.y, self.cameraForward.z, self.cameraUp.x, self.cameraUp.y, self.cameraUp.z);
     // 使用透视投影矩阵，视场角设置为60°
-    projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(60.0), 1.0f, 0.1f, 100.0f);
+    _projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(60.0), 1.0f, 0.1f, 100.0f);
     // 正交投影矩阵
     // projectionMatrix = GLKMatrix4MakeOrtho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
     [self.glkView display];
@@ -173,7 +173,7 @@ static float skyboxVertices[] = {
     self.endQuaternion = GLKQuaternionMultiply(self.endQuaternion, quaternion);
     self.cameraForward = GLKMatrix4MultiplyVector3(GLKMatrix4MakeWithQuaternion(self.endQuaternion), GLKVector3Make(0, 0, 1));
     // 摄像机坐标不变，改变的看向的点
-    viewMatrix = GLKMatrix4MakeLookAt(self.cameraEye.x, self.cameraEye.y, self.cameraEye.z, self.cameraForward.x, self.cameraForward.y, self.cameraForward.z, self.cameraUp.x, self.cameraUp.y, self.cameraUp.z);
+    _viewMatrix = GLKMatrix4MakeLookAt(self.cameraEye.x, self.cameraEye.y, self.cameraEye.z, self.cameraForward.x, self.cameraForward.y, self.cameraForward.z, self.cameraUp.x, self.cameraUp.y, self.cameraUp.z);
     
     [self.glkView display];
 }
@@ -205,15 +205,15 @@ static float skyboxVertices[] = {
     [self.program use];
     
     // model、view、projection
-    glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&modelMatrix);
-    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&viewMatrix);
-    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&projectionMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&_modelMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&_viewMatrix);
+    glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&_projectionMatrix);
     
     // cube
-    glBindVertexArrayOES(VAO);
+    glBindVertexArrayOES(_VAO);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, cubeTexture);
-    glUniform1i(skyboxTextureUniform, 0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _cubeTexture);
+    glUniform1i(_skyboxTextureUniform, 0);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArrayOES(0);
     glDepthFunc(GL_LESS);
@@ -224,20 +224,17 @@ static float skyboxVertices[] = {
 
 - (void)dealloc
 {
-    [self.program validate];
-    self.program = nil;
-    
-    if (VAO) {
-        glDeleteVertexArraysOES(1, &VAO);
-        VAO = 0;
+    if (_VAO) {
+        glDeleteVertexArraysOES(1, &_VAO);
+        _VAO = 0;
     }
-    if (VBO) {
-        glDeleteBuffers(1, &VBO);
-        VBO = 0;
+    if (_VBO) {
+        glDeleteBuffers(1, &_VBO);
+        _VBO = 0;
     }
-    if (cubeTexture) {
-        glDeleteTextures(1, &cubeTexture);
-        cubeTexture = 0;
+    if (_cubeTexture) {
+        glDeleteTextures(1, &_cubeTexture);
+        _cubeTexture = 0;
     }
 }
 

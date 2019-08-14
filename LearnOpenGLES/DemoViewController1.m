@@ -15,9 +15,9 @@ typedef struct {
     GLfloat positon[3];//位置
     GLfloat color[4];//颜色
     GLfloat texCoord[2];//纹理
-} Vertex;
+} ScenceVertex;
 
-static Vertex vertexData[] = {
+static ScenceVertex vertexData[] = {
     -1.0f, -1.0f, 0.0,     1.0, 0.0, 0.0, 1.0,   1.0f, 0.0f, // 0 左下
     1.0f, -1.0f, 0.0,     1.0, 1.0, 0.0, 1.0,   0.0f, 1.0f, // 1 右下
     -1.0f, 1.0f, 0.0,    0.0, 0.0, 1.0, 1.0,   0.0f, 0.0f, // 2 左上
@@ -26,8 +26,8 @@ static Vertex vertexData[] = {
 
 @interface DemoViewController1 () <GLKViewDelegate>
 {
-    GLint filterPositionAttribute;
-    GLint filterSourceColorAttribute;
+    GLint _filterPositionAttribute;
+    GLint _filterSourceColorAttribute;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -56,8 +56,8 @@ static Vertex vertexData[] = {
     [self.program addAttribute:@"sourceColor"];
     [self.program link];
     
-    filterPositionAttribute = [self.program attributeIndex:@"position"];
-    filterSourceColorAttribute = [self.program attributeIndex:@"sourceColor"];
+    _filterPositionAttribute = [self.program attributeIndex:@"position"];
+    _filterSourceColorAttribute = [self.program attributeIndex:@"sourceColor"];
     [self.glkView display];
 }
 
@@ -68,21 +68,15 @@ static Vertex vertexData[] = {
     
     // 启用着色器
     [self.program use];
-    glEnableVertexAttribArray(filterPositionAttribute); // 启用属性
-    glEnableVertexAttribArray(filterSourceColorAttribute); // 启用属性
+    glEnableVertexAttribArray(_filterPositionAttribute); // 启用属性
+    glEnableVertexAttribArray(_filterSourceColorAttribute); // 启用属性
     // 参数含义分别为：顶点属性索引（这里是位置）、3个分量的矢量、类型是浮点（GL_FLOAT）、填充时不需要单位化（GL_FALSE）； sizeof(Vertex)==4*8==32（GL_FLOAT占4个字节，每行有8个浮点数），如果数据连续存放，则为0；最后一个参数是一个偏移量的指针，用来确定“第一个数据”将从内存数据块的什么地方开始。
-    glVertexAttribPointer(filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(Vertex), (float *)vertexData + 0);
-    glVertexAttribPointer(filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(Vertex), (float *)vertexData + 3);
+    glVertexAttribPointer(_filterPositionAttribute, 3, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)vertexData + 0);
+    glVertexAttribPointer(_filterSourceColorAttribute, 4, GL_FLOAT, 0, sizeof(ScenceVertex), (float *)vertexData + 3);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    glDisableVertexAttribArray(filterPositionAttribute);
-    glDisableVertexAttribArray(filterSourceColorAttribute);
-}
-
-- (void)dealloc
-{
-    [self.program validate];
-    self.program = nil;
+    glDisableVertexAttribArray(_filterPositionAttribute);
+    glDisableVertexAttribArray(_filterSourceColorAttribute);
 }
 
 @end
