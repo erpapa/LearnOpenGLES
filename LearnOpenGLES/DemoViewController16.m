@@ -69,7 +69,8 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
 // 用于刷新屏幕
 @property (nonatomic, strong) CADisplayLink *displayLink;
 // 开始的时间戳
-@property (nonatomic, assign) NSTimeInterval startTimeInterval;
+@property (nonatomic, assign) NSTimeInterval startTimestamp;
+@property (nonatomic, assign) NSTimeInterval lastTimestamp;
 // 滤镜组
 @property (nonatomic, copy) NSArray *dataArray;
 @property (nonatomic, copy) NSArray *filterArray;
@@ -111,7 +112,7 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
     self.eglLayer.drawableProperties = @
     {
         kEAGLDrawablePropertyRetainedBacking : @(NO),
-        kEAGLDrawablePropertyColorFormat : kEAGLColorFormatRGB565,
+        kEAGLDrawablePropertyColorFormat : kEAGLColorFormatRGBA8,
     };
     [self.view.layer addSublayer:self.eglLayer];
     [self setupFrameBuffer];
@@ -122,8 +123,8 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
     _textureID = [DemoUtils createTextureFromImage:image.CGImage flippedX:NO flippedY:YES];
     
     // 4.配置着色器
-    self.dataArray = @[@"无",@"灰度",@"颠倒",@"旋涡",@"马赛克",@"马赛克2",@"马赛克3", @"缩放",@"灵魂出窍",@"抖动",@"闪白",@"毛刺"];
-    self.filterArray = @[@"Normal", @"Gray", @"Reversal", @"Cirlce", @"Mosaic", @"HexagonMosaic", @"TriangularMosaic", @"Scale", @"SoulOut", @"Shake", @"ShineWhite", @"Glitch"];
+    self.dataArray = @[@"无",@"灰度",@"颠倒",@"旋涡",@"马赛克",@"马赛克2",@"马赛克3", @"缩放",@"灵魂出窍",@"抖动",@"闪白",@"毛刺",@"眩晕"];
+    self.filterArray = @[@"Normal", @"Gray", @"Reversal", @"Cirlce", @"Mosaic", @"HexagonMosaic", @"TriangularMosaic", @"Scale", @"SoulOut", @"Shake", @"ShineWhite", @"Glitch", @"Vertigo"];
     [self setupFilerProgram:self.filterArray.firstObject];
 }
 
@@ -152,7 +153,9 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DemoViewController16Cell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDemoViewController16CellResueID forIndexPath:indexPath];
-    cell.titleLabel.text = [self.dataArray objectAtIndex:indexPath.item];
+    if (indexPath.item < self.dataArray.count) {
+        cell.titleLabel.text = [self.dataArray objectAtIndex:indexPath.item];
+    }
     return cell;
 }
 
@@ -162,53 +165,28 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
     
-    NSString *shaderName = [self.filterArray objectAtIndex:indexPath.item];
-    [self setupFilerProgram:shaderName];
+    [self stopFilerAnimation];
+    [self setupFilerProgram:self.filterArray[indexPath.item]];
     [self startFilerAnimation];
 }
 
-// FBO
-- (void)setupFrameBuffer
+// 停止动画
+- (void)stopFilerAnimation
 {
-    _defaultFrameBuffer = 0;
-    _colorRenderBuffer = 0;
-    _depthRenderBuffer = 0;
-    
-    // FBO
-    glGenFramebuffers(1, &_defaultFrameBuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, _defaultFrameBuffer);
-    
-    // 创建颜色缓冲
-    glGenRenderbuffers(1, &_colorRenderBuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
-    [self.eglContext renderbufferStorage:GL_RENDERBUFFER fromDrawable:self.eglLayer];
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorRenderBuffer);
-    // 获取画布宽高
-    _drawableWidth = 0;
-    _drawableHeight = 0;
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_drawableWidth);
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_drawableHeight);
-    glBindRenderbuffer(GL_RENDERBUFFER, 0);
-    
-    // 创建深度缓冲
-    /*
-     glGenRenderbuffers(1, &_depthRenderBuffer);
-     glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
-     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, _drawableWidth, _drawableHeight);
-     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-     // 附加模板缓冲，可以与深度缓冲共用一个depthRenderBuffer
-     // glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-     glBindRenderbuffer(GL_RENDERBUFFER, 0);
-     */
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    if (self.displayLink) {
+        [self.displayLink invalidate];
+        self.displayLink = nil;
+    }
+    self.startTimestamp = 0;
+    self.lastTimestamp = 0;
 }
 
-- (void)bindDrawable
+// 开始一个滤镜动画
+- (void)startFilerAnimation
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, _defaultFrameBuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
-    glViewport(0, 0, _drawableWidth, _drawableHeight);
+    [self stopFilerAnimation];
+    self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
+    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
 }
 
 // 创建着色器
@@ -228,49 +206,90 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
     _filterTimeUniform = [self.program uniformIndex:@"Time"];
 }
 
-// 停止动画
-- (void)stopFilerAnimation
+// FBO
+- (void)setupFrameBuffer
 {
-    if (self.displayLink) {
-        [self.displayLink invalidate];
-        self.displayLink = nil;
-    }
+    _defaultFrameBuffer = 0;
+    _colorRenderBuffer = 0;
+    _depthRenderBuffer = 0;
+    _drawableWidth = 0;
+    _drawableHeight = 0;
+    
+    // FBO
+    glGenFramebuffers(1, &_defaultFrameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, _defaultFrameBuffer);
+    
+    // 创建颜色缓冲
+    glGenRenderbuffers(1, &_colorRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
+    // iOS下使用renderbufferStorage:fromDrawable:函数分配空间
+    // glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA, _drawableWidth, _drawableHeight);
+    [self.eglContext renderbufferStorage:GL_RENDERBUFFER fromDrawable:self.eglLayer];
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorRenderBuffer);
+    // 获取画布宽高
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_drawableWidth);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_drawableHeight);
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    
+    // 创建深度缓冲
+    GLenum internalformat = GL_DEPTH24_STENCIL8_OES;
+    glGenRenderbuffers(1, &_depthRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
+    /**
+     * target: 指定renderbuffer目标，符号常量必须为GL_RENDERBUFFER。
+     * internalformat: 指定渲染缓冲区的颜色可渲染，深度可渲染或模板可渲染格式，
+     *   深度格式GLES2默认只有GL_DEPTH_COMPONENT16，但是可以使用扩展GL_DEPTH_COMPONENT24_OES
+     *   如果使用模板，设置为GL_DEPTH24_STENCIL8_OES，即24位深度，8位模板
+     * width: 指定渲染缓冲区的宽度（以像素为单位）。
+     * height: 指定渲染缓冲区的高度（以像素为单位）。
+     */
+    glRenderbufferStorage(GL_RENDERBUFFER, internalformat, _drawableWidth, _drawableHeight);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
+    // 附加模板缓冲，可以与深度缓冲共用一个depthRenderBuffer，前提是internalformat设置为GL_DEPTH24_STENCIL8_OES
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-// 开始一个滤镜动画
-- (void)startFilerAnimation
+- (void)bindDrawable
 {
-    [self stopFilerAnimation];
-    self.startTimeInterval = 0;
-    self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
-    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    glBindFramebuffer(GL_FRAMEBUFFER, _defaultFrameBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
+    glViewport(0, 0, _drawableWidth, _drawableHeight);
 }
 
 // 更新
 - (void)update
 {
-    // 可以在这里做模型变化等操作
-    
-    // 控制绘制频率
-    NSInteger interval = (self.displayLink.timestamp - self.startTimeInterval) * 60;
-    if (interval % 4 == 0) {
-        [self draw];
+    if (self.startTimestamp <= 0) {
+        self.startTimestamp = self.displayLink.timestamp;
+        self.lastTimestamp = self.startTimestamp;
     }
+    // 更新模型变换
+    // 控制绘制频率
+    NSTimeInterval interval = self.displayLink.timestamp - self.lastTimestamp;
+    if (interval * 1000 < 50) {
+        return;
+    }
+    self.lastTimestamp = self.displayLink.timestamp;
+    [self bindDrawable];
+    [self drawRect:self.eglLayer.bounds];
+    [self.eglContext presentRenderbuffer:GL_RENDERBUFFER];
 }
 
 // 绘制
-- (void)draw
+- (void)drawRect:(CGRect)rect
 {
     // 清除画布
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(1, 1, 1, 1);
     
     // 启用着色器
-    [self bindDrawable];
     [self.program use];
     
     // 传入时间
-    CGFloat currentTime = self.displayLink.timestamp - self.startTimeInterval;
+    CGFloat currentTime = self.displayLink.timestamp - self.startTimestamp;
     glUniform1f(_filterTimeUniform, currentTime);
     
     // 绑定纹理
@@ -287,8 +306,6 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
     glVertexAttribPointer(_filterTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, noRotationTextureCoordinates);
     // 绘制
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    // 显示
-    [self.eglContext presentRenderbuffer:GL_RENDERBUFFER];
     
     glDisableVertexAttribArray(_filterPositionAttribute);
     glDisableVertexAttribArray(_filterTextureCoordinateAttribute);
@@ -296,6 +313,11 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
 
 - (void)dealloc
 {
+    if ([EAGLContext currentContext] != self.eglContext)
+    {
+        [EAGLContext setCurrentContext:self.eglContext];
+        [self.eglContext renderbufferStorage:GL_RENDERBUFFER fromDrawable:nil];
+    }
     if (_defaultFrameBuffer != 0)
     {
         glDeleteFramebuffers(1, &_defaultFrameBuffer);
@@ -318,6 +340,8 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
         glDeleteTextures(1, &_textureID);
         _textureID = 0;
     }
+    [EAGLContext setCurrentContext:nil];
+    self.eglContext = nil;
 }
 
 @end

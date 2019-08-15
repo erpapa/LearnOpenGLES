@@ -82,10 +82,10 @@ static ScenceVertex blueVertexData[] = {
      
     glGenRenderbuffers(1, &_depthRenderBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, self.glkView.bounds.size.width, self.glkView.bounds.size.height);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8_OES, self.glkView.bounds.size.width, self.glkView.bounds.size.height);
     // 附加深度缓冲
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-    // 附加模板缓冲，可以与深度缓冲共用一个depthRenderBuffer
+    // 附加模板缓冲，可以与深度缓冲共用一个depthRenderBuffer，前提是internalformat设置为GL_DEPTH24_STENCIL8_OES
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
     
