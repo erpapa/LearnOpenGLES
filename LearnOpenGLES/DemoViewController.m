@@ -40,7 +40,8 @@
                        @{@"title":@"alpha测试",@"class":@"DemoViewController13"},
                        @{@"title":@"blend混合",@"class":@"DemoViewController14"},
                        @{@"title":@"面剔除",@"class":@"DemoViewController15"},
-                       @{@"title":@"滤镜特效",@"class":@"DemoViewController16"}];
+                       @{@"title":@"滤镜特效",@"class":@"DemoViewController16"},
+                       @{@"title":@"分屏效果",@"class":@"DemoViewController17"}];
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;

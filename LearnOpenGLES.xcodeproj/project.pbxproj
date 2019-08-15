@@ -68,6 +68,11 @@
 		18A9F43522F034C5006B104B /* for_test_blend.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A9F43422F034C5006B104B /* for_test_blend.png */; };
 		18C07F3C22FB187000C60C13 /* shaderv_15.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 18C07F3A22FB187000C60C13 /* shaderv_15.vsh */; };
 		18C07F3D22FB187000C60C13 /* shaderf_15.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 18C07F3B22FB187000C60C13 /* shaderf_15.fsh */; };
+		18CFC31923054EEF00D6E1C7 /* shaderv_16.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 18CFC31723054EEE00D6E1C7 /* shaderv_16.vsh */; };
+		18CFC31A23054EEF00D6E1C7 /* shaderf_16.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 18CFC31823054EEF00D6E1C7 /* shaderf_16.fsh */; };
+		18CFC31D23054F0200D6E1C7 /* shaderf_17.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 18CFC31B23054F0200D6E1C7 /* shaderf_17.fsh */; };
+		18CFC31E23054F0200D6E1C7 /* shaderv_17.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 18CFC31C23054F0200D6E1C7 /* shaderv_17.vsh */; };
+		18CFC321230553EE00D6E1C7 /* DemoViewController17.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CFC320230553EE00D6E1C7 /* DemoViewController17.m */; };
 		18D1B5842186F11C0071A7FE /* shapes.cc in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B5792186F11C0071A7FE /* shapes.cc */; };
 		18D1B5852186F11C0071A7FE /* sweep.cc in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B57C2186F11C0071A7FE /* sweep.cc */; };
 		18D1B5862186F11C0071A7FE /* sweep_context.cc in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B57D2186F11C0071A7FE /* sweep_context.cc */; };
@@ -243,6 +248,12 @@
 		18A9F43422F034C5006B104B /* for_test_blend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = for_test_blend.png; sourceTree = "<group>"; };
 		18C07F3A22FB187000C60C13 /* shaderv_15.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_15.vsh; sourceTree = "<group>"; };
 		18C07F3B22FB187000C60C13 /* shaderf_15.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_15.fsh; sourceTree = "<group>"; };
+		18CFC31723054EEE00D6E1C7 /* shaderv_16.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_16.vsh; sourceTree = "<group>"; };
+		18CFC31823054EEF00D6E1C7 /* shaderf_16.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_16.fsh; sourceTree = "<group>"; };
+		18CFC31B23054F0200D6E1C7 /* shaderf_17.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_17.fsh; sourceTree = "<group>"; };
+		18CFC31C23054F0200D6E1C7 /* shaderv_17.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_17.vsh; sourceTree = "<group>"; };
+		18CFC31F230553EE00D6E1C7 /* DemoViewController17.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController17.h; sourceTree = "<group>"; };
+		18CFC320230553EE00D6E1C7 /* DemoViewController17.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController17.m; sourceTree = "<group>"; };
 		18D1B5762186F11C0071A7FE /* poly2tri.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poly2tri.h; sourceTree = "<group>"; };
 		18D1B5782186F11C0071A7FE /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		18D1B5792186F11C0071A7FE /* shapes.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shapes.cc; sourceTree = "<group>"; };
@@ -941,6 +952,8 @@
 				188D1B3722EEA4F400864A47 /* DemoViewController15.m */,
 				188D1B3922EEA4FF00864A47 /* DemoViewController16.h */,
 				188D1B3A22EEA4FF00864A47 /* DemoViewController16.m */,
+				18CFC31F230553EE00D6E1C7 /* DemoViewController17.h */,
+				18CFC320230553EE00D6E1C7 /* DemoViewController17.m */,
 				EA4603BB202C64050037EC15 /* Assets.xcassets */,
 				EA4603BD202C64050037EC15 /* LaunchScreen.storyboard */,
 				EA4603C0202C64050037EC15 /* Info.plist */,
@@ -1000,8 +1013,12 @@
 				18A9F42D22F02B7C006B104B /* shaderf_13.fsh */,
 				18A9F43122F02B89006B104B /* shaderv_14.vsh */,
 				18A9F43022F02B89006B104B /* shaderf_14.fsh */,
-				18C07F3B22FB187000C60C13 /* shaderf_15.fsh */,
 				18C07F3A22FB187000C60C13 /* shaderv_15.vsh */,
+				18C07F3B22FB187000C60C13 /* shaderf_15.fsh */,
+				18CFC31723054EEE00D6E1C7 /* shaderv_16.vsh */,
+				18CFC31823054EEF00D6E1C7 /* shaderf_16.fsh */,
+				18CFC31C23054F0200D6E1C7 /* shaderv_17.vsh */,
+				18CFC31B23054F0200D6E1C7 /* shaderf_17.fsh */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -1152,6 +1169,7 @@
 				18000741218AF40200BC0EFC /* earth_reflective.jpg in Resources */,
 				18A9F42922F00E8D006B104B /* shaderf_12.fsh in Resources */,
 				EA4603EC202C647D0037EC15 /* shaderf_2.fsh in Resources */,
+				18CFC31D23054F0200D6E1C7 /* shaderf_17.fsh in Resources */,
 				18000743218AF41500BC0EFC /* earth_specular.jpg in Resources */,
 				1851C15122EEEAEA00535AC3 /* shaderv_11.vsh in Resources */,
 				18A9F43222F02B8A006B104B /* shaderf_14.fsh in Resources */,
@@ -1161,6 +1179,7 @@
 				EA4603FE202D84240037EC15 /* shaderf_1.fsh in Resources */,
 				18000738218AE9DE00BC0EFC /* shaderf_8.fsh in Resources */,
 				18A0510C2191A13700FB97D7 /* skybox_back.jpg in Resources */,
+				18CFC31E23054F0200D6E1C7 /* shaderv_17.vsh in Resources */,
 				18000710218850F700BC0EFC /* shaderf_5.fsh in Resources */,
 				1851C14D22EECAE800535AC3 /* shaderv_10.vsh in Resources */,
 				1800071421886D6700BC0EFC /* shaderv_6.vsh in Resources */,
@@ -1179,6 +1198,7 @@
 				1800074B218AF9D700BC0EFC /* orbit.png in Resources */,
 				EA4603E5202C64330037EC15 /* for_test.jpg in Resources */,
 				18A051012191A0AB00FB97D7 /* shaderf_9.fsh in Resources */,
+				18CFC31A23054EEF00D6E1C7 /* shaderf_16.fsh in Resources */,
 				18000716218878CA00BC0EFC /* material.jpg in Resources */,
 				EA4603ED202C647D0037EC15 /* shaderv_2.vsh in Resources */,
 				1851C14E22EECAE800535AC3 /* shaderf_10.fsh in Resources */,
@@ -1202,6 +1222,7 @@
 				18D1B892218712D20071A7FE /* container_specular.jpg in Resources */,
 				18000739218AE9DE00BC0EFC /* shaderv_8.vsh in Resources */,
 				1800073F218AF3E700BC0EFC /* earth_diffuse.jpg in Resources */,
+				18CFC31923054EEF00D6E1C7 /* shaderv_16.vsh in Resources */,
 				18A9F42E22F02B7C006B104B /* shaderv_13.vsh in Resources */,
 				18A9F42822F00E8D006B104B /* shaderv_12.vsh in Resources */,
 				183C56A7230434A9001DAEFC /* FilterResource.bundle in Resources */,
@@ -1298,6 +1319,7 @@
 				18D1B8892186FF0A0071A7FE /* Contour.cpp in Sources */,
 				18D1B86F2186F14A0071A7FE /* ftgasp.c in Sources */,
 				18D1B8582186F14A0071A7FE /* ftbitmap.c in Sources */,
+				18CFC321230553EE00D6E1C7 /* DemoViewController17.m in Sources */,
 				18D1B88B2186FF0A0071A7FE /* Point.cpp in Sources */,
 				EA4603B4202C64050037EC15 /* AppDelegate.m in Sources */,
 				18D1B8682186F14A0071A7FE /* ftdebug.c in Sources */,
