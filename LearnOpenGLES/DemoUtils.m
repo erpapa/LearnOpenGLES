@@ -104,7 +104,7 @@
 + (GLuint)createTextureFromImage:(CGImageRef)image flippedX:(BOOL)flippedX flippedY:(BOOL)flippedY
 {
     // 1.从CGImage获取bitmap
-    NSData *imageData = [DemoUtils createBitmapFromImage:image flippedX:flippedX flippedY:flippedY];
+    NSData *imageData = [self createBitmapFromImage:image flippedX:flippedX flippedY:flippedY];
     
     // 2、读取图片的大小，宽和高
     GLuint width = (GLuint)CGImageGetWidth(image);

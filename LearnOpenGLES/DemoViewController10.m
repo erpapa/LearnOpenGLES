@@ -105,6 +105,7 @@ static ScenceVertex greenVertexData[] = {
     // 启用着色器
     [self.program use];
     
+    // 思考：为什么要设置视图矩阵，不设置视图矩阵会得出什么结果？
     // model、view、projection
     glUniformMatrix4fv([self.program uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&_modelMatrix);
     glUniformMatrix4fv([self.program uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&_viewMatrix);
@@ -130,6 +131,12 @@ static ScenceVertex greenVertexData[] = {
     glDisableVertexAttribArray(_filterSourceColorAttribute);
     
     glDisable(GL_DEPTH_TEST);
+    
+    // 回答上面的思考题，如果不设置视图矩阵，直接绘制方块，那么红色方块还是会被绿色方块盖住！！！
+    // 解释：顶点的坐标本身就处于 [-1, 1] 范围内，我们也未做任何坐标变换，因此这些坐标就等于最终的 NDC 坐标值。
+    // NDC 是基于左手坐标系，则 z 轴上的坐标值越小，就越显示在前面（左手坐标系 z 轴正方向指向屏幕内，与右手坐标系刚好相反）。
+    // 而本例中绿色方块 z 值比红色方块 z 值小，所以优先显示绿色方块，红色方块被遮挡。
+    // https://my.oschina.net/iirecord/blog/824029
 }
 
 @end
