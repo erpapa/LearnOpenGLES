@@ -123,8 +123,8 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
     _textureID = [DemoUtils createTextureFromImage:image.CGImage flippedX:NO flippedY:YES];
     
     // 4.配置着色器
-    self.dataArray = @[@"无",@"灰度",@"颠倒",@"旋涡",@"马赛克",@"马赛克2",@"马赛克3", @"缩放",@"灵魂出窍",@"抖动",@"闪白",@"毛刺",@"眩晕",@"电击"];
-    self.filterArray = @[@"Normal", @"Gray", @"Reversal", @"Cirlce", @"Mosaic", @"HexagonMosaic", @"TriangularMosaic", @"Scale", @"SoulOut", @"Shake", @"ShineWhite", @"Glitch", @"Vertigo", @"Electric"];
+    self.dataArray = @[@"无",@"灰度",@"颠倒",@"旋涡",@"马赛克",@"马赛克2",@"马赛克3", @"缩放",@"灵魂出窍",@"抖动",@"闪白",@"毛刺",@"眩晕",@"电击",@"镜像"];
+    self.filterArray = @[@"Normal", @"Gray", @"Reversal", @"Cirlce", @"Mosaic", @"HexagonMosaic", @"TriangularMosaic", @"Scale", @"SoulOut", @"Shake", @"ShineWhite", @"Glitch", @"Vertigo", @"Electric", @"Mirror"];
     [self setupFilerProgram:self.filterArray.firstObject];
 }
 
