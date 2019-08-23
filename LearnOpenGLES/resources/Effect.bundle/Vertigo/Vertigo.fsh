@@ -1,10 +1,8 @@
 precision highp float;
+varying vec2 textureCoordinate;
+uniform sampler2D inputImageTexture;
 
-uniform sampler2D Texture;
-varying vec2 TextureCoordsVarying;
-
-uniform float Time;
-
+uniform float inputTime;
 const float PI = 3.1415926;
 const float duration = 2.0;
 
@@ -12,7 +10,7 @@ vec4 getMask(float currentTime, vec2 textureCoords, float padding) {
     vec2 translation = vec2(sin(currentTime * (PI * 2.0 / duration)),
                             cos(currentTime * (PI * 2.0 / duration)));
     vec2 translationTextureCoords = textureCoords + padding * translation;
-    vec4 mask = texture2D(Texture, translationTextureCoords);
+    vec4 mask = texture2D(inputImageTexture, translationTextureCoords);
     
     return mask;
 }
@@ -22,12 +20,13 @@ float maskAlphaProgress(float currentTime, float hideTime, float startTime) {
     return min(time, hideTime);
 }
 
-void main (void) {
-    float currentTime = mod(Time, duration);
+void main (void)
+{
+    float currentTime = mod(inputTime, duration);
     
     float scale = 1.2;
     float padding = 0.5 * (1.0 - 1.0 / scale);
-    vec2 textureCoords = vec2(0.5, 0.5) + (TextureCoordsVarying - vec2(0.5, 0.5)) / scale;
+    vec2 textureCoords = vec2(0.5, 0.5) + (textureCoordinate - vec2(0.5, 0.5)) / scale;
     
     float hideTime = 0.9;
     float timeGap = 0.2;
@@ -36,7 +35,7 @@ void main (void) {
     float maxAlphaG = 0.05; // max G
     float maxAlphaB = 0.05; // max B
     
-    vec4 mask = getMask(Time, textureCoords, padding);
+    vec4 mask = getMask(inputTime, textureCoords, padding);
     float alphaR = 1.0; // R
     float alphaG = 1.0; // G
     float alphaB = 1.0; // B
@@ -46,9 +45,9 @@ void main (void) {
     for (float f = 0.0; f < duration; f += timeGap) {
         float tmpTime = f;
         vec4 tmpMask = getMask(tmpTime, textureCoords, padding);
-        float tmpAlphaR = maxAlphaR - maxAlphaR * maskAlphaProgress(Time, hideTime, tmpTime) / hideTime;
-        float tmpAlphaG = maxAlphaG - maxAlphaG * maskAlphaProgress(Time, hideTime, tmpTime) / hideTime;
-        float tmpAlphaB = maxAlphaB - maxAlphaB * maskAlphaProgress(Time, hideTime, tmpTime) / hideTime;
+        float tmpAlphaR = maxAlphaR - maxAlphaR * maskAlphaProgress(inputTime, hideTime, tmpTime) / hideTime;
+        float tmpAlphaG = maxAlphaG - maxAlphaG * maskAlphaProgress(inputTime, hideTime, tmpTime) / hideTime;
+        float tmpAlphaB = maxAlphaB - maxAlphaB * maskAlphaProgress(inputTime, hideTime, tmpTime) / hideTime;
         
         resultMask += vec4(tmpMask.r * tmpAlphaR,
                            tmpMask.g * tmpAlphaG,

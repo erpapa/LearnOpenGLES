@@ -180,14 +180,14 @@ static NSString * kDemoViewController17CellResueID = @"kDemoViewController17Cell
     NSString *vertexShaderPath = [effectBundle pathForResource:shaderName ofType:@"vsh" inDirectory:shaderName];
     NSString *fragmentShaderPath = [effectBundle pathForResource:shaderName ofType:@"fsh" inDirectory:shaderName];
     self.program = [[GLProgram alloc] initWithVertexShaderString:[NSString stringWithContentsOfFile:vertexShaderPath encoding:NSUTF8StringEncoding error:nil] fragmentShaderString:[NSString stringWithContentsOfFile:fragmentShaderPath encoding:NSUTF8StringEncoding error:nil]];
-    [self.program addAttribute:@"Position"];
-    [self.program addAttribute:@"TextureCoords"];
+    [self.program addAttribute:@"position"];
+    [self.program addAttribute:@"inputTextureCoordinate"];
     [self.program link];
     
-    _filterPositionAttribute = [self.program attributeIndex:@"Position"];
-    _filterTextureCoordinateAttribute = [self.program attributeIndex:@"TextureCoords"];
-    _filterInputTextureUniform = [self.program uniformIndex:@"Texture"];
-    _filterScreenTypeUniform = [self.program uniformIndex:@"ScreenType"];
+    _filterPositionAttribute = [self.program attributeIndex:@"position"];
+    _filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
+    _filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"];
+    _filterScreenTypeUniform = [self.program uniformIndex:@"screenType"];
 }
 
 // FBO

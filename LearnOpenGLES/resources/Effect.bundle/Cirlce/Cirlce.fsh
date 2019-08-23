@@ -1,19 +1,18 @@
 precision mediump float;
 
-const float PI = 3.14159265;
-uniform sampler2D Texture;
+varying vec2 textureCoordinate;
+uniform sampler2D inputImageTexture;
 
+const float PI = 3.14159265;
 const float uD = 80.0;
 const float uR = 0.5;
-
-varying vec2 TextureCoordsVarying;
 
 void main()
 {
     ivec2 ires = ivec2(512, 512);
     float Res = float(ires.s);
     
-    vec2 st = TextureCoordsVarying;
+    vec2 st = textureCoordinate;
     float Radius = Res * uR;
     
     vec2 xy = Res * st;
@@ -32,7 +31,7 @@ void main()
     
     st = xy1/Res;
     
-    vec3 irgb = texture2D(Texture, st).rgb;
+    vec3 irgb = texture2D(inputImageTexture, st).rgb;
     
     gl_FragColor = vec4( irgb, 1.0 );
 }

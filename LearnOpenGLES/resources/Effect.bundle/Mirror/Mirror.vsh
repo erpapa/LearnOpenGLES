@@ -1,8 +1,10 @@
-attribute vec4 Position;
-attribute vec2 TextureCoords;
-varying vec2 TextureCoordsVarying;
+attribute vec4 position;
+attribute vec4 inputTextureCoordinate;
 
-void main() {
-	gl_Position = Position;
-	TextureCoordsVarying = TextureCoords;
+varying vec2 textureCoordinate;
+
+void main()
+{
+    gl_Position = position;
+    textureCoordinate = inputTextureCoordinate.xy;
 }

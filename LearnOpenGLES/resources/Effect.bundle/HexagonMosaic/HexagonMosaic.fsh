@@ -1,6 +1,6 @@
 precision highp float;
-uniform sampler2D Texture;
-varying vec2 TextureCoordsVarying;
+varying vec2 textureCoordinate;
+uniform sampler2D inputImageTexture;
 
 const float mosaicSize = 0.03;
 
@@ -9,8 +9,8 @@ void main (void)
     float length = mosaicSize;
     float TR = 0.866025;
     
-    float x = TextureCoordsVarying.x;
-    float y = TextureCoordsVarying.y;
+    float x = textureCoordinate.x;
+    float y = textureCoordinate.y;
     
     int wx = int(x / 1.5 / length);
     int wy = int(y / TR / length);
@@ -45,7 +45,7 @@ void main (void)
     } else {
         vn = v2;
     }
-    vec4 color = texture2D(Texture, vn);
+    vec4 color = texture2D(inputImageTexture, vn);
     
     gl_FragColor = color;
     

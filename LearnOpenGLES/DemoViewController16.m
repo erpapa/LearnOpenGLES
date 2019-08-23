@@ -54,7 +54,7 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
 @interface DemoViewController16 () <UICollectionViewDataSource, UICollectionViewDelegate>
 {
     GLint _filterPositionAttribute, _filterTextureCoordinateAttribute;
-    GLint _filterInputTextureUniform, _filterTimeUniform;
+    GLint _filterInputTextureUniform, _filterInputTimeUniform, _filterInputTextureSizeUniform;
     
     GLint _drawableWidth, _drawableHeight;
     GLuint _defaultFrameBuffer, _colorRenderBuffer, _depthRenderBuffer;
@@ -123,8 +123,8 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
     _textureID = [DemoUtils createTextureFromImage:image.CGImage flippedX:NO flippedY:YES];
     
     // 4.配置着色器
-    self.dataArray = @[@"无",@"灰度",@"颠倒",@"旋涡",@"马赛克",@"马赛克2",@"马赛克3", @"缩放",@"灵魂出窍",@"抖动",@"闪白",@"毛刺",@"眩晕",@"电击",@"镜像"];
-    self.filterArray = @[@"Normal", @"Gray", @"Reversal", @"Cirlce", @"Mosaic", @"HexagonMosaic", @"TriangularMosaic", @"Scale", @"SoulOut", @"Shake", @"ShineWhite", @"Glitch", @"Vertigo", @"Electric", @"Mirror"];
+    self.dataArray = @[@"无", @"灰度", @"颠倒", @"旋涡", @"马赛克", @"马赛克2", @"马赛克3",  @"缩放", @"灵魂出窍", @"抖动", @"闪白", @"毛刺", @"眩晕", @"电击", @"动感光波", @"暗黑幻境", @"视频分裂", @"百叶窗", @"幻影", @"镜像"];
+    self.filterArray = @[@"Normal", @"Gray", @"Reversal", @"Cirlce", @"Mosaic", @"HexagonMosaic", @"TriangularMosaic", @"Scale", @"SoulOut", @"Shake", @"ShineWhite", @"Glitch", @"Vertigo", @"Electric", @"RockLight", @"DarkDream", @"SoulSplit", @"LinearShadow", @"Phantom", @"Mirror"];
     [self setupFilerProgram:self.filterArray.firstObject];
 }
 
@@ -196,14 +196,15 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
     NSString *vertexShaderPath = [effectBundle pathForResource:shaderName ofType:@"vsh" inDirectory:shaderName];
     NSString *fragmentShaderPath = [effectBundle pathForResource:shaderName ofType:@"fsh" inDirectory:shaderName];
     self.program = [[GLProgram alloc] initWithVertexShaderString:[NSString stringWithContentsOfFile:vertexShaderPath encoding:NSUTF8StringEncoding error:nil] fragmentShaderString:[NSString stringWithContentsOfFile:fragmentShaderPath encoding:NSUTF8StringEncoding error:nil]];
-    [self.program addAttribute:@"Position"];
-    [self.program addAttribute:@"TextureCoords"];
+    [self.program addAttribute:@"position"];
+    [self.program addAttribute:@"inputTextureCoordinate"];
     [self.program link];
     
-    _filterPositionAttribute = [self.program attributeIndex:@"Position"];
-    _filterTextureCoordinateAttribute = [self.program attributeIndex:@"TextureCoords"];
-    _filterInputTextureUniform = [self.program uniformIndex:@"Texture"];
-    _filterTimeUniform = [self.program uniformIndex:@"Time"];
+    _filterPositionAttribute = [self.program attributeIndex:@"position"];
+    _filterTextureCoordinateAttribute = [self.program attributeIndex:@"inputTextureCoordinate"];
+    _filterInputTextureUniform = [self.program uniformIndex:@"inputImageTexture"];
+    _filterInputTextureSizeUniform = [self.program uniformIndex:@"inputTextureSize"];
+    _filterInputTimeUniform = [self.program uniformIndex:@"inputTime"];
 }
 
 // FBO
@@ -289,8 +290,14 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
     [self.program use];
     
     // 传入时间
-    CGFloat currentTime = self.displayLink.timestamp - self.startTimestamp;
-    glUniform1f(_filterTimeUniform, currentTime);
+    CGFloat inputTime = self.displayLink.timestamp - self.startTimestamp;
+    glUniform1f(_filterInputTimeUniform, inputTime);
+    
+    // 传入宽高
+    GLfloat sizeArray[2];
+    sizeArray[0] = _drawableWidth;
+    sizeArray[1] = _drawableHeight;
+    glUniform2fv(_filterInputTextureSizeUniform, 1, sizeArray);
     
     // 绑定纹理
     glActiveTexture(GL_TEXTURE0);

@@ -1,16 +1,16 @@
 precision highp float;
-uniform sampler2D Texture;
-varying vec2 TextureCoordsVarying;
+varying vec2 textureCoordinate;
+uniform sampler2D inputImageTexture;
 
 float mosaicSize = 0.03;
 
-void main (void){
-    
+void main (void)
+{
     const float TR = 0.866025;
     const float PI6 = 0.523599;
     
-    float x = TextureCoordsVarying.x;
-    float y = TextureCoordsVarying.y;
+    float x = textureCoordinate.x;
+    float y = textureCoordinate.y;
     
     int wx = int(x/(1.5 * mosaicSize));
     int wy = int(y/(TR * mosaicSize));
@@ -44,7 +44,7 @@ void main (void){
         vn = v2;
     }
     
-    vec4 mid = texture2D(Texture, vn);
+    vec4 mid = texture2D(inputImageTexture, vn);
     float a = atan((x - vn.x)/(y - vn.y));
     
     vec2 area1 = vec2(vn.x, vn.y - mosaicSize * TR / 2.0);
@@ -68,7 +68,7 @@ void main (void){
         vn = area6;
     }
     
-    vec4 color = texture2D(Texture, vn);
+    vec4 color = texture2D(inputImageTexture, vn);
     gl_FragColor = color;
     
 }

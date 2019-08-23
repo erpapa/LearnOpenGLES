@@ -1,17 +1,17 @@
 precision highp float;
+varying vec2 textureCoordinate;
+uniform sampler2D inputImageTexture;
 
-uniform sampler2D Texture;
-varying highp vec2 TextureCoordsVarying;
-uniform float Time;
+uniform float inputTime;
+const float duration = 3.0;
 
-void main() {
-    float duration = 3.0;
-    float time = mod(Time, duration);
-    
-	highp vec2 position = TextureCoordsVarying;
-    if (time <= 1.0) {
+void main()
+{
+    float currentTime = mod(inputTime, duration);
+	highp vec2 position = textureCoordinate;
+    if (currentTime <= 1.0) {
         position.x = position.x;
-    } else if (time <= 2.0) {
+    } else if (currentTime <= 2.0) {
 		if (position.x > 0.5) {
 			position.x = 1.0 - position.x;
 		}
@@ -22,5 +22,5 @@ void main() {
 			position.x = 0.5 - position.x;
 		}
 	}
-	gl_FragColor = texture2D(Texture, position);
+	gl_FragColor = texture2D(inputImageTexture, position);
 }

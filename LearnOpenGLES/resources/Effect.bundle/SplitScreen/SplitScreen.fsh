@@ -1,45 +1,44 @@
 precision highp float;
-
-uniform int ScreenType;
-uniform sampler2D Texture;
-varying vec2 TextureCoordsVarying;
+varying vec2 textureCoordinate;
+uniform sampler2D inputImageTexture;
+uniform int screenType;
 
 void main()
 {
-    vec2 uv = TextureCoordsVarying;
+    vec2 uv = textureCoordinate;
     
     // 1
-    if (ScreenType == 0) {
+    if (screenType == 0) {
         
-    } else if (ScreenType == 1) {
+    } else if (screenType == 1) {
         // 2 v
         if (uv.y <= 0.5) {
             uv.y = uv.y + 0.25;
         } else {
             uv.y = uv.y - 0.25;
         }
-    } else if (ScreenType == 2) {
+    } else if (screenType == 2) {
         // 2 h
         if (uv.x <= 0.5) {
             uv.x = uv.x + 0.25;
         } else {
             uv.x = uv.x - 0.25;
         }
-    } else if (ScreenType == 3) {
+    } else if (screenType == 3) {
         // 3v
         if (uv.y <= 1.0/3.0) {
             uv.y = uv.y + 1.0/3.0;
         } else if (uv.y >= 2.0/3.0) {
             uv.y = uv.y - 1.0/3.0;
         }
-    } else if (ScreenType == 4) {
+    } else if (screenType == 4) {
         // 3h
         if (uv.x <= 1.0/3.0) {
             uv.x = uv.x + 1.0/3.0;
         } else if (uv.x >= 2.0/3.0) {
             uv.x = uv.x - 1.0/3.0;
         }
-    } else if (ScreenType == 7) {
+    } else if (screenType == 7) {
         // 4
         if (uv.x <= 0.5) {
             uv.x = uv.x + 0.25;
@@ -51,7 +50,7 @@ void main()
         } else {
             uv.y = uv.y - 0.25;
         }
-    } else if (ScreenType == 8) {
+    } else if (screenType == 8) {
         // 6v
         if (uv.x <= 0.5) {
             uv.x = uv.x + 0.25;
@@ -63,8 +62,7 @@ void main()
         } else if (uv.y >= 2.0/3.0) {
             uv.y = uv.y - 1.0/3.0;
         }
-
-    } else if (ScreenType == 9) {
+    } else if (screenType == 9) {
         // 6h
         if (uv.x <= 1.0/3.0) {
             uv.x = uv.x + 1.0/3.0;
@@ -76,7 +74,7 @@ void main()
         } else {
             uv.y = uv.y - 0.25;
         }
-    } else if (ScreenType == 10) {
+    } else if (screenType == 10) {
         // 9
         if (uv.x <= 1.0/3.0) {
             uv.x = uv.x + 1.0/3.0;
@@ -90,9 +88,9 @@ void main()
         }
     }
     
-    vec4 textureColor = texture2D(Texture, uv);
+    vec4 textureColor = texture2D(inputImageTexture, uv);
     
-    if (ScreenType == 5) {
+    if (screenType == 5) {
         // 3 blur
         if (uv.y <= 1.0/3.0 || uv.y >= 2.0/3.0) {
             // blurry cal
@@ -101,9 +99,9 @@ void main()
             uv = uv / 1.5;
             uv += center;
             vec4 whiteMask = vec4(0.5, 0.5, 0.5, 0.9);
-            textureColor = mix(whiteMask, texture2D(Texture, uv) * 0.5, 0.2);
+            textureColor = mix(whiteMask, texture2D(inputImageTexture, uv) * 0.5, 0.2);
         }
-    } else if (ScreenType == 6) {
+    } else if (screenType == 6) {
         // 3black
         if (uv.y <= 1.0/3.0 || uv.y >= 2.0/3.0) {
             // blurry cal
