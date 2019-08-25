@@ -206,7 +206,7 @@
     glBindAttribLocation(program, index, [name UTF8String]);
 }
 
-+ (BOOL)linkProgram:(GLuint)program vertShader:(GLint)vertShader fragShader:(GLint)fragShader
++ (BOOL)linkProgram:(GLuint)program
 {
     GLint status;
     glLinkProgram(program);
@@ -216,18 +216,15 @@
     {
         return NO;
     }
-    
-    if (vertShader)
-    {
-        glDeleteShader(vertShader);
-        vertShader = 0;
-    }
-    if (fragShader)
-    {
-        glDeleteShader(fragShader);
-        fragShader = 0;
-    }
     return YES;
+}
+
++ (void)deleteShader:(GLuint)shader
+{
+    if (shader)
+    {
+        glDeleteShader(shader);
+    }
 }
 
 + (void)useProgram:(GLuint)program

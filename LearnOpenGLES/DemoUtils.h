@@ -21,7 +21,7 @@
 + (NSData *)createBitmapFromImage:(CGImageRef)image;
 + (NSData *)createBitmapFromImage:(CGImageRef)image flippedX:(BOOL)flippedX flippedY:(BOOL)flippedY;
 
-// 创建纹理
+// 创建纹理texture
 + (GLuint)createTextureFromImage:(CGImageRef)image;
 + (GLuint)createTextureFromImage:(CGImageRef)image flippedX:(BOOL)flippedX flippedY:(BOOL)flippedY;
 
@@ -29,18 +29,21 @@
 + (GLuint)createProgram;
 
 // 编译shader
-+ (GLuint)compileShaderPath:(NSString *)shaderFile type:(GLenum)type;
++ (GLuint)compileShaderPath:(NSString *)shaderPath type:(GLenum)type;
 + (GLuint)compileShaderString:(NSString *)shaderString type:(GLenum)type;
 
 // 执行attach
 + (void)attachShader:(GLuint)program shader:(GLuint)shader;
 + (void)attachShader:(GLuint)program vertShader:(GLint)vertShader fragShader:(GLint)fragShader;
 
-// GLES2 需要绑定 attribLocation，GLES3 可以直接在顶点着色器指定 layout
+// GLES2需要绑定attribLocation，GLES3可以直接在顶点着色器指定layout
 + (void)bindAttribLocation:(GLuint)program index:(GLuint)index name:(NSString *)name;
 
 // 链接program，然后删除shader
-+ (BOOL)linkProgram:(GLuint)program vertShader:(GLint)vertShader fragShader:(GLint)fragShader;
++ (BOOL)linkProgram:(GLuint)program;
+
+// 删除shader
++ (void)deleteShader:(GLuint)shader;
 
 // 使用program
 + (void)useProgram:(GLuint)program;

@@ -36,7 +36,6 @@ static ScenceVertex greenVertexData[] = {
     GLint _filterPositionAttribute;
     GLint _filterSourceColorAttribute;
     GLKMatrix4 _modelMatrix, _viewMatrix, _projectionMatrix;
-    GLKVector3 _cameraPos;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -70,12 +69,10 @@ static ScenceVertex greenVertexData[] = {
     _filterSourceColorAttribute = [self.program attributeIndex:@"sourceColor"];
     [self.program use]; // 加载并使用链接好的程序
     
-    // 摄像机位置
-    _cameraPos = GLKVector3Make(0.0, 0.0, 1.0);
     // 初始化模型矩阵
     _modelMatrix = GLKMatrix4Identity;
     // 设置摄像机在(0，0，1)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
-    _viewMatrix = GLKMatrix4MakeLookAt(_cameraPos.x, _cameraPos.y, _cameraPos.z, 0, 0, 0, 0, 1, 0);
+    _viewMatrix = GLKMatrix4MakeLookAt(0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     // 正交投影矩阵
     _projectionMatrix = GLKMatrix4MakeOrtho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
 }

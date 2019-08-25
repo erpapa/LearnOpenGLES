@@ -1,7 +1,7 @@
-attribute vec4 position;
-attribute vec4 inputTextureCoordinate;
+attribute highp vec4 position;
+attribute highp vec4 inputTextureCoordinate;
 
-varying vec2 textureCoordinate;
+varying highp vec2 textureCoordinate;
 
 uniform mat4 model;
 uniform mat4 view;

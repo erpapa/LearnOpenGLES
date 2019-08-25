@@ -26,6 +26,12 @@
 		18000747218AF43600BC0EFC /* sun.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18000745218AF43600BC0EFC /* sun.jpg */; };
 		18000749218AF45900BC0EFC /* earth_bump.png in Resources */ = {isa = PBXBuildFile; fileRef = 18000748218AF45900BC0EFC /* earth_bump.png */; };
 		1800074B218AF9D700BC0EFC /* orbit.png in Resources */ = {isa = PBXBuildFile; fileRef = 1800074A218AF9D700BC0EFC /* orbit.png */; };
+		1804653523128694002682FC /* shaderv_20.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1804652F23128693002682FC /* shaderv_20.vsh */; };
+		1804653623128694002682FC /* shaderf_20.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1804653023128693002682FC /* shaderf_20.fsh */; };
+		1804653723128694002682FC /* shaderf_19.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1804653123128693002682FC /* shaderf_19.fsh */; };
+		1804653823128694002682FC /* shaderv_19.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1804653223128693002682FC /* shaderv_19.vsh */; };
+		1804653923128694002682FC /* shaderf_18.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1804653323128694002682FC /* shaderf_18.fsh */; };
+		1804653A23128694002682FC /* shaderv_18.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1804653423128694002682FC /* shaderv_18.vsh */; };
 		18187CFB22E0C411004AF974 /* DemoViewController7.m in Sources */ = {isa = PBXBuildFile; fileRef = 18187CF822E0C410004AF974 /* DemoViewController7.m */; };
 		18187CFC22E0C411004AF974 /* DemoViewController6.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18187CF922E0C411004AF974 /* DemoViewController6.mm */; };
 		18379ADF21831F5C00383953 /* DemoViewController5.m in Sources */ = {isa = PBXBuildFile; fileRef = 18379ADE21831F5C00383953 /* DemoViewController5.m */; };
@@ -127,6 +133,9 @@
 		18D1B88B2186FF0A0071A7FE /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B8852186FF090071A7FE /* Point.cpp */; };
 		18D1B892218712D20071A7FE /* container_specular.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18D1B890218712D20071A7FE /* container_specular.jpg */; };
 		18D1B893218712D20071A7FE /* container_diffuse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18D1B891218712D20071A7FE /* container_diffuse.jpg */; };
+		18FBF3CF23127A9A007B106D /* DemoViewController18.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FBF3CE23127A9A007B106D /* DemoViewController18.m */; };
+		18FBF3D223127EF8007B106D /* DemoViewController19.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FBF3D123127EF8007B106D /* DemoViewController19.m */; };
+		18FBF3D523127F0A007B106D /* DemoViewController20.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FBF3D423127F0A007B106D /* DemoViewController20.m */; };
 		EA4603B4202C64050037EC15 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4603B3202C64050037EC15 /* AppDelegate.m */; };
 		EA4603B7202C64050037EC15 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4603B6202C64050037EC15 /* DemoViewController.m */; };
 		EA4603BC202C64050037EC15 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA4603BB202C64050037EC15 /* Assets.xcassets */; };
@@ -193,6 +202,12 @@
 		18000745218AF43600BC0EFC /* sun.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun.jpg; sourceTree = "<group>"; };
 		18000748218AF45900BC0EFC /* earth_bump.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth_bump.png; sourceTree = "<group>"; };
 		1800074A218AF9D700BC0EFC /* orbit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orbit.png; sourceTree = "<group>"; };
+		1804652F23128693002682FC /* shaderv_20.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_20.vsh; sourceTree = "<group>"; };
+		1804653023128693002682FC /* shaderf_20.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_20.fsh; sourceTree = "<group>"; };
+		1804653123128693002682FC /* shaderf_19.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_19.fsh; sourceTree = "<group>"; };
+		1804653223128693002682FC /* shaderv_19.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_19.vsh; sourceTree = "<group>"; };
+		1804653323128694002682FC /* shaderf_18.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_18.fsh; sourceTree = "<group>"; };
+		1804653423128694002682FC /* shaderv_18.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_18.vsh; sourceTree = "<group>"; };
 		18187CF722E0C410004AF974 /* DemoViewController7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewController7.h; sourceTree = "<group>"; };
 		18187CF822E0C410004AF974 /* DemoViewController7.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController7.m; sourceTree = "<group>"; };
 		18187CF922E0C411004AF974 /* DemoViewController6.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DemoViewController6.mm; sourceTree = "<group>"; };
@@ -407,6 +422,12 @@
 		18D1B8882186FF0A0071A7FE /* Contour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contour.h; sourceTree = "<group>"; };
 		18D1B890218712D20071A7FE /* container_specular.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container_specular.jpg; sourceTree = "<group>"; };
 		18D1B891218712D20071A7FE /* container_diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container_diffuse.jpg; sourceTree = "<group>"; };
+		18FBF3CD23127A9A007B106D /* DemoViewController18.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController18.h; sourceTree = "<group>"; };
+		18FBF3CE23127A9A007B106D /* DemoViewController18.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController18.m; sourceTree = "<group>"; };
+		18FBF3D023127EF8007B106D /* DemoViewController19.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController19.h; sourceTree = "<group>"; };
+		18FBF3D123127EF8007B106D /* DemoViewController19.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController19.m; sourceTree = "<group>"; };
+		18FBF3D323127F0A007B106D /* DemoViewController20.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController20.h; sourceTree = "<group>"; };
+		18FBF3D423127F0A007B106D /* DemoViewController20.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController20.m; sourceTree = "<group>"; };
 		EA4603AF202C64050037EC15 /* LearnOpenGLES.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LearnOpenGLES.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA4603B2202C64050037EC15 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EA4603B3202C64050037EC15 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -954,6 +975,12 @@
 				188D1B3A22EEA4FF00864A47 /* DemoViewController16.m */,
 				18CFC31F230553EE00D6E1C7 /* DemoViewController17.h */,
 				18CFC320230553EE00D6E1C7 /* DemoViewController17.m */,
+				18FBF3CD23127A9A007B106D /* DemoViewController18.h */,
+				18FBF3CE23127A9A007B106D /* DemoViewController18.m */,
+				18FBF3D023127EF8007B106D /* DemoViewController19.h */,
+				18FBF3D123127EF8007B106D /* DemoViewController19.m */,
+				18FBF3D323127F0A007B106D /* DemoViewController20.h */,
+				18FBF3D423127F0A007B106D /* DemoViewController20.m */,
 				EA4603BB202C64050037EC15 /* Assets.xcassets */,
 				EA4603BD202C64050037EC15 /* LaunchScreen.storyboard */,
 				EA4603C0202C64050037EC15 /* Info.plist */,
@@ -1019,6 +1046,12 @@
 				18CFC31823054EEF00D6E1C7 /* shaderf_16.fsh */,
 				18CFC31C23054F0200D6E1C7 /* shaderv_17.vsh */,
 				18CFC31B23054F0200D6E1C7 /* shaderf_17.fsh */,
+				1804653423128694002682FC /* shaderv_18.vsh */,
+				1804653323128694002682FC /* shaderf_18.fsh */,
+				1804653223128693002682FC /* shaderv_19.vsh */,
+				1804653123128693002682FC /* shaderf_19.fsh */,
+				1804652F23128693002682FC /* shaderv_20.vsh */,
+				1804653023128693002682FC /* shaderf_20.fsh */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -1175,6 +1208,7 @@
 				18A9F43222F02B8A006B104B /* shaderf_14.fsh in Resources */,
 				18C07F3D22FB187000C60C13 /* shaderf_15.fsh in Resources */,
 				18A9F42B22F022B1006B104B /* waiting.png in Resources */,
+				1804653623128694002682FC /* shaderf_20.fsh in Resources */,
 				EA460402202D84F80037EC15 /* shaderv_0.vsh in Resources */,
 				EA4603FE202D84240037EC15 /* shaderf_1.fsh in Resources */,
 				18000738218AE9DE00BC0EFC /* shaderf_8.fsh in Resources */,
@@ -1206,16 +1240,21 @@
 				18A051092191A13700FB97D7 /* skybox_right.jpg in Resources */,
 				18A9F43522F034C5006B104B /* for_test_blend.png in Resources */,
 				1800073B218AF3A600BC0EFC /* moon.jpg in Resources */,
+				1804653823128694002682FC /* shaderv_19.vsh in Resources */,
 				180007192188797100BC0EFC /* shaderf_7.fsh in Resources */,
 				18A0510D2191A13700FB97D7 /* skybox_left.jpg in Resources */,
 				EA46040C202DA7160037EC15 /* shaderv_4.vsh in Resources */,
 				EA460406202D8FB80037EC15 /* shaderv_3.vsh in Resources */,
 				1800071321886D6700BC0EFC /* shaderf_6.fsh in Resources */,
+				1804653923128694002682FC /* shaderf_18.fsh in Resources */,
+				1804653A23128694002682FC /* shaderv_18.vsh in Resources */,
 				18D1B893218712D20071A7FE /* container_diffuse.jpg in Resources */,
+				1804653723128694002682FC /* shaderf_19.fsh in Resources */,
 				18000749218AF45900BC0EFC /* earth_bump.png in Resources */,
 				1800073E218AF3E700BC0EFC /* earth_emissive.jpg in Resources */,
 				183C56A523043497001DAEFC /* ColorConvert.bundle in Resources */,
 				18000746218AF43600BC0EFC /* sun_halo.png in Resources */,
+				1804653523128694002682FC /* shaderv_20.vsh in Resources */,
 				18A9F43322F02B8A006B104B /* shaderv_14.vsh in Resources */,
 				EA4603FC202D840A0037EC15 /* shaderv_1.vsh in Resources */,
 				EA4603BC202C64050037EC15 /* Assets.xcassets in Resources */,
@@ -1261,6 +1300,7 @@
 				18D1B7CF2186F14A0071A7FE /* cff.c in Sources */,
 				18D1B8532186F14A0071A7FE /* ftgxval.c in Sources */,
 				18D1B83E2186F14A0071A7FE /* truetype.c in Sources */,
+				18FBF3D223127EF8007B106D /* DemoViewController19.m in Sources */,
 				18D1B85A2186F14A0071A7FE /* ftglyph.c in Sources */,
 				18D1B86C2186F14A0071A7FE /* ftbbox.c in Sources */,
 				18D1B86A2186F14A0071A7FE /* ftfstype.c in Sources */,
@@ -1317,7 +1357,9 @@
 				18D1B7C22186F14A0071A7FE /* type42.c in Sources */,
 				188D1B3B22EEA4FF00864A47 /* DemoViewController16.m in Sources */,
 				18D1B8892186FF0A0071A7FE /* Contour.cpp in Sources */,
+				18FBF3D523127F0A007B106D /* DemoViewController20.m in Sources */,
 				18D1B86F2186F14A0071A7FE /* ftgasp.c in Sources */,
+				18FBF3CF23127A9A007B106D /* DemoViewController18.m in Sources */,
 				18D1B8582186F14A0071A7FE /* ftbitmap.c in Sources */,
 				18CFC321230553EE00D6E1C7 /* DemoViewController17.m in Sources */,
 				18D1B88B2186FF0A0071A7FE /* Point.cpp in Sources */,

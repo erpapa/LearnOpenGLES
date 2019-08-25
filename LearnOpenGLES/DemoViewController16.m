@@ -118,9 +118,9 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
     [self setupFrameBuffer];
     
     // 3.创建纹理
-    NSString *imagePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"meimei.jpg"];
-    UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-    _textureID = [DemoUtils createTextureFromImage:image.CGImage flippedX:NO flippedY:YES];
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"meimei" ofType:@"jpg"];
+    UIImage *textureImage = [UIImage imageWithContentsOfFile:imagePath];
+    _textureID = [DemoUtils createTextureFromImage:textureImage.CGImage flippedX:NO flippedY:YES];
     
     // 4.配置着色器
     self.dataArray = @[@"无", @"灰度", @"颠倒", @"旋涡", @"马赛克", @"马赛克2", @"马赛克3",  @"缩放", @"灵魂出窍", @"抖动", @"闪白", @"毛刺", @"眩晕", @"电击", @"动感光波", @"暗黑幻境", @"视频分裂", @"百叶窗", @"幻影", @"镜像"];
@@ -283,8 +283,8 @@ static NSString * kDemoViewController16CellResueID = @"kDemoViewController16Cell
 - (void)drawRect:(CGRect)rect
 {
     // 清除画布
+    glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
-    glClearColor(1, 1, 1, 1);
     
     // 启用着色器
     [self.program use];
