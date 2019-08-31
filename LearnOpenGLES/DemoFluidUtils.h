@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
-#import <GLKit/GLKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import "GLProgram.h"
 
@@ -34,6 +33,15 @@ extern NSString *const kFluidCurlFragmentShaderString;
 extern NSString *const kFluidVorticityFragmentShaderString;
 extern NSString *const kFluidPressureFragmentShaderString;
 extern NSString *const kFluidGradientSubtractFragmentShaderString;
+
+#pragma mark - Color
+
+union _FluidColor
+{
+    struct { float r, g, b; };
+    float v[3];
+};
+typedef union _FluidColor FluidColor;
 
 #pragma mark - Format
 
@@ -71,7 +79,7 @@ struct _FluidConfig {
     BOOL COLORFUL;
     CGFloat COLOR_UPDATE_SPEED;
     BOOL PAUSED;
-    GLKVector3 BACK_COLOR;
+    FluidColor BACK_COLOR;
     BOOL TRANSPARENT;
     BOOL BLOOM;
     NSInteger BLOOM_ITERATIONS;
@@ -96,7 +104,7 @@ typedef struct _FluidConfig FluidConfig;
 @property (nonatomic, assign) float deltaY;
 @property (nonatomic, assign) BOOL down;
 @property (nonatomic, assign) BOOL moved;
-@property (nonatomic, assign) GLKVector3 color;
+@property (nonatomic, assign) FluidColor color;
 
 @end
 

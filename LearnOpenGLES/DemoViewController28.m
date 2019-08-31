@@ -28,6 +28,7 @@
 @property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic, strong) GLKTextureInfo *ditheringTexture;
 
+@property (nonatomic, assign) BOOL needUpdate;
 @property (nonatomic, assign) int canvasWidth;
 @property (nonatomic, assign) int canvasHeight;
 @property (nonatomic, assign) CFTimeInterval lastUpdateTime;
@@ -80,12 +81,12 @@
             .PRESSURE_ITERATIONS = 20,
             .CURL = 30,
             .SPLAT_RADIUS = 5,
-            .SPLAT_FORCE = 2000,
+            .SPLAT_FORCE = 6000,
             .SHADING = YES,
             .COLORFUL = YES,
             .COLOR_UPDATE_SPEED = 10,
             .PAUSED = NO,
-            .BACK_COLOR = GLKVector3Make(0.0, 0.0, 0.0),
+            .BACK_COLOR = (FluidColor){0.0, 0.0, 0.0},
             .TRANSPARENT = NO,
             .BLOOM = YES,
             .BLOOM_ITERATIONS = 8,
@@ -252,7 +253,7 @@
     GLenum filtering = self.extension.supportLinearFiltering ? GL_LINEAR : GL_NEAREST;
     self.bloom = [[FluidFrameBuffer alloc] initWithWidth:res.width height:res.height internalFormat:rgba.internalFormat format:rgba.format type:texType param:filtering];
     [self.bloomFramebuffers removeAllObjects];
-    for (NSInteger i = 0; i < self.config.BLOOM_ITERATIONS; i++) {
+    for (int i = 0; i < self.config.BLOOM_ITERATIONS; i++) {
         int width = ((int)res.width) >> (i + 1);
         int height = ((int)res.height) >> (i + 1);
         if (width < 2 || height < 2) break;
@@ -275,7 +276,7 @@
 - (void)multipleSplats:(NSInteger)amount
 {
     for (int i = 0; i < amount; i++) {
-        GLKVector3 color = [self generateColor];
+        FluidColor color = [self generateColor];
         color.r *= 10.0;
         color.g *= 10.0;
         color.b *= 10.0;
@@ -294,7 +295,7 @@
     [self splat:pointer.texcoordX y:pointer.texcoordY dx:dx dy:dy color:pointer.color];
 }
 
-- (void)splat:(float)x y:(float)y dx:(float)dx dy:(float)dy color:(GLKVector3)color
+- (void)splat:(float)x y:(float)y dx:(float)dx dy:(float)dy color:(FluidColor)color
 {
     float aspectRatio = 1.0 * self.canvasWidth / self.canvasHeight;
     float radius = self.config.SPLAT_RADIUS / 1000.0 * MAX(1.0, aspectRatio);
@@ -305,7 +306,7 @@
     glUniform1i([self.splatProgram uniformIndex:@"uTarget"], 0);
     glUniform1f([self.splatProgram uniformIndex:@"aspectRatio"], aspectRatio);
     glUniform2f([self.splatProgram uniformIndex:@"point"], x, y);
-    glUniform3f([self.splatProgram uniformIndex:@"color"], 0.0, 0.0, 0.0);
+    glUniform3f([self.splatProgram uniformIndex:@"color"], dx, dy, 0.0);
     glUniform1f([self.splatProgram uniformIndex:@"radius"], radius);
     [self blit:self.velocity.write];
     [self.velocity swap];
@@ -336,7 +337,7 @@
     return CGSizeMake(max, min);
 }
 
-- (GLKVector3)generateColor
+- (FluidColor)generateColor
 {
     float h = (arc4random() % 101) / 100.0;
     float s = 1.0;
@@ -376,13 +377,17 @@
             break;
         }
     }
-    return GLKVector3Make(r * 0.15, g * 0.15, b * 0.15);
+    return (FluidColor){r * 0.15, g * 0.15, b * 0.15};
 }
 
 #pragma mark - Update
 
 - (void)update
 {
+    if (!self.needUpdate) {
+        return;
+    }
+    self.needUpdate = NO;
     CFTimeInterval now = CACurrentMediaTime();
     CFTimeInterval dt = now - self.lastUpdateTime;
     dt = MIN(dt, 0.016666);
@@ -430,15 +435,13 @@
 
 - (void)step:(double)dt
 {
-    glDisable(GL_BLEND);
-    
     [self.curlProgram use];
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, self.velocity.read.texture);
     glUniform1i([self.curlProgram uniformIndex:@"uVelocity"], 0);
-    glUniform2f([self.curlProgram uniformIndex:@"texelSize"], self.velocity.texelSizeX, self.velocity.texelSizeY);
+    glUniform2f([self.curlProgram uniformIndex:@"texelSize"], self.curl.texelSizeX, self.curl.texelSizeY);
     [self blit:self.curl];
-    
+
     [self.vorticityProgram use];
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, self.velocity.read.texture);
@@ -468,13 +471,15 @@
     [self.pressure swap];
     
     [self.pressureProgram use];
+    glUniform2f([self.pressureProgram uniformIndex:@"texelSize"], self.velocity.texelSizeX, self.velocity.texelSizeY);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, self.divergence.texture);
     glUniform1i([self.pressureProgram uniformIndex:@"uDivergence"], 0);
+#warning I DONT'T KNOW WHY
     for (int i = 0; i < self.config.PRESSURE_ITERATIONS; i++) {
-        glActiveTexture(GL_TEXTURE1);
+        glActiveTexture(GL_TEXTURE1 + i % 10);
         glBindTexture(GL_TEXTURE_2D, self.pressure.read.texture);
-        glUniform1i([self.pressureProgram uniformIndex:@"uPressure"], 1);
+        glUniform1i([self.pressureProgram uniformIndex:@"uPressure"], 1 + i % 10);
         [self blit:self.pressure.write];
         [self.pressure swap];
     }
@@ -498,6 +503,7 @@
     glUniform1f([self.advectionProgram uniformIndex:@"dt"], dt);
     glUniform1f([self.advectionProgram uniformIndex:@"dissipation"], self.config.VELOCITY_DISSIPATION);
     glUniform2f([self.advectionProgram uniformIndex:@"texelSize"], self.velocity.texelSizeX, self.velocity.texelSizeY);
+    glUniform2f([self.advectionProgram uniformIndex:@"aTexelSize"], self.velocity.texelSizeX, self.velocity.texelSizeY);
     if (!self.extension.supportLinearFiltering) {
         glUniform2f([self.advectionProgram uniformIndex:@"dyeTexelSize"], self.velocity.texelSizeX, self.velocity.texelSizeY);
     }
@@ -514,6 +520,7 @@
     glUniform1f([self.advectionProgram uniformIndex:@"dt"], dt);
     glUniform1f([self.advectionProgram uniformIndex:@"dissipation"], self.config.DENSITY_DISSIPATION);
     glUniform2f([self.advectionProgram uniformIndex:@"texelSize"], self.dye.texelSizeX, self.dye.texelSizeY);
+    glUniform2f([self.advectionProgram uniformIndex:@"aTexelSize"], self.dye.texelSizeX, self.dye.texelSizeY);
     if (!self.extension.supportLinearFiltering) {
         glUniform2f([self.advectionProgram uniformIndex:@"dyeTexelSize"], self.dye.texelSizeX, self.dye.texelSizeY);
     }
@@ -523,7 +530,7 @@
 
 - (void)blit:(FluidFrameBuffer *)target
 {
-    [self blit:target clear:NO];
+    [self blit:target clear:YES];
 }
 
 - (void)blit:(FluidFrameBuffer *)target clear:(BOOL)clear
@@ -556,6 +563,7 @@
         [self applySunrays:self.dye.read mask:self.dye.write destination:self.sunrays];
         [self applyBlur:self.sunrays temp:self.sunraysTemp iterations:1];
     }
+    /*
     if (target == nil || !self.config.TRANSPARENT) {
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
@@ -572,18 +580,19 @@
         glUniform1f([self.checkerboardProgram uniformIndex:@"aspectRatio"], 1.0 * target.width / target.height);
         [self blit:target];
     }
+     */
     [self drawDispaly:target];
 }
 
 - (void)drawDispaly:(FluidFrameBuffer *)target
 {
     [self.displayMaterial use];
-    if (self.config.SHADING) {
-        glUniform2f([self.displayMaterial uniformIndex:@"texelSize"], 1.0 / target.width, 1.0 / target.height);
-    }
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, self.dye.read.texture);
     glUniform1i([self.displayMaterial uniformIndex:@"uTexture"], 0);
+    if (self.config.SHADING) {
+        glUniform2f([self.displayMaterial uniformIndex:@"texelSize"], 1.0 / target.width, 1.0 / target.height);
+    }
     if (self.config.BLOOM) {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, self.bloom.texture);
@@ -603,7 +612,8 @@
 
 - (void)applyBloom:(FluidFrameBuffer *)source destination:(FluidFrameBuffer *)destination
 {
-    if (self.bloomFramebuffers.count < 2) {
+    int buffersCount = (int)self.bloomFramebuffers.count;
+    if (buffersCount < 2) {
         return;
     }
     
@@ -623,25 +633,25 @@
     [self blit:last];
     
     [self.bloomBlurProgram use];
-    for (NSInteger i = 0; i < self.bloomFramebuffers.count; i++) {
+    for (int i = 0; i < buffersCount; i++) {
         FluidFrameBuffer *dest = self.bloomFramebuffers[i];
-        glActiveTexture(GL_TEXTURE0);
+        glActiveTexture(GL_TEXTURE0 + i % 2);
         glBindTexture(GL_TEXTURE_2D, last.texture);
-        glUniform1i([self.bloomBlurProgram uniformIndex:@"uTexture"], 0);
+        glUniform1i([self.bloomBlurProgram uniformIndex:@"uTexture"], i % 2);
         glUniform2f([self.bloomBlurProgram uniformIndex:@"texelSize"], last.texelSizeX, last.texelSizeY);
-        [self blit:dest];
+        [self blit:dest clear:NO];
         last = dest;
     }
     
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE);
-    for (NSInteger i = self.bloomFramebuffers.count - 2; i >= 0; i--) {
+    for (int i = buffersCount - 2; i >= 0; i--) {
         FluidFrameBuffer *baseTex = self.bloomFramebuffers[i];
-        glActiveTexture(GL_TEXTURE0);
+        glActiveTexture(GL_TEXTURE1 + i % 2);
         glBindTexture(GL_TEXTURE_2D, last.texture);
-        glUniform1i([self.bloomBlurProgram uniformIndex:@"uTexture"], 0);
+        glUniform1i([self.bloomBlurProgram uniformIndex:@"uTexture"], 1 + i % 2);
         glUniform2f([self.bloomBlurProgram uniformIndex:@"texelSize"], last.texelSizeX, last.texelSizeY);
-        [self blit:baseTex];
+        [self blit:baseTex clear:NO];
         last = baseTex;
     }
     
@@ -657,7 +667,6 @@
 
 - (void)applySunrays:(FluidFrameBuffer *)source mask:(FluidFrameBuffer *)mask destination:(FluidFrameBuffer *)destination
 {
-    glDisable(GL_BLEND);
     [self.sunraysMaskProgram use];
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, source.texture);
@@ -682,9 +691,9 @@
         glUniform2f([self.blurProgram uniformIndex:@"texelSize"], target.texelSizeX, 0.0);
         [self blit:temp];
         
-        glActiveTexture(GL_TEXTURE0);
+        glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, temp.texture);
-        glUniform1i([self.blurProgram uniformIndex:@"uTexture"], 0);
+        glUniform1i([self.blurProgram uniformIndex:@"uTexture"], 1);
         glUniform2f([self.blurProgram uniformIndex:@"texelSize"], 0.0, target.texelSizeY);
         [self blit:target];
     }
@@ -776,6 +785,7 @@
     glVertexAttribPointer(0, 2, GL_FLOAT, 0, 0, kDisplayVertices);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glDisableVertexAttribArray(0);
+    self.needUpdate = YES;
 }
 
 - (void)dealloc

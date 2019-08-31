@@ -328,7 +328,7 @@ precision highp sampler2D;\n\
 varying vec2 vUv;\n\
 uniform sampler2D uVelocity;\n\
 uniform sampler2D uSource;\n\
-uniform vec2 texelSize;\n\
+uniform vec2 aTexelSize;\n\
 uniform vec2 dyeTexelSize;\n\
 uniform float dt;\n\
 uniform float dissipation;\n\
@@ -348,10 +348,10 @@ vec4 bilerp (sampler2D sam, vec2 uv, vec2 tsize) {\n\
 void main () {\n\
 \n\
 #ifdef MANUAL_FILTERING\n\
-    vec2 coord = vUv - dt * bilerp(uVelocity, vUv, texelSize).xy * texelSize;\n\
+    vec2 coord = vUv - dt * bilerp(uVelocity, vUv, aTexelSize).xy * aTexelSize;\n\
     vec4 result = bilerp(uSource, coord, dyeTexelSize);\n\
 #else\n\
-    vec2 coord = vUv - dt * texture2D(uVelocity, vUv).xy * texelSize;\n\
+    vec2 coord = vUv - dt * texture2D(uVelocity, vUv).xy * aTexelSize;\n\
     vec4 result = texture2D(uSource, coord);\n\
 #endif\n\
     float decay = 1.0 + dissipation * dt;\n\
@@ -501,7 +501,7 @@ void main () {\n\
         self.deltaY = 0;
         self.down = NO;
         self.moved = NO;
-        self.color = GLKVector3Make(0.1176, 0, 0.7843);
+        self.color = (FluidColor){0.1176, 0, 0.7843};
     }
     return self;
 }
