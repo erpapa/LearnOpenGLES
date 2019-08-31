@@ -17,7 +17,8 @@
 
 @implementation DemoViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
@@ -41,10 +42,18 @@
                        @{@"title":@"BLEND（颜色混合）",@"class":@"DemoViewController14"},
                        @{@"title":@"CULL_FACE（面剔除）",@"class":@"DemoViewController15"},
                        @{@"title":@"Effects（滤镜特效）",@"class":@"DemoViewController16"},
-                       @{@"title":@"Screens（分屏特效）",@"class":@"DemoViewController17"},
+                       @{@"title":@"Split Screen（分屏特效）",@"class":@"DemoViewController17"},
                        @{@"title":@"Ambient（环境光）",@"class":@"DemoViewController18"},
                        @{@"title":@"Diffuse（漫反射光）",@"class":@"DemoViewController19"},
-                       @{@"title":@"Specular（镜面高光）",@"class":@"DemoViewController20"}];
+                       @{@"title":@"Specular（镜面高光）",@"class":@"DemoViewController20"},
+                       @{@"title":@"Material（材质）",@"class":@"DemoViewController21"},
+                       @{@"title":@"Diffuse Map（漫反射贴图）",@"class":@"DemoViewController22"},
+                       @{@"title":@"Specular Map（镜面光贴图）",@"class":@"DemoViewController23"},
+                       @{@"title":@"Directional Light（方向光）",@"class":@"DemoViewController24"},
+                       @{@"title":@"Point Light（点光源）",@"class":@"DemoViewController25"},
+                       @{@"title":@"Spot Light（聚光灯）",@"class":@"DemoViewController26"},
+                       @{@"title":@"Multiple Lights（多光源）",@"class":@"DemoViewController27"},
+                       @{@"title":@"Fluid Simulation（流体模拟）",@"class":@"DemoViewController28"}];
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;

@@ -133,6 +133,16 @@
 		18D1B88B2186FF0A0071A7FE /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18D1B8852186FF090071A7FE /* Point.cpp */; };
 		18D1B892218712D20071A7FE /* container_specular.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18D1B890218712D20071A7FE /* container_specular.jpg */; };
 		18D1B893218712D20071A7FE /* container_diffuse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18D1B891218712D20071A7FE /* container_diffuse.jpg */; };
+		18D64E2223180D970047FFDE /* DemoViewController21.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D64E2123180D970047FFDE /* DemoViewController21.m */; };
+		18D64E2523180DA20047FFDE /* DemoViewController22.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D64E2423180DA20047FFDE /* DemoViewController22.m */; };
+		18D64E2823180DAE0047FFDE /* DemoViewController23.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D64E2723180DAE0047FFDE /* DemoViewController23.m */; };
+		18D64E2B23180DBB0047FFDE /* DemoViewController24.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D64E2A23180DBB0047FFDE /* DemoViewController24.m */; };
+		18D64E2E23180DC80047FFDE /* DemoViewController25.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D64E2D23180DC80047FFDE /* DemoViewController25.m */; };
+		18D64E3123180DD40047FFDE /* DemoViewController26.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D64E3023180DD40047FFDE /* DemoViewController26.m */; };
+		18D64E3423180DE10047FFDE /* DemoViewController27.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D64E3323180DE10047FFDE /* DemoViewController27.m */; };
+		18D64E3723180DEC0047FFDE /* DemoViewController28.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D64E3623180DEC0047FFDE /* DemoViewController28.m */; };
+		18D64E3923182AFE0047FFDE /* fluid_dithering.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D64E3823182AFE0047FFDE /* fluid_dithering.png */; };
+		18D64E3C2318EEBE0047FFDE /* DemoFluidUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D64E3B2318EEBE0047FFDE /* DemoFluidUtils.m */; };
 		18FBF3CF23127A9A007B106D /* DemoViewController18.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FBF3CE23127A9A007B106D /* DemoViewController18.m */; };
 		18FBF3D223127EF8007B106D /* DemoViewController19.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FBF3D123127EF8007B106D /* DemoViewController19.m */; };
 		18FBF3D523127F0A007B106D /* DemoViewController20.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FBF3D423127F0A007B106D /* DemoViewController20.m */; };
@@ -422,6 +432,25 @@
 		18D1B8882186FF0A0071A7FE /* Contour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contour.h; sourceTree = "<group>"; };
 		18D1B890218712D20071A7FE /* container_specular.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container_specular.jpg; sourceTree = "<group>"; };
 		18D1B891218712D20071A7FE /* container_diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = container_diffuse.jpg; sourceTree = "<group>"; };
+		18D64E2023180D970047FFDE /* DemoViewController21.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController21.h; sourceTree = "<group>"; };
+		18D64E2123180D970047FFDE /* DemoViewController21.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController21.m; sourceTree = "<group>"; };
+		18D64E2323180DA20047FFDE /* DemoViewController22.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController22.h; sourceTree = "<group>"; };
+		18D64E2423180DA20047FFDE /* DemoViewController22.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController22.m; sourceTree = "<group>"; };
+		18D64E2623180DAE0047FFDE /* DemoViewController23.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController23.h; sourceTree = "<group>"; };
+		18D64E2723180DAE0047FFDE /* DemoViewController23.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController23.m; sourceTree = "<group>"; };
+		18D64E2923180DBB0047FFDE /* DemoViewController24.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController24.h; sourceTree = "<group>"; };
+		18D64E2A23180DBB0047FFDE /* DemoViewController24.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController24.m; sourceTree = "<group>"; };
+		18D64E2C23180DC80047FFDE /* DemoViewController25.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController25.h; sourceTree = "<group>"; };
+		18D64E2D23180DC80047FFDE /* DemoViewController25.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController25.m; sourceTree = "<group>"; };
+		18D64E2F23180DD40047FFDE /* DemoViewController26.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController26.h; sourceTree = "<group>"; };
+		18D64E3023180DD40047FFDE /* DemoViewController26.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController26.m; sourceTree = "<group>"; };
+		18D64E3223180DE10047FFDE /* DemoViewController27.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController27.h; sourceTree = "<group>"; };
+		18D64E3323180DE10047FFDE /* DemoViewController27.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController27.m; sourceTree = "<group>"; };
+		18D64E3523180DEC0047FFDE /* DemoViewController28.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController28.h; sourceTree = "<group>"; };
+		18D64E3623180DEC0047FFDE /* DemoViewController28.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController28.m; sourceTree = "<group>"; };
+		18D64E3823182AFE0047FFDE /* fluid_dithering.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fluid_dithering.png; sourceTree = "<group>"; };
+		18D64E3A2318EEBE0047FFDE /* DemoFluidUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoFluidUtils.h; sourceTree = "<group>"; };
+		18D64E3B2318EEBE0047FFDE /* DemoFluidUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoFluidUtils.m; sourceTree = "<group>"; };
 		18FBF3CD23127A9A007B106D /* DemoViewController18.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController18.h; sourceTree = "<group>"; };
 		18FBF3CE23127A9A007B106D /* DemoViewController18.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController18.m; sourceTree = "<group>"; };
 		18FBF3D023127EF8007B106D /* DemoViewController19.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController19.h; sourceTree = "<group>"; };
@@ -937,6 +966,8 @@
 				18A051112191A4CD00FB97D7 /* GPUImagePicture.m */,
 				183C56AC23043AAF001DAEFC /* DemoUtils.h */,
 				183C56AD23043AAF001DAEFC /* DemoUtils.m */,
+				18D64E3A2318EEBE0047FFDE /* DemoFluidUtils.h */,
+				18D64E3B2318EEBE0047FFDE /* DemoFluidUtils.m */,
 				EA4603B5202C64050037EC15 /* DemoViewController.h */,
 				EA4603B6202C64050037EC15 /* DemoViewController.m */,
 				EA4603EF202D7A7B0037EC15 /* DemoViewController0.h */,
@@ -981,6 +1012,22 @@
 				18FBF3D123127EF8007B106D /* DemoViewController19.m */,
 				18FBF3D323127F0A007B106D /* DemoViewController20.h */,
 				18FBF3D423127F0A007B106D /* DemoViewController20.m */,
+				18D64E2023180D970047FFDE /* DemoViewController21.h */,
+				18D64E2123180D970047FFDE /* DemoViewController21.m */,
+				18D64E2323180DA20047FFDE /* DemoViewController22.h */,
+				18D64E2423180DA20047FFDE /* DemoViewController22.m */,
+				18D64E2623180DAE0047FFDE /* DemoViewController23.h */,
+				18D64E2723180DAE0047FFDE /* DemoViewController23.m */,
+				18D64E2923180DBB0047FFDE /* DemoViewController24.h */,
+				18D64E2A23180DBB0047FFDE /* DemoViewController24.m */,
+				18D64E2C23180DC80047FFDE /* DemoViewController25.h */,
+				18D64E2D23180DC80047FFDE /* DemoViewController25.m */,
+				18D64E2F23180DD40047FFDE /* DemoViewController26.h */,
+				18D64E3023180DD40047FFDE /* DemoViewController26.m */,
+				18D64E3223180DE10047FFDE /* DemoViewController27.h */,
+				18D64E3323180DE10047FFDE /* DemoViewController27.m */,
+				18D64E3523180DEC0047FFDE /* DemoViewController28.h */,
+				18D64E3623180DEC0047FFDE /* DemoViewController28.m */,
 				EA4603BB202C64050037EC15 /* Assets.xcassets */,
 				EA4603BD202C64050037EC15 /* LaunchScreen.storyboard */,
 				EA4603C0202C64050037EC15 /* Info.plist */,
@@ -1066,6 +1113,7 @@
 				1876558A218198D700209E75 /* davlo.otf */,
 				EA4603E4202C64320037EC15 /* for_test.jpg */,
 				18A9F43422F034C5006B104B /* for_test_blend.png */,
+				18D64E3823182AFE0047FFDE /* fluid_dithering.png */,
 				183C56A9230434E8001DAEFC /* kaixin.jpg */,
 				183C56A8230434E8001DAEFC /* meimei.jpg */,
 				18A9F42A22F022B1006B104B /* waiting.png */,
@@ -1241,6 +1289,7 @@
 				18A9F43522F034C5006B104B /* for_test_blend.png in Resources */,
 				1800073B218AF3A600BC0EFC /* moon.jpg in Resources */,
 				1804653823128694002682FC /* shaderv_19.vsh in Resources */,
+				18D64E3923182AFE0047FFDE /* fluid_dithering.png in Resources */,
 				180007192188797100BC0EFC /* shaderf_7.fsh in Resources */,
 				18A0510D2191A13700FB97D7 /* skybox_left.jpg in Resources */,
 				EA46040C202DA7160037EC15 /* shaderv_4.vsh in Resources */,
@@ -1305,6 +1354,7 @@
 				18D1B86C2186F14A0071A7FE /* ftbbox.c in Sources */,
 				18D1B86A2186F14A0071A7FE /* ftfstype.c in Sources */,
 				18D1B7BA2186F14A0071A7FE /* bdf.c in Sources */,
+				18D64E2B23180DBB0047FFDE /* DemoViewController24.m in Sources */,
 				18D1B8702186F14A0071A7FE /* ftsynth.c in Sources */,
 				18D1B7C02186F14A0071A7FE /* smooth.c in Sources */,
 				18D1B5862186F11C0071A7FE /* sweep_context.cc in Sources */,
@@ -1321,6 +1371,7 @@
 				18D1B8662186F14A0071A7FE /* ftwinfnt.c in Sources */,
 				188D1B3522EE9AA600864A47 /* DemoViewController14.m in Sources */,
 				18D1B8652186F14A0071A7FE /* fttype1.c in Sources */,
+				18D64E3723180DEC0047FFDE /* DemoViewController28.m in Sources */,
 				18D1B8372186F14A0071A7FE /* pshinter.c in Sources */,
 				18D1B79C2186F14A0071A7FE /* type1.c in Sources */,
 				18D1B82E2186F14A0071A7FE /* autofit.c in Sources */,
@@ -1328,16 +1379,20 @@
 				18D1B85C2186F14A0071A7FE /* ftsystem.c in Sources */,
 				18379ADF21831F5C00383953 /* DemoViewController5.m in Sources */,
 				188D1B2922EE98FC00864A47 /* DemoViewController10.m in Sources */,
+				18D64E2523180DA20047FFDE /* DemoViewController22.m in Sources */,
 				18D1B8602186F14A0071A7FE /* ftpatent.c in Sources */,
+				18D64E3C2318EEBE0047FFDE /* DemoFluidUtils.m in Sources */,
 				18D1B87E2186FE0F0071A7FE /* ftcache.c in Sources */,
 				EA4603B7202C64050037EC15 /* DemoViewController.m in Sources */,
 				18D1B7B72186F14A0071A7FE /* winfnt.c in Sources */,
 				18D1B8482186F14A0071A7FE /* raster.c in Sources */,
 				183C56AE23043AAF001DAEFC /* DemoUtils.m in Sources */,
 				18000724218AA1F200BC0EFC /* DemoViewController8.m in Sources */,
+				18D64E2223180D970047FFDE /* DemoViewController21.m in Sources */,
 				18D1B84C2186F14A0071A7FE /* psnames.c in Sources */,
 				EA4603F4202D7DED0037EC15 /* DemoViewController1.m in Sources */,
 				18D1B84F2186F14A0071A7FE /* ftfntfmt.c in Sources */,
+				18D64E2E23180DC80047FFDE /* DemoViewController25.m in Sources */,
 				188D1B2F22EE994D00864A47 /* DemoViewController12.m in Sources */,
 				18D1B7B12186F14A0071A7FE /* sfnt.c in Sources */,
 				18D1B8692186F14A0071A7FE /* ftmm.c in Sources */,
@@ -1365,9 +1420,12 @@
 				18D1B88B2186FF0A0071A7FE /* Point.cpp in Sources */,
 				EA4603B4202C64050037EC15 /* AppDelegate.m in Sources */,
 				18D1B8682186F14A0071A7FE /* ftdebug.c in Sources */,
+				18D64E2823180DAE0047FFDE /* DemoViewController23.m in Sources */,
 				18D1B8502186F14A0071A7FE /* ftinit.c in Sources */,
+				18D64E3423180DE10047FFDE /* DemoViewController27.m in Sources */,
 				EA460409202D91BE0037EC15 /* DemoViewController4.m in Sources */,
 				EA4603FA202D80960037EC15 /* DemoViewController3.m in Sources */,
+				18D64E3123180DD40047FFDE /* DemoViewController26.m in Sources */,
 				18D1B78F2186F14A0071A7FE /* pcf.c in Sources */,
 				18D1B8612186F14A0071A7FE /* ftlcdfil.c in Sources */,
 			);
