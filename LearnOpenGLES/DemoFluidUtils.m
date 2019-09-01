@@ -128,7 +128,7 @@ uniform sampler2D uBloom;\n\
 uniform sampler2D uSunrays;\n\
 uniform sampler2D uDithering;\n\
 uniform vec2 ditherScale;\n\
-uniform vec2 texelSize;\n\
+uniform vec2 aTexelSize;\n\
 \n\
 vec3 linearToGamma (vec3 color) {\n\
     color = max(color, vec3(0));\n\
@@ -148,7 +148,7 @@ void main () {\n\
     float dx = length(rc) - length(lc);\n\
     float dy = length(tc) - length(bc);\n\
 \n\
-    vec3 n = normalize(vec3(dx, dy, length(texelSize)));\n\
+    vec3 n = normalize(vec3(dx, dy, length(aTexelSize)));\n\
     vec3 l = vec3(0.0, 0.0, 1.0);\n\
 \n\
     float diffuse = clamp(dot(n, l) + 0.7, 0.7, 1.0);\n\
@@ -354,8 +354,7 @@ void main () {\n\
     vec2 coord = vUv - dt * texture2D(uVelocity, vUv).xy * aTexelSize;\n\
     vec4 result = texture2D(uSource, coord);\n\
 #endif\n\
-    float decay = 1.0 + dissipation * dt;\n\
-    gl_FragColor = result / decay;\n\
+    gl_FragColor = vec4(dissipation * result.rgb, 1.0);\n\
 }\n\
 ";
 
@@ -512,7 +511,7 @@ void main () {\n\
 
 - (instancetype)init
 {
-    return [self initWithWidth:1 height:1 internalFormat:GL_RGBA16F_EXT format:GL_RGBA type:GL_HALF_FLOAT_OES param:GL_LINEAR];
+    return [self initWithWidth:1 height:1 internalFormat:GL_RGBA format:GL_RGBA type:GL_HALF_FLOAT_OES param:GL_LINEAR];
 }
 
 - (instancetype)initWithWidth:(int)width height:(int)height internalFormat:(GLenum)internalFormat format:(GLenum)format type:(GLenum)type param:(GLint)param
@@ -528,6 +527,7 @@ void main () {\n\
         _texelSizeX = 1.0 / width;
         _texelSizeY = 1.0 / height;
         
+        glActiveTexture(GL_TEXTURE0);
         glGenTextures(1, &_texture);
         glBindTexture(GL_TEXTURE_2D, _texture);
         glTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, _width, _height, 0, _format, _type, NULL);

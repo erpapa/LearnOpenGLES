@@ -168,9 +168,9 @@ static GLfloat boxVertices[] = {
     glUniformMatrix4fv([self.program uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&_projectionMatrix);
     
     // bind texture
-    glActiveTexture(GL_TEXTURE2);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
-    glUniform1i([self.program uniformIndex:@"inputImageTexture"], 2);
+    glUniform1i([self.program uniformIndex:@"inputImageTexture"], 0);
     
     glBindVertexArrayOES(_VAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
