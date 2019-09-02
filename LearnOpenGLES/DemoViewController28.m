@@ -510,7 +510,6 @@
         glUniform1f([self.advectionProgram uniformIndex:@"dt"], dt);
         glUniform1f([self.advectionProgram uniformIndex:@"dissipation"], self.config.VELOCITY_DISSIPATION);
         glUniform2f([self.advectionProgram uniformIndex:@"texelSize"], self.velocity.texelSizeX, self.velocity.texelSizeY);
-        glUniform2f([self.advectionProgram uniformIndex:@"aTexelSize"], self.velocity.texelSizeX, self.velocity.texelSizeY);
         if (!self.extension.supportLinearFiltering) {
             glUniform2f([self.advectionProgram uniformIndex:@"dyeTexelSize"], self.velocity.texelSizeX, self.velocity.texelSizeY);
         }
@@ -528,7 +527,6 @@
         glUniform1f([self.advectionProgram uniformIndex:@"dt"], dt);
         glUniform1f([self.advectionProgram uniformIndex:@"dissipation"], self.config.DENSITY_DISSIPATION);
         glUniform2f([self.advectionProgram uniformIndex:@"texelSize"], self.density.texelSizeX, self.density.texelSizeY);
-        glUniform2f([self.advectionProgram uniformIndex:@"aTexelSize"], self.density.texelSizeX, self.density.texelSizeY);
         if (!self.extension.supportLinearFiltering) {
             glUniform2f([self.advectionProgram uniformIndex:@"dyeTexelSize"], self.density.texelSizeX, self.density.texelSizeY);
         }
@@ -577,7 +575,6 @@
         glUniform1i([self.displayMaterial uniformIndex:@"uTexture"], 0);
         if (self.config.SHADING) {
             glUniform2f([self.displayMaterial uniformIndex:@"texelSize"], 1.0 / target.width, 1.0 / target.height);
-            glUniform2f([self.displayMaterial uniformIndex:@"aTexelSize"], 1.0 / target.width, 1.0 / target.height);
         }
         if (self.config.BLOOM) {
             glActiveTexture(GL_TEXTURE1);

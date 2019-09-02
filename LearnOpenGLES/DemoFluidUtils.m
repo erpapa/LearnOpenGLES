@@ -128,7 +128,7 @@ uniform sampler2D uBloom;\n\
 uniform sampler2D uSunrays;\n\
 uniform sampler2D uDithering;\n\
 uniform vec2 ditherScale;\n\
-uniform vec2 aTexelSize;\n\
+uniform vec2 texelSize;\n\
 \n\
 vec3 linearToGamma (vec3 color) {\n\
     color = max(color, vec3(0));\n\
@@ -148,7 +148,7 @@ void main () {\n\
     float dx = length(rc) - length(lc);\n\
     float dy = length(tc) - length(bc);\n\
 \n\
-    vec3 n = normalize(vec3(dx, dy, length(aTexelSize)));\n\
+    vec3 n = normalize(vec3(dx, dy, length(texelSize)));\n\
     vec3 l = vec3(0.0, 0.0, 1.0);\n\
 \n\
     float diffuse = clamp(dot(n, l) + 0.7, 0.7, 1.0);\n\
@@ -328,7 +328,7 @@ precision highp sampler2D;\n\
 varying vec2 vUv;\n\
 uniform sampler2D uVelocity;\n\
 uniform sampler2D uSource;\n\
-uniform vec2 aTexelSize;\n\
+uniform vec2 texelSize;\n\
 uniform vec2 dyeTexelSize;\n\
 uniform float dt;\n\
 uniform float dissipation;\n\
@@ -348,10 +348,10 @@ vec4 bilerp (sampler2D sam, vec2 uv, vec2 tsize) {\n\
 void main () {\n\
 \n\
 #ifdef MANUAL_FILTERING\n\
-    vec2 coord = vUv - dt * bilerp(uVelocity, vUv, aTexelSize).xy * aTexelSize;\n\
+    vec2 coord = vUv - dt * bilerp(uVelocity, vUv, texelSize).xy * texelSize;\n\
     vec4 result = bilerp(uSource, coord, dyeTexelSize);\n\
 #else\n\
-    vec2 coord = vUv - dt * texture2D(uVelocity, vUv).xy * aTexelSize;\n\
+    vec2 coord = vUv - dt * texture2D(uVelocity, vUv).xy * texelSize;\n\
     vec4 result = texture2D(uSource, coord);\n\
 #endif\n\
     gl_FragColor = vec4(dissipation * result.rgb, 1.0);\n\
