@@ -30,7 +30,11 @@ class FEngine;
 class FTexture;
 
 #if !defined(FILAMENT_DFG_LUT_SIZE)
+#if defined(ANDROID) || defined(IOS)
+#define FILAMENT_DFG_LUT_SIZE 64
+#else
 #define FILAMENT_DFG_LUT_SIZE 128
+#endif
 #endif
 
 class DFG {

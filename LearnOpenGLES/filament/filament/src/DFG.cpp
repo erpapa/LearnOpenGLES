@@ -23,14 +23,14 @@ namespace filament {
 namespace details {
 
 const uint16_t DFG::DFG_LUT[] = {
-//#include "generated/data/dfg.inc"
+#include "generated/data/dfg.inc"
 };
 
 DFG::DFG(FEngine& engine) noexcept : mEngine(engine) {
     constexpr size_t fp16Count = DFG_LUT_SIZE * DFG_LUT_SIZE * 3;
     constexpr size_t byteCount = fp16Count * sizeof(uint16_t);
 
-//    static_assert(sizeof(DFG_LUT) == byteCount, "DFG_LUT_SIZE doesn't match size of the DFG LUT");
+    static_assert(sizeof(DFG_LUT) == byteCount, "DFG_LUT_SIZE doesn't match size of the DFG LUT");
 
     Texture* lut = Texture::Builder()
             .width(DFG_LUT_SIZE)

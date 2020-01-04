@@ -30,7 +30,7 @@
 
 #include <utils/Panic.h>
 
-//#include "generated/resources/materials.h"
+#include "generated/resources/materials.h"
 
 using namespace filament::math;
 namespace filament {
@@ -113,10 +113,9 @@ FSkybox::FSkybox(FEngine& engine, const Builder& builder) noexcept
 }
 
 FMaterial const* FSkybox::createMaterial(FEngine& engine) {
-//    FMaterial const* material = upcast(Material::Builder().package(
-//            MATERIALS_SKYBOX_DATA, MATERIALS_SKYBOX_SIZE).build(engine));
-//    return material;
-    return nullptr;
+    FMaterial const* material = upcast(Material::Builder().package(
+            MATERIALS_SKYBOX_DATA, MATERIALS_SKYBOX_SIZE).build(engine));
+    return material;
 }
 
 void FSkybox::terminate(FEngine& engine) noexcept {

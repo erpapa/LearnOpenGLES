@@ -25,7 +25,7 @@
 #include "details/Camera.h"
 #include "details/Material.h"
 #include "details/MaterialInstance.h"
-//#include "generated/resources/materials.h"
+#include "generated/resources/materials.h"
 
 #include <private/filament/SibGenerator.h>
 
@@ -109,12 +109,12 @@ PostProcessManager::PostProcessManager(FEngine& engine) noexcept : mEngine(engin
 
 void PostProcessManager::init() noexcept {
     // TODO: load materials lazily as to reduce start-up time and memory usage
-//    mSSAO = PostProcessMaterial(mEngine, MATERIALS_SAO_DATA, MATERIALS_SAO_SIZE);
-//    mMipmapDepth = PostProcessMaterial(mEngine, MATERIALS_MIPMAPDEPTH_DATA, MATERIALS_MIPMAPDEPTH_SIZE);
-//    mBlur = PostProcessMaterial(mEngine, MATERIALS_BLUR_DATA, MATERIALS_BLUR_SIZE);
-//    mBlit = PostProcessMaterial(mEngine, MATERIALS_BLIT_DATA, MATERIALS_BLIT_SIZE);
-//    mTonemapping = PostProcessMaterial(mEngine, MATERIALS_TONEMAPPING_DATA, MATERIALS_TONEMAPPING_SIZE);
-//    mFxaa = PostProcessMaterial(mEngine, MATERIALS_FXAA_DATA, MATERIALS_FXAA_SIZE);
+    mSSAO = PostProcessMaterial(mEngine, MATERIALS_SAO_DATA, MATERIALS_SAO_SIZE);
+    mMipmapDepth = PostProcessMaterial(mEngine, MATERIALS_MIPMAPDEPTH_DATA, MATERIALS_MIPMAPDEPTH_SIZE);
+    mBlur = PostProcessMaterial(mEngine, MATERIALS_BLUR_DATA, MATERIALS_BLUR_SIZE);
+    mBlit = PostProcessMaterial(mEngine, MATERIALS_BLIT_DATA, MATERIALS_BLIT_SIZE);
+    mTonemapping = PostProcessMaterial(mEngine, MATERIALS_TONEMAPPING_DATA, MATERIALS_TONEMAPPING_SIZE);
+    mFxaa = PostProcessMaterial(mEngine, MATERIALS_FXAA_DATA, MATERIALS_FXAA_SIZE);
 
     DriverApi& driver = mEngine.getDriverApi();
     mNoSSAOTexture = driver.createTexture(SamplerType::SAMPLER_2D, 1,

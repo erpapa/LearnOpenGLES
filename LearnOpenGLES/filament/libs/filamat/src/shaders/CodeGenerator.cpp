@@ -16,7 +16,7 @@
 
 #include "CodeGenerator.h"
 
-//#include "generated/shaders.h"
+#include "generated/shaders.h"
 
 #include <cctype>
 #include <iomanip>
@@ -86,7 +86,7 @@ io::sstream& CodeGenerator::generateProlog(io::sstream& out, ShaderType type,
         out << "invariant gl_Position;\n";
     }
 
-//    out << SHADERS_COMMON_TYPES_FS_DATA;
+    out << SHADERS_COMMON_TYPES_FS_DATA;
 
     out << "\n";
     return out;
@@ -119,21 +119,21 @@ io::sstream& CodeGenerator::generateEpilog(io::sstream& out) const {
 }
 
 io::sstream& CodeGenerator::generateShaderMain(io::sstream& out, ShaderType type) const {
-//    if (type == ShaderType::VERTEX) {
-//        out << SHADERS_SHADOWING_VS_DATA;
-//        out << SHADERS_MAIN_VS_DATA;
-//    } else if (type == ShaderType::FRAGMENT) {
-//        out << SHADERS_MAIN_FS_DATA;
-//    }
+    if (type == ShaderType::VERTEX) {
+        out << SHADERS_SHADOWING_VS_DATA;
+        out << SHADERS_MAIN_VS_DATA;
+    } else if (type == ShaderType::FRAGMENT) {
+        out << SHADERS_MAIN_FS_DATA;
+    }
     return out;
 }
 
 io::sstream& CodeGenerator::generatePostProcessMain(io::sstream& out, ShaderType type) const {
-//    if (type == ShaderType::VERTEX) {
-//        out << SHADERS_POST_PROCESS_VS_DATA;
-//    } else if (type == ShaderType::FRAGMENT) {
-//        out << SHADERS_POST_PROCESS_FS_DATA;
-//    }
+    if (type == ShaderType::VERTEX) {
+        out << SHADERS_POST_PROCESS_VS_DATA;
+    } else if (type == ShaderType::FRAGMENT) {
+        out << SHADERS_POST_PROCESS_FS_DATA;
+    }
     return out;
 }
 
@@ -212,19 +212,19 @@ io::sstream& CodeGenerator::generateShaderInputs(io::sstream& out, ShaderType ty
             }
         }
 
-//        out << SHADERS_INPUTS_VS_DATA;
+        out << SHADERS_INPUTS_VS_DATA;
     } else if (type == ShaderType::FRAGMENT) {
-//        out << SHADERS_INPUTS_FS_DATA;
+        out << SHADERS_INPUTS_FS_DATA;
     }
     return out;
 }
 
 io::sstream& CodeGenerator::generateDepthShaderMain(io::sstream& out, ShaderType type) const {
-//    if (type == ShaderType::VERTEX) {
-//        out << SHADERS_DEPTH_MAIN_VS_DATA;
-//    } else if (type == ShaderType::FRAGMENT) {
-//        out << SHADERS_DEPTH_MAIN_FS_DATA;
-//    }
+    if (type == ShaderType::VERTEX) {
+        out << SHADERS_DEPTH_MAIN_VS_DATA;
+    } else if (type == ShaderType::FRAGMENT) {
+        out << SHADERS_DEPTH_MAIN_FS_DATA;
+    }
     return out;
 }
 
@@ -412,114 +412,114 @@ io::sstream& CodeGenerator::generateMaterialProperty(io::sstream& out,
 }
 
 io::sstream& CodeGenerator::generateCommon(io::sstream& out, ShaderType type) const {
-//    out << SHADERS_COMMON_MATH_FS_DATA;
-//    if (type == ShaderType::VERTEX) {
-//    } else if (type == ShaderType::FRAGMENT) {
-//        out << SHADERS_COMMON_SHADING_FS_DATA;
-//        out << SHADERS_COMMON_GRAPHICS_FS_DATA;
-//        out << SHADERS_COMMON_MATERIAL_FS_DATA;
-//    }
+    out << SHADERS_COMMON_MATH_FS_DATA;
+    if (type == ShaderType::VERTEX) {
+    } else if (type == ShaderType::FRAGMENT) {
+        out << SHADERS_COMMON_SHADING_FS_DATA;
+        out << SHADERS_COMMON_GRAPHICS_FS_DATA;
+        out << SHADERS_COMMON_MATERIAL_FS_DATA;
+    }
     return out;
 }
 
 io::sstream& CodeGenerator::generateCommonMaterial(io::sstream& out, ShaderType type) const {
-//    if (type == ShaderType::VERTEX) {
-//        out << SHADERS_MATERIAL_INPUTS_VS_DATA;
-//    } else if (type == ShaderType::FRAGMENT) {
-//        out << SHADERS_MATERIAL_INPUTS_FS_DATA;
-//    }
+    if (type == ShaderType::VERTEX) {
+        out << SHADERS_MATERIAL_INPUTS_VS_DATA;
+    } else if (type == ShaderType::FRAGMENT) {
+        out << SHADERS_MATERIAL_INPUTS_FS_DATA;
+    }
     return out;
 }
 
 io::sstream& CodeGenerator::generatePostProcessInputs(io::sstream& out, ShaderType type) const {
-//    if (type == ShaderType::VERTEX) {
-//        out << SHADERS_POST_PROCESS_INPUTS_VS_DATA;
-//    } else if (type == ShaderType::FRAGMENT) {
-//        out << SHADERS_POST_PROCESS_INPUTS_FS_DATA;
-//    }
+    if (type == ShaderType::VERTEX) {
+        out << SHADERS_POST_PROCESS_INPUTS_VS_DATA;
+    } else if (type == ShaderType::FRAGMENT) {
+        out << SHADERS_POST_PROCESS_INPUTS_FS_DATA;
+    }
     return out;
 }
 
 utils::io::sstream& CodeGenerator::generatePostProcessGetters(utils::io::sstream& out,
         ShaderType type) const {
-//    out << SHADERS_COMMON_GETTERS_FS_DATA;
-//    if (type == ShaderType::VERTEX) {
-//        out << SHADERS_POST_PROCESS_GETTERS_VS_DATA;
-//    }
+    out << SHADERS_COMMON_GETTERS_FS_DATA;
+    if (type == ShaderType::VERTEX) {
+        out << SHADERS_POST_PROCESS_GETTERS_VS_DATA;
+    }
     return out;
 }
 
 io::sstream& CodeGenerator::generateGetters(io::sstream& out, ShaderType type) const {
-//    out << SHADERS_COMMON_GETTERS_FS_DATA;
-//    if (type == ShaderType::VERTEX) {
-//        out << SHADERS_GETTERS_VS_DATA;
-//    } else if (type == ShaderType::FRAGMENT) {
-//        out << SHADERS_GETTERS_FS_DATA;
-//    }
+    out << SHADERS_COMMON_GETTERS_FS_DATA;
+    if (type == ShaderType::VERTEX) {
+        out << SHADERS_GETTERS_VS_DATA;
+    } else if (type == ShaderType::FRAGMENT) {
+        out << SHADERS_GETTERS_FS_DATA;
+    }
     return out;
 }
 
 io::sstream& CodeGenerator::generateParameters(io::sstream& out, ShaderType type) const {
-//    if (type == ShaderType::VERTEX) {
-//    } else if (type == ShaderType::FRAGMENT) {
-//        out << SHADERS_SHADING_PARAMETERS_FS_DATA;
-//    }
+    if (type == ShaderType::VERTEX) {
+    } else if (type == ShaderType::FRAGMENT) {
+        out << SHADERS_SHADING_PARAMETERS_FS_DATA;
+    }
     return out;
 }
 
 io::sstream& CodeGenerator::generateShaderLit(io::sstream& out, ShaderType type,
         filament::Variant variant, filament::Shading shading) const {
-//    if (type == ShaderType::VERTEX) {
-//    } else if (type == ShaderType::FRAGMENT) {
-//        out << SHADERS_COMMON_LIGHTING_FS_DATA;
-//        if (variant.hasShadowReceiver()) {
-//            out << SHADERS_SHADOWING_FS_DATA;
-//        }
-//
-//        out << SHADERS_BRDF_FS_DATA;
-//        switch (shading) {
-//            case Shading::UNLIT:
-//                assert("Lit shader generated with unlit shading model");
-//                break;
-//            case Shading::SPECULAR_GLOSSINESS:
-//            case Shading::LIT:
-//                out << SHADERS_SHADING_MODEL_STANDARD_FS_DATA;
-//                break;
-//            case Shading::SUBSURFACE:
-//                out << SHADERS_SHADING_MODEL_SUBSURFACE_FS_DATA;
-//                break;
-//            case Shading::CLOTH:
-//                out << SHADERS_SHADING_MODEL_CLOTH_FS_DATA;
-//                break;
-//        }
-//
-//        if (shading != Shading::UNLIT) {
-//            out << SHADERS_AMBIENT_OCCLUSION_FS_DATA;
-//            out << SHADERS_LIGHT_INDIRECT_FS_DATA;
-//        }
-//        if (variant.hasDirectionalLighting()) {
-//            out << SHADERS_LIGHT_DIRECTIONAL_FS_DATA;
-//        }
-//        if (variant.hasDynamicLighting()) {
-//            out << SHADERS_LIGHT_PUNCTUAL_FS_DATA;
-//        }
-//
-//        out << SHADERS_SHADING_LIT_FS_DATA;
-//    }
+    if (type == ShaderType::VERTEX) {
+    } else if (type == ShaderType::FRAGMENT) {
+        out << SHADERS_COMMON_LIGHTING_FS_DATA;
+        if (variant.hasShadowReceiver()) {
+            out << SHADERS_SHADOWING_FS_DATA;
+        }
+
+        out << SHADERS_BRDF_FS_DATA;
+        switch (shading) {
+            case Shading::UNLIT:
+                assert("Lit shader generated with unlit shading model");
+                break;
+            case Shading::SPECULAR_GLOSSINESS:
+            case Shading::LIT:
+                out << SHADERS_SHADING_MODEL_STANDARD_FS_DATA;
+                break;
+            case Shading::SUBSURFACE:
+                out << SHADERS_SHADING_MODEL_SUBSURFACE_FS_DATA;
+                break;
+            case Shading::CLOTH:
+                out << SHADERS_SHADING_MODEL_CLOTH_FS_DATA;
+                break;
+        }
+
+        if (shading != Shading::UNLIT) {
+            out << SHADERS_AMBIENT_OCCLUSION_FS_DATA;
+            out << SHADERS_LIGHT_INDIRECT_FS_DATA;
+        }
+        if (variant.hasDirectionalLighting()) {
+            out << SHADERS_LIGHT_DIRECTIONAL_FS_DATA;
+        }
+        if (variant.hasDynamicLighting()) {
+            out << SHADERS_LIGHT_PUNCTUAL_FS_DATA;
+        }
+
+        out << SHADERS_SHADING_LIT_FS_DATA;
+    }
     return out;
 }
 
 io::sstream& CodeGenerator::generateShaderUnlit(io::sstream& out, ShaderType type,
         filament::Variant variant, bool hasShadowMultiplier) const {
-//    if (type == ShaderType::VERTEX) {
-//    } else if (type == ShaderType::FRAGMENT) {
-//        if (hasShadowMultiplier) {
-//            if (variant.hasShadowReceiver()) {
-//                out << SHADERS_SHADOWING_FS_DATA;
-//            }
-//        }
-//        out << SHADERS_SHADING_UNLIT_FS_DATA;
-//    }
+    if (type == ShaderType::VERTEX) {
+    } else if (type == ShaderType::FRAGMENT) {
+        if (hasShadowMultiplier) {
+            if (variant.hasShadowReceiver()) {
+                out << SHADERS_SHADOWING_FS_DATA;
+            }
+        }
+        out << SHADERS_SHADING_UNLIT_FS_DATA;
+    }
     return out;
 }
 

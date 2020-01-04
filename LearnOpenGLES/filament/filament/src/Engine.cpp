@@ -48,7 +48,7 @@
 
 #include <memory>
 
-//#include "generated/resources/materials.h"
+#include "generated/resources/materials.h"
 
 using namespace filament::math;
 using namespace utils;
@@ -239,10 +239,10 @@ void FEngine::init() {
             .build(*this));
 
     // Always initialize the default material, most materials' depth shaders fallback on it.
-//    mDefaultMaterial = upcast(
-//            FMaterial::DefaultMaterialBuilder()
-//                    .package(MATERIALS_DEFAULTMATERIAL_DATA, MATERIALS_DEFAULTMATERIAL_SIZE)
-//                    .build(*const_cast<FEngine*>(this)));
+    mDefaultMaterial = upcast(
+            FMaterial::DefaultMaterialBuilder()
+                    .package(MATERIALS_DEFAULTMATERIAL_DATA, MATERIALS_DEFAULTMATERIAL_SIZE)
+                    .build(*const_cast<FEngine*>(this)));
 
     mPostProcessManager.init();
     mLightManager.init(*this);
@@ -431,7 +431,9 @@ int FEngine::loop() {
             case backend::Backend::METAL:
                 slog.d << "Metal";
                 break;
-
+            case backend::Backend::D3D11:
+                slog.d << "D3D11";
+                break;
             default:
                 slog.d << "Unknown";
                 break;
