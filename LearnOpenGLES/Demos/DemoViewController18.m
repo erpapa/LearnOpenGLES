@@ -60,8 +60,9 @@ static GLfloat boxVertices[] = {
 @interface DemoViewController18 () <GLKViewDelegate>
 {
     GLuint _lightVAO, _lightVBO, _modelVAO, _modelVBO;
-    GLint _positionAttribute, _normalAttribute;
-    GLKMatrix4 _lightMatrix, _modelMatrix, _viewMatrix, _projectionMatrix;
+    GLint _positionAttribute;
+    GLKMatrix4 _lightMatrix, _modelMatrix;
+    GLKMatrix4 _viewMatrix, _projectionMatrix;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -87,12 +88,10 @@ static GLfloat boxVertices[] = {
     // shader
     self.program = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_18" fragmentShaderFilename:@"shaderf_18"];
     [self.program addAttribute:@"position"];
-    [self.program addAttribute:@"normal"];
     [self.program link];
     
     // 顶点
     _positionAttribute = [self.program attributeIndex:@"position"];
-    _normalAttribute = [self.program attributeIndex:@"normal"];
     
     // 1.创建灯光
     {
@@ -105,8 +104,6 @@ static GLfloat boxVertices[] = {
         
         glVertexAttribPointer(_positionAttribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
         glEnableVertexAttribArray(_positionAttribute);
-        glVertexAttribPointer(_normalAttribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-        glEnableVertexAttribArray(_normalAttribute);
         
         // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
         glBindVertexArrayOES(0); // 解绑VAO（这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法）
@@ -122,8 +119,6 @@ static GLfloat boxVertices[] = {
         
         glVertexAttribPointer(_positionAttribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
         glEnableVertexAttribArray(_positionAttribute);
-        glVertexAttribPointer(_normalAttribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-        glEnableVertexAttribArray(_normalAttribute);
         
         // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
         glBindVertexArrayOES(0); // 解绑VAO（这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法）

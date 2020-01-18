@@ -1,5 +1,4 @@
 attribute vec4 position;
-attribute vec3 normal;
 
 uniform mat4 model;
 uniform mat4 view;

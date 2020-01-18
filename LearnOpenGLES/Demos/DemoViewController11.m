@@ -113,14 +113,14 @@ static ScenceVertex blueVertexData[] = {
 {
     /**
      * 指定清除颜色缓冲后赋值的默认颜色
-     **/
+     */
     glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
     /**
      * 1.如果指定“当前像素值”为1时，我们知道，一个模型深度值取值和范围为[0,1]。
          这个时候你往里面画一个物体，由于物体的每个像素的深度值都小于等于1， 所以整个物体都被显示了出来。
      * 2.如果指定“当前像素值”为0，物体的每个像素的深度值都大于等于0，所以整个物体都不可见。
      * 3.如果指定“当前像素值”为0.5，那么物体就只有深度小于等于0.5的那部分才是可见的。
-     **/
+     */
     glClearDepthf(1.0f);
     // 指定清除模板缓冲区时使用的索引，初始值为0。
     glClearStencil(0);
@@ -139,13 +139,13 @@ static ScenceVertex blueVertexData[] = {
      * func：设置模板测试函数(Stencil Test Function)
      * ref：设置了模板测试的参考值(Reference Value)。模板缓冲的内容将会与这个值进行比较。
      * mask：设置一个掩码，它将会与参考值和储存的模板值在测试比较它们之前进行与(AND)运算。初始情况下所有位都为1。
-     **/
+     */
     glStencilFunc(GL_ALWAYS, 1, 1);
     /**
      * fail：模板测试失败。
      * zfail：模板测试通过，但深度测试失败。
      * zpass：模板测试通过，且深度测试通过。
-     **/
+     */
     glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
     
     // 启用着色器

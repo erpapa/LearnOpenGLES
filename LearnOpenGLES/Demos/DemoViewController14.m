@@ -79,7 +79,7 @@ static const GLfloat noRotationTextureCoordinates[] = {
         textureData0[i + 0] = 127;
         textureData0[i + 1] = 127;
         textureData0[i + 2] = 0;
-        textureData0[i + 3] = 64;
+        textureData0[i + 3] = 127;
     }
     glGenTextures(1, &_alphaTexture0);
     glBindTexture(GL_TEXTURE_2D, _alphaTexture0);
@@ -136,7 +136,7 @@ static const GLfloat noRotationTextureCoordinates[] = {
     };
     
     // glkView背景必须要设置为clearColor，才能透出glkView的父视图
-    // 这样做的目的是为了让glkView与父视图做blend，这操作是借住系统自动完成的
+    // 这样做的目的是为了让glkView与父视图做blend，这操作是系统自动完成的
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
@@ -226,7 +226,7 @@ static const GLfloat noRotationTextureCoordinates[] = {
      * 多乘一次alpha会导致当前结果的a减小，再用来做blend的时候，颜色比例不对，
      * 在COLOR(rgb) = SRC(rgb) + DST(rgb) * (1 - SRC(a))这个公式中，
      * 当前结果的a减小，(1 - SRC(a))变大了，导致颜色整体偏向背景色。
-     **/
+     */
 }
 
 - (void)dealloc

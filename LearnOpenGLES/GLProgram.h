@@ -17,11 +17,11 @@
 {
     NSMutableArray  *attributes;
     NSMutableArray  *uniforms;
-    GLuint          program,
-	vertShader, 
-	fragShader;	
+    GLuint vertShader;
+	GLuint fragShader;
 }
 
+@property(readonly, nonatomic) GLuint program;
 @property(readwrite, nonatomic) BOOL initialized;
 @property(readwrite, copy, nonatomic) NSString *vertexShaderLog;
 @property(readwrite, copy, nonatomic) NSString *fragmentShaderLog;

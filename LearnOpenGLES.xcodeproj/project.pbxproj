@@ -231,6 +231,8 @@
 		183C56AA230434E8001DAEFC /* meimei.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 183C56A8230434E8001DAEFC /* meimei.jpg */; };
 		183C56AB230434E8001DAEFC /* kaixin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 183C56A9230434E8001DAEFC /* kaixin.jpg */; };
 		183C56AE23043AAF001DAEFC /* DemoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 183C56AD23043AAF001DAEFC /* DemoUtils.m */; };
+		1849E84A23D32A0100D72112 /* shaderf_21_2.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1849E84823D32A0100D72112 /* shaderf_21_2.fsh */; };
+		1849E84B23D32A0100D72112 /* shaderv_21_2.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1849E84923D32A0100D72112 /* shaderv_21_2.vsh */; };
 		1851C14D22EECAE800535AC3 /* shaderv_10.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1851C14B22EECAE800535AC3 /* shaderv_10.vsh */; };
 		1851C14E22EECAE800535AC3 /* shaderf_10.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1851C14C22EECAE800535AC3 /* shaderf_10.fsh */; };
 		1851C15122EEEAEA00535AC3 /* shaderv_11.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1851C14F22EEEAEA00535AC3 /* shaderv_11.vsh */; };
@@ -262,6 +264,10 @@
 		18A9F43222F02B8A006B104B /* shaderf_14.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 18A9F43022F02B89006B104B /* shaderf_14.fsh */; };
 		18A9F43322F02B8A006B104B /* shaderv_14.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 18A9F43122F02B89006B104B /* shaderv_14.vsh */; };
 		18A9F43522F034C5006B104B /* for_test_blend.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A9F43422F034C5006B104B /* for_test_blend.png */; };
+		18B6A30D23D1A20E00178882 /* shaderv_21_1.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 18B6A30B23D1A20D00178882 /* shaderv_21_1.vsh */; };
+		18B6A30E23D1A20E00178882 /* shaderf_21_1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 18B6A30C23D1A20D00178882 /* shaderf_21_1.fsh */; };
+		18B6A31123D1BDF200178882 /* shaderv_21_0.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 18B6A30F23D1BDF200178882 /* shaderv_21_0.vsh */; };
+		18B6A31223D1BDF200178882 /* shaderf_21_0.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 18B6A31023D1BDF200178882 /* shaderf_21_0.fsh */; };
 		18C07F3C22FB187000C60C13 /* shaderv_15.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 18C07F3A22FB187000C60C13 /* shaderv_15.vsh */; };
 		18C07F3D22FB187000C60C13 /* shaderf_15.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 18C07F3B22FB187000C60C13 /* shaderf_15.fsh */; };
 		18CFC31923054EEF00D6E1C7 /* shaderv_16.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 18CFC31723054EEE00D6E1C7 /* shaderv_16.vsh */; };
@@ -1010,6 +1016,8 @@
 		183C56A9230434E8001DAEFC /* kaixin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = kaixin.jpg; sourceTree = "<group>"; };
 		183C56AC23043AAF001DAEFC /* DemoUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoUtils.h; sourceTree = "<group>"; };
 		183C56AD23043AAF001DAEFC /* DemoUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoUtils.m; sourceTree = "<group>"; };
+		1849E84823D32A0100D72112 /* shaderf_21_2.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_21_2.fsh; sourceTree = "<group>"; };
+		1849E84923D32A0100D72112 /* shaderv_21_2.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_21_2.vsh; sourceTree = "<group>"; };
 		1851C14B22EECAE800535AC3 /* shaderv_10.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_10.vsh; sourceTree = "<group>"; };
 		1851C14C22EECAE800535AC3 /* shaderf_10.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_10.fsh; sourceTree = "<group>"; };
 		1851C14F22EEEAEA00535AC3 /* shaderv_11.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_11.vsh; sourceTree = "<group>"; };
@@ -1050,6 +1058,10 @@
 		18A9F43022F02B89006B104B /* shaderf_14.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_14.fsh; sourceTree = "<group>"; };
 		18A9F43122F02B89006B104B /* shaderv_14.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_14.vsh; sourceTree = "<group>"; };
 		18A9F43422F034C5006B104B /* for_test_blend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = for_test_blend.png; sourceTree = "<group>"; };
+		18B6A30B23D1A20D00178882 /* shaderv_21_1.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_21_1.vsh; sourceTree = "<group>"; };
+		18B6A30C23D1A20D00178882 /* shaderf_21_1.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_21_1.fsh; sourceTree = "<group>"; };
+		18B6A30F23D1BDF200178882 /* shaderv_21_0.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_21_0.vsh; sourceTree = "<group>"; };
+		18B6A31023D1BDF200178882 /* shaderf_21_0.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_21_0.fsh; sourceTree = "<group>"; };
 		18C07F3A22FB187000C60C13 /* shaderv_15.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_15.vsh; sourceTree = "<group>"; };
 		18C07F3B22FB187000C60C13 /* shaderf_15.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_15.fsh; sourceTree = "<group>"; };
 		18CFC31723054EEE00D6E1C7 /* shaderv_16.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_16.vsh; sourceTree = "<group>"; };
@@ -3274,6 +3286,12 @@
 				1804653123128693002682FC /* shaderf_19.fsh */,
 				1804652F23128693002682FC /* shaderv_20.vsh */,
 				1804653023128693002682FC /* shaderf_20.fsh */,
+				18B6A30F23D1BDF200178882 /* shaderv_21_0.vsh */,
+				18B6A31023D1BDF200178882 /* shaderf_21_0.fsh */,
+				18B6A30B23D1A20D00178882 /* shaderv_21_1.vsh */,
+				18B6A30C23D1A20D00178882 /* shaderf_21_1.fsh */,
+				1849E84923D32A0100D72112 /* shaderv_21_2.vsh */,
+				1849E84823D32A0100D72112 /* shaderf_21_2.fsh */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -3424,12 +3442,14 @@
 				EA460401202D84F80037EC15 /* shaderf_0.fsh in Resources */,
 				18000741218AF40200BC0EFC /* earth_reflective.jpg in Resources */,
 				18A9F42922F00E8D006B104B /* shaderf_12.fsh in Resources */,
+				18B6A31223D1BDF200178882 /* shaderf_21_0.fsh in Resources */,
 				EA4603EC202C647D0037EC15 /* shaderf_2.fsh in Resources */,
 				18CFC31D23054F0200D6E1C7 /* shaderf_17.fsh in Resources */,
 				18000743218AF41500BC0EFC /* earth_specular.jpg in Resources */,
 				1851C15122EEEAEA00535AC3 /* shaderv_11.vsh in Resources */,
 				18A9F43222F02B8A006B104B /* shaderf_14.fsh in Resources */,
 				18C07F3D22FB187000C60C13 /* shaderf_15.fsh in Resources */,
+				18B6A30D23D1A20E00178882 /* shaderv_21_1.vsh in Resources */,
 				18A9F42B22F022B1006B104B /* waiting.png in Resources */,
 				1804653623128694002682FC /* shaderf_20.fsh in Resources */,
 				EA460402202D84F80037EC15 /* shaderv_0.vsh in Resources */,
@@ -3444,9 +3464,11 @@
 				EA4603BF202C64050037EC15 /* LaunchScreen.storyboard in Resources */,
 				183C56AB230434E8001DAEFC /* kaixin.jpg in Resources */,
 				1851C15222EEEAEA00535AC3 /* shaderf_11.fsh in Resources */,
+				18B6A30E23D1A20E00178882 /* shaderf_21_1.fsh in Resources */,
 				EA460405202D8FB80037EC15 /* shaderf_3.fsh in Resources */,
 				18000747218AF43600BC0EFC /* sun.jpg in Resources */,
 				1876558B218198D700209E75 /* davlo.otf in Resources */,
+				18B6A31123D1BDF200178882 /* shaderv_21_0.vsh in Resources */,
 				18765502218181AA00209E75 /* hwxk.ttf in Resources */,
 				18A0510B2191A13700FB97D7 /* skybox_front.jpg in Resources */,
 				183C56A323043456001DAEFC /* Effect.bundle in Resources */,
@@ -3463,6 +3485,7 @@
 				18A051092191A13700FB97D7 /* skybox_right.jpg in Resources */,
 				18A9F43522F034C5006B104B /* for_test_blend.png in Resources */,
 				1800073B218AF3A600BC0EFC /* moon.jpg in Resources */,
+				1849E84A23D32A0100D72112 /* shaderf_21_2.fsh in Resources */,
 				1804653823128694002682FC /* shaderv_19.vsh in Resources */,
 				18D64E3923182AFE0047FFDE /* fluid_dithering.png in Resources */,
 				180007192188797100BC0EFC /* shaderf_7.fsh in Resources */,
@@ -3491,6 +3514,7 @@
 				183C56A7230434A9001DAEFC /* FilterResource.bundle in Resources */,
 				18A051022191A0AB00FB97D7 /* shaderv_9.vsh in Resources */,
 				18A9F42F22F02B7C006B104B /* shaderf_13.fsh in Resources */,
+				1849E84B23D32A0100D72112 /* shaderv_21_2.vsh in Resources */,
 				EA46040D202DA7160037EC15 /* shaderf_4.fsh in Resources */,
 				1800071A2188797100BC0EFC /* shaderv_7.vsh in Resources */,
 			);

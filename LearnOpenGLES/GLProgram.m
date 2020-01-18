@@ -35,7 +35,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
         
         attributes = [[NSMutableArray alloc] init];
         uniforms = [[NSMutableArray alloc] init];
-        program = glCreateProgram();
+        _program = glCreateProgram();
         
         if (![self compileShader:&vertShader 
                             type:GL_VERTEX_SHADER 
@@ -52,8 +52,8 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
             NSLog(@"Failed to compile fragment shader");
         }
         
-        glAttachShader(program, vertShader);
-        glAttachShader(program, fragShader);
+        glAttachShader(_program, vertShader);
+        glAttachShader(_program, fragShader);
     }
     
     return self;
@@ -146,7 +146,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
     if (![attributes containsObject:attributeName])
     {
         [attributes addObject:attributeName];
-        glBindAttribLocation(program, 
+        glBindAttribLocation(_program,
                              (GLuint)[attributes indexOfObject:attributeName],
                              [attributeName UTF8String]);
     }
@@ -159,7 +159,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 }
 - (GLuint)uniformIndex:(NSString *)uniformName
 {
-    return glGetUniformLocation(program, [uniformName UTF8String]);
+    return glGetUniformLocation(_program, [uniformName UTF8String]);
 }
 // END:indexmethods
 #pragma mark -
@@ -170,9 +170,9 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 
     GLint status;
     
-    glLinkProgram(program);
+    glLinkProgram(_program);
     
-    glGetProgramiv(program, GL_LINK_STATUS, &status);
+    glGetProgramiv(_program, GL_LINK_STATUS, &status);
     if (status == GL_FALSE)
         return NO;
     
@@ -198,7 +198,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 // START:use
 - (void)use
 {
-    glUseProgram(program);
+    glUseProgram(_program);
 }
 // END:use
 #pragma mark -
@@ -207,12 +207,12 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 {
 	GLint logLength;
 	
-	glValidateProgram(program);
-	glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+	glValidateProgram(_program);
+	glGetProgramiv(_program, GL_INFO_LOG_LENGTH, &logLength);
 	if (logLength > 0)
 	{
 		GLchar *log = (GLchar *)malloc(logLength);
-		glGetProgramInfoLog(program, logLength, &logLength, log);
+		glGetProgramInfoLog(_program, logLength, &logLength, log);
         self.programLog = [NSString stringWithFormat:@"%s", log];
 		free(log);
 	}	
@@ -228,8 +228,8 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
     if (fragShader)
         glDeleteShader(fragShader);
     
-    if (program)
-        glDeleteProgram(program);
+    if (_program)
+        glDeleteProgram(_program);
        
 }
 // END:dealloc
