@@ -3,6 +3,10 @@ precision highp float;
 
 out vec4 FragColor;
 
+in vec3 ViewPos;
+in vec3 FragPos;
+in vec3 Normal;
+
 struct Material {
     vec3 ambient;
     vec3 diffuse;
@@ -13,22 +17,19 @@ struct Material {
 struct Light {
     vec3 position;
     
+    vec3 color;
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
 };
 
-in vec3 FragPos;
-in vec3 Normal;
-
-uniform vec3 viewPos;
 uniform Material material;
 uniform Light light;
 
 void main()
 {
     // 1.环境光
-    vec3 ambient = light.ambient * material.ambient;
+    vec3 ambient = light.color * light.ambient * material.ambient;
     
     // 2.漫反射光
     // 计算光源向量，规范化两个向量
@@ -39,7 +40,7 @@ void main()
     
     // 3.镜面高光
     // 计算反射光向量
-    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 viewDir = normalize(ViewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
     // 计算镜面高光的强度，shininess表示了高光的光泽度信息。光泽度越高，高光范围越集中
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);

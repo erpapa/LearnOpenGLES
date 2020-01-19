@@ -2,17 +2,25 @@
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aNormal;
 
+out vec3 ViewPos;
 out vec3 FragPos;
 out vec3 Normal;
 
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+struct Camera {
+    vec3 position;
+    
+    mat4 view;
+    mat4 projection;
+};
+
+uniform Camera camera;
+uniform mat4 model_matrix;
 
 void main()
 {
-    FragPos = vec3(model * vec4(aPos, 1.0));
-    Normal = mat3(transpose(inverse(model))) * aNormal;
+    ViewPos = camera.position;
+    FragPos = vec3(model_matrix * vec4(aPos, 1.0));
+    Normal = mat3(transpose(inverse(model_matrix))) * aNormal;
     
-    gl_Position = projection * view * vec4(FragPos, 1.0);
+    gl_Position = camera.projection * camera.view * vec4(FragPos, 1.0);
 }
