@@ -15,10 +15,10 @@
 
 @interface GLProgram : NSObject 
 {
-    NSMutableArray  *attributes;
-    NSMutableArray  *uniforms;
-    GLuint vertShader;
-	GLuint fragShader;
+    NSMutableArray  *_attributes;
+    NSMutableArray  *_uniforms;
+    GLuint _vertShader;
+	GLuint _fragShader;
 }
 
 @property(readonly, nonatomic) GLuint program;

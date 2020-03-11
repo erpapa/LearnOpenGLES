@@ -50,7 +50,7 @@
                        @{@"title":@"21.Material（材质）",@"class":@"DemoViewController21"},
                        @{@"title":@"22.Diffuse Map（漫反射贴图）",@"class":@"DemoViewController22"},
                        @{@"title":@"23.Specular Map（镜面光贴图）",@"class":@"DemoViewController23"},
-                       @{@"title":@"24.Directional Light（方向光）",@"class":@"DemoViewController24"},
+                       @{@"title":@"24.Directional Light（定向光）",@"class":@"DemoViewController24"},
                        @{@"title":@"25.Point Light（点光源）",@"class":@"DemoViewController25"},
                        @{@"title":@"26.Spot Light（聚光灯）",@"class":@"DemoViewController26"},
                        @{@"title":@"27.Multiple Lights（多光源）",@"class":@"DemoViewController27"},

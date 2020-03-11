@@ -6,15 +6,17 @@ out vec4 FragColor;
 in vec3 ViewPos;
 in vec3 FragPos;
 in vec3 Normal;
+in vec2 TexCoords;
 
-layout (std140) uniform Material
+// 移除了环境光材质颜色向量，因为环境光颜色在几乎所有情况下都等于漫反射颜色
+struct Material
 {
-    // 使用vec4，字节对齐
-    vec4 material_ambient;
-    vec4 material_diffuse;
-    vec4 material_specular;
-    float material_shininess;
+    sampler2D diffuse; // 漫反射贴图
+    vec4 specular; // 镜面光
+    float shininess;
 };
+
+uniform Material material;
 
 layout (std140) uniform Light
 {
@@ -30,22 +32,22 @@ layout (std140) uniform Light
 void main()
 {
     // 1.环境光
-    vec3 ambient = vec3(light_color * light_ambient * material_ambient);
+    vec3 ambient = vec3(light_color * light_ambient * texture(material.diffuse, TexCoords));
     
     // 2.漫反射光
     // 计算光源向量，规范化两个向量
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(vec3(light_position) - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = vec3(light_diffuse * (diff * material_diffuse));
+    vec3 diffuse = vec3(light_diffuse * (diff * texture(material.diffuse, TexCoords)));
     
     // 3.镜面高光
     // 计算反射光向量
     vec3 viewDir = normalize(ViewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
     // 计算镜面高光的强度，shininess表示了高光的光泽度信息。光泽度越高，高光范围越集中
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material_shininess);
-    vec3 specular = vec3(light_specular * (spec * material_specular));
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    vec3 specular = vec3(light_specular * (spec * material.specular));
     
     vec3 result = ambient + diffuse + specular;
     FragColor = vec4(result, 1.0);

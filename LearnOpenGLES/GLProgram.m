@@ -33,11 +33,11 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
     {
         _initialized = NO;
         
-        attributes = [[NSMutableArray alloc] init];
-        uniforms = [[NSMutableArray alloc] init];
+        _attributes = [[NSMutableArray alloc] init];
+        _uniforms = [[NSMutableArray alloc] init];
         _program = glCreateProgram();
         
-        if (![self compileShader:&vertShader 
+        if (![self compileShader:&_vertShader
                             type:GL_VERTEX_SHADER 
                           string:vShaderString])
         {
@@ -45,15 +45,15 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
         }
         
         // Create and compile fragment shader
-        if (![self compileShader:&fragShader 
+        if (![self compileShader:&_fragShader
                             type:GL_FRAGMENT_SHADER 
                           string:fShaderString])
         {
             NSLog(@"Failed to compile fragment shader");
         }
         
-        glAttachShader(_program, vertShader);
-        glAttachShader(_program, fragShader);
+        glAttachShader(_program, _vertShader);
+        glAttachShader(_program, _fragShader);
     }
     
     return self;
@@ -120,7 +120,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 		{
 			GLchar *log = (GLchar *)malloc(logLength);
 			glGetShaderInfoLog(*shader, logLength, &logLength, log);
-            if (shader == &vertShader)
+            if (shader == &_vertShader)
             {
                 self.vertexShaderLog = [NSString stringWithFormat:@"%s", log];
             }
@@ -143,11 +143,11 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 // START:addattribute
 - (void)addAttribute:(NSString *)attributeName
 {
-    if (![attributes containsObject:attributeName])
+    if (![_attributes containsObject:attributeName])
     {
-        [attributes addObject:attributeName];
+        [_attributes addObject:attributeName];
         glBindAttribLocation(_program,
-                             (GLuint)[attributes indexOfObject:attributeName],
+                             (GLuint)[_attributes indexOfObject:attributeName],
                              [attributeName UTF8String]);
     }
 }
@@ -155,7 +155,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 // START:indexmethods
 - (GLuint)attributeIndex:(NSString *)attributeName
 {
-    return (GLuint)[attributes indexOfObject:attributeName];
+    return (GLuint)[_attributes indexOfObject:attributeName];
 }
 - (GLuint)uniformIndex:(NSString *)uniformName
 {
@@ -176,15 +176,15 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
     if (status == GL_FALSE)
         return NO;
     
-    if (vertShader)
+    if (_vertShader)
     {
-        glDeleteShader(vertShader);
-        vertShader = 0;
+        glDeleteShader(_vertShader);
+        _vertShader = 0;
     }
-    if (fragShader)
+    if (_fragShader)
     {
-        glDeleteShader(fragShader);
-        fragShader = 0;
+        glDeleteShader(_fragShader);
+        _fragShader = 0;
     }
     
     self.initialized = YES;
@@ -222,11 +222,11 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 // START:dealloc
 - (void)dealloc
 {
-    if (vertShader)
-        glDeleteShader(vertShader);
+    if (_vertShader)
+        glDeleteShader(_vertShader);
         
-    if (fragShader)
-        glDeleteShader(fragShader);
+    if (_fragShader)
+        glDeleteShader(_fragShader);
     
     if (_program)
         glDeleteProgram(_program);

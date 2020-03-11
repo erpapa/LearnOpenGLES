@@ -57,12 +57,6 @@ static GLfloat boxVertices[] = {
     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f
 };
 
-struct _Model
-{
-    GLKMatrix4 matrix;
-};
-typedef struct _Model Model;
-
 struct _Camera
 {
     GLKVector4 position;
@@ -77,6 +71,7 @@ struct _Material
     GLKVector4 diffuse;
     GLKVector4 specular;
     float shininess;
+    float padding[3]; // 占位
 };
 typedef struct _Material Material;
 
@@ -96,12 +91,12 @@ typedef struct _Light Light;
     GLuint _lightVAO, _lightVBO, _modelVAO, _modelVBO;
     GLKMatrix4 _lightMatrix, _modelMatrix;
     
-    GLuint _camera_buffer;
     GLuint _material_buffer;
     GLuint _light_buffer;
-    Camera _camera;
+    GLuint _camera_buffer;
     Material _material;
     Light _light;
+    Camera _camera;
 }
 @property (nonatomic, strong) EAGLContext *eglContext;
 @property (nonatomic, strong) GLKView *glkView;
@@ -128,7 +123,7 @@ typedef struct _Light Light;
     [EAGLContext setCurrentContext:self.eglContext];
     
     // ubo
-    self.useUBO = NO;
+    self.useUBO = YES;
 
     // shader
     self.lightProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"shaderv_21_0" fragmentShaderFilename:@"shaderf_21_0"];
@@ -171,23 +166,8 @@ typedef struct _Light Light;
     }
     // 3.UBO
     if (self.useUBO) {
-        // 3.1.camera
-        GLuint camera_point = 1;
-        // 获取Uniform Block的索引值
-        GLuint camera_index = glGetUniformBlockIndex(self.modelProgram.program, "Camera");
-        //将Uniform Block的索引值和binding point关联
-        glUniformBlockBinding(self.modelProgram.program, camera_index, camera_point);
-        
-        glGenBuffers(1, &_camera_buffer);
-        glBindBuffer(GL_UNIFORM_BUFFER, _camera_buffer);
-        // 设置UBO存储的数据（用来给Uniform Block中变量赋值）
-        glBufferData(GL_UNIFORM_BUFFER, sizeof(Camera), NULL, GL_DYNAMIC_DRAW);
-        // 将buffer与point关联
-        glBindBufferBase(GL_UNIFORM_BUFFER, camera_point, _camera_buffer);
-        glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
-        // 3.2.material
-        GLuint material_point = 2;
+        // 3.1.material
+        GLuint material_point = 1;
         // 获取Uniform Block的索引值
         GLuint material_index = glGetUniformBlockIndex(self.modelProgram.program, "Material");
         //将Uniform Block的索引值和binding point关联
@@ -196,13 +176,13 @@ typedef struct _Light Light;
         glGenBuffers(1, &_material_buffer);
         glBindBuffer(GL_UNIFORM_BUFFER, _material_buffer);
         // 设置UBO存储的数据（用来给Uniform Block中变量赋值）
-        glBufferData(GL_UNIFORM_BUFFER, sizeof(Material), NULL, GL_DYNAMIC_DRAW);
+        glBufferData(GL_UNIFORM_BUFFER, offsetof(Material, padding), NULL, GL_DYNAMIC_DRAW);
         // 将buffer与point关联
         glBindBufferBase(GL_UNIFORM_BUFFER, material_point, _material_buffer);
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-        // 3.3.light
-        GLuint light_point = 3;
+        // 3.2.light
+        GLuint light_point = 2;
         // 获取Uniform Block的索引值
         GLuint light_index = glGetUniformBlockIndex(self.modelProgram.program, "Light");
         //将Uniform Block的索引值和binding point关联
@@ -215,18 +195,33 @@ typedef struct _Light Light;
         // 将buffer与point关联
         glBindBufferBase(GL_UNIFORM_BUFFER, light_point, _light_buffer);
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
+        
+        // 3.3.camera
+        GLuint camera_point = 3;
+        // 获取Uniform Block的索引值
+        GLuint camera_index = glGetUniformBlockIndex(self.modelProgram.program, "Camera");
+        //将Uniform Block的索引值和binding point关联
+        glUniformBlockBinding(self.modelProgram.program, camera_index, camera_point);
+        
+        glGenBuffers(1, &_camera_buffer);
+        glBindBuffer(GL_UNIFORM_BUFFER, _camera_buffer);
+        // 设置UBO存储的数据（用来给Uniform Block中变量赋值）
+        glBufferData(GL_UNIFORM_BUFFER, sizeof(Camera), NULL, GL_DYNAMIC_DRAW);
+        // 将buffer与point关联
+        glBindBufferBase(GL_UNIFORM_BUFFER, camera_point, _camera_buffer);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
     }
     
     // 初始化模型矩阵
     _modelMatrix = GLKMatrix4Identity;
 
     // 灯光
-    _light.position = GLKVector4Make(-0.5, 1.0, -1.0, 1.0);
+    _light.position = GLKVector4Make(1.3, 0.0, 0.0, 1.0);
     _lightMatrix = GLKMatrix4Multiply(GLKMatrix4MakeTranslation(_light.position.x, _light.position.y, _light.position.z), GLKMatrix4MakeScale(0.25, 0.25, 0.25));
-
+    
     // 摄像机
-    _camera.position = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
-    // 设置摄像机在(1，1，1)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
+    _camera.position = GLKVector4Make(1.3, -0.65, 0.65, 1.0);
+    // 设置摄像机在(1.3, -0.65, 0.65)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
     _camera.view = GLKMatrix4MakeLookAt(_camera.position.x, _camera.position.y, _camera.position.z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     // 使用透视投影矩阵，视场角设置为90°
     _camera.projection = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
@@ -296,12 +291,12 @@ typedef struct _Light Light;
             glUniformMatrix4fv([self.modelProgram uniformIndex:@"model_matrix"], 1, GL_FALSE, (GLfloat *)&_modelMatrix);
 
             // ubo
-            glBindBuffer(GL_UNIFORM_BUFFER, _camera_buffer);
-            glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Camera), &_camera);
             glBindBuffer(GL_UNIFORM_BUFFER, _material_buffer);
-            glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Material), &_material);
+            glBufferSubData(GL_UNIFORM_BUFFER, 0, offsetof(Material, padding), &_material);
             glBindBuffer(GL_UNIFORM_BUFFER, _light_buffer);
             glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Light), &_light);
+            glBindBuffer(GL_UNIFORM_BUFFER, _camera_buffer);
+            glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Camera), &_camera);
             glBindBuffer(GL_UNIFORM_BUFFER, 0);
         }
         else
@@ -309,23 +304,23 @@ typedef struct _Light Light;
             // model
             glUniformMatrix4fv([self.modelProgram uniformIndex:@"model_matrix"], 1, GL_FALSE, (GLfloat *)&_modelMatrix);
             
-            // camera properties
-            glUniform3f([self.modelProgram uniformIndex:@"camera.position"], _camera.position.x, _camera.position.y, _camera.position.z);
-            glUniformMatrix4fv([self.modelProgram uniformIndex:@"camera.view"], 1, GL_FALSE, (GLfloat *)&_camera.view);
-            glUniformMatrix4fv([self.modelProgram uniformIndex:@"camera.projection"], 1, GL_FALSE, (GLfloat *)&_camera.projection);
-                        
+            // material properties
+            glUniform3f([self.modelProgram uniformIndex:@"material.ambient"], _material.ambient.x, _material.ambient.y, _material.ambient.z);
+            glUniform3f([self.modelProgram uniformIndex:@"material.diffuse"], _material.diffuse.x, _material.diffuse.y, _material.diffuse.z);
+            glUniform3f([self.modelProgram uniformIndex:@"material.specular"], _material.specular.x, _material.specular.y, _material.specular.z);
+            glUniform1f([self.modelProgram uniformIndex:@"material.shininess"], _material.shininess);
+            
             // light properties
             glUniform3f([self.modelProgram uniformIndex:@"light.position"], _light.position.x, _light.position.y, _light.position.z);
             glUniform3f([self.modelProgram uniformIndex:@"light.color"], _light.color.x, _light.color.y, _light.color.z);
             glUniform3f([self.modelProgram uniformIndex:@"light.ambient"], _light.ambient.x, _light.ambient.y, _light.ambient.z);
             glUniform3f([self.modelProgram uniformIndex:@"light.diffuse"], _light.diffuse.x, _light.diffuse.y, _light.diffuse.z);
             glUniform3f([self.modelProgram uniformIndex:@"light.specular"], _light.specular.x, _light.specular.y, _light.specular.z);
-            
-            // material properties
-            glUniform3f([self.modelProgram uniformIndex:@"material.ambient"], _material.ambient.x, _material.ambient.y, _material.ambient.z);
-            glUniform3f([self.modelProgram uniformIndex:@"material.diffuse"], _material.diffuse.x, _material.diffuse.y, _material.diffuse.z);
-            glUniform3f([self.modelProgram uniformIndex:@"material.specular"], _material.specular.x, _material.specular.y, _material.specular.z);
-            glUniform1f([self.modelProgram uniformIndex:@"material.shininess"], _material.shininess);
+
+            // camera properties
+            glUniform3f([self.modelProgram uniformIndex:@"camera.position"], _camera.position.x, _camera.position.y, _camera.position.z);
+            glUniformMatrix4fv([self.modelProgram uniformIndex:@"camera.view"], 1, GL_FALSE, (GLfloat *)&_camera.view);
+            glUniformMatrix4fv([self.modelProgram uniformIndex:@"camera.projection"], 1, GL_FALSE, (GLfloat *)&_camera.projection);
         }
         
         glBindVertexArray(_modelVAO);
@@ -354,10 +349,6 @@ typedef struct _Light Light;
         glDeleteBuffers(1, &_modelVBO);
         _modelVBO = 0;
     }
-    if (_camera_buffer) {
-        glDeleteBuffers(1, &_camera_buffer);
-        _camera_buffer = 0;
-    }
     if (_material_buffer) {
         glDeleteBuffers(1, &_material_buffer);
         _material_buffer = 0;
@@ -365,6 +356,10 @@ typedef struct _Light Light;
     if (_light_buffer) {
         glDeleteBuffers(1, &_light_buffer);
         _light_buffer = 0;
+    }
+    if (_camera_buffer) {
+        glDeleteBuffers(1, &_camera_buffer);
+        _camera_buffer = 0;
     }
 }
 
