@@ -216,12 +216,12 @@ typedef struct _Light Light;
     _modelMatrix = GLKMatrix4Identity;
 
     // 灯光
-    _light.position = GLKVector4Make(1.3, 0.0, 0.0, 1.0);
+    _light.position = GLKVector4Make(-0.5, 1.0, -1.0, 1.0);
     _lightMatrix = GLKMatrix4Multiply(GLKMatrix4MakeTranslation(_light.position.x, _light.position.y, _light.position.z), GLKMatrix4MakeScale(0.25, 0.25, 0.25));
     
     // 摄像机
-    _camera.position = GLKVector4Make(1.3, -0.65, 0.65, 1.0);
-    // 设置摄像机在(1.3, -0.65, 0.65)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
+    _camera.position = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
+    // 设置摄像机在(1.0, 1.0, 1.0)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
     _camera.view = GLKMatrix4MakeLookAt(_camera.position.x, _camera.position.y, _camera.position.z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     // 使用透视投影矩阵，视场角设置为90°
     _camera.projection = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
