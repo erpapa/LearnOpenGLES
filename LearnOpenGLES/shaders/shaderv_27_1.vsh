@@ -8,21 +8,22 @@ out vec3 FragPos;
 out vec3 Normal;
 out vec2 TexCoords;
 
-uniform mat4 model_matrix;
-layout (std140) uniform Camera
-{
-    // 使用vec4，字节对齐
-    vec4 camera_position;
-    mat4 camera_view;
-    mat4 camera_projection;
+struct Camera {
+    vec3 position;
+    
+    mat4 view;
+    mat4 projection;
 };
+
+uniform Camera camera;
+uniform mat4 model_matrix;
 
 void main()
 {
-    ViewPos = vec3(camera_position);
+    ViewPos = vec3(camera.position);
     FragPos = vec3(model_matrix * vec4(aPos, 1.0));
     Normal = mat3(transpose(inverse(model_matrix))) * aNormal;
     TexCoords = aTexCoords;
     
-    gl_Position = camera_projection * camera_view * vec4(FragPos, 1.0);
+    gl_Position = camera.projection * camera.view * vec4(FragPos, 1.0);
 }

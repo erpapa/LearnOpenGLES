@@ -121,13 +121,13 @@ typedef struct _SpotLight SpotLight;
 @interface DemoViewController27 () <GLKViewDelegate>
 {
     GLuint _lightVAO, _lightVBO, _modelVAO, _modelVBO;
-    GLKMatrix4 _lightMatrix, _modelMatrix;
     
-    GLuint _material_buffer;
-    GLuint _light_buffer;
-    GLuint _camera_buffer;
+    GLKVector4 _cubePositions[10];
+    GLKVector4 _pointLightPositions[4];
+    GLKVector4 _pointLightColors[4];
+    
     DirLight _dirLight;
-    PointLight _pointLight[3];
+    PointLight _pointLights[4];
     SpotLight _spotLight;
     Camera _camera;
 }
@@ -169,6 +169,28 @@ typedef struct _SpotLight SpotLight;
     NSString *specularFilePath = [[NSBundle mainBundle] pathForResource:@"container_specular" ofType:@"jpg"];
     self.specularTextureInfo = [GLKTextureLoader textureWithContentsOfFile:specularFilePath options:[NSDictionary dictionaryWithObjectsAndKeys:@(1),GLKTextureLoaderOriginBottomLeft, nil] error:nil];
     
+    // positions
+    _cubePositions[0] = GLKVector4Make(0.0f, 0.0f,  0.0f, 1.0f);
+    _cubePositions[1] = GLKVector4Make(2.0f, 5.0f, -15.0f, 1.0f);
+    _cubePositions[2] = GLKVector4Make(-1.5f, -2.2f, -2.5f, 1.0f);
+    _cubePositions[3] = GLKVector4Make(-3.8f, -2.0f, -12.3f, 1.0f);
+    _cubePositions[4] = GLKVector4Make(2.4f, -0.4f, -3.5f, 1.0f);
+    _cubePositions[5] = GLKVector4Make(-1.7f, 3.0f, -7.5f, 1.0f);
+    _cubePositions[6] = GLKVector4Make(1.3f, -2.0f, -2.5f, 1.0f);
+    _cubePositions[7] = GLKVector4Make(1.5f, 2.0f, -2.5f, 1.0f);
+    _cubePositions[8] = GLKVector4Make(1.5f, 0.2f, -1.5f, 1.0f);
+    _cubePositions[9] = GLKVector4Make(-1.3f, 1.0f, -1.5f, 1.0f);
+
+    _pointLightPositions[0] = GLKVector4Make(0.7f, 0.2f, 2.0f, 1.0f);
+    _pointLightPositions[1] = GLKVector4Make(2.3f, -3.3f, -4.0f, 1.0f);
+    _pointLightPositions[2] = GLKVector4Make(-4.0f, 2.0f, -12.0f, 1.0f);
+    _pointLightPositions[3] = GLKVector4Make(0.0f, 0.0f, -3.0f, 1.0f);
+    
+    _pointLightColors[0] = GLKVector4Make(0.7f, 0.2f, 2.0f, 1.0f);
+    _pointLightColors[1] = GLKVector4Make(1.0f, 0.0f, 0.0f, 1.0f);
+    _pointLightColors[2] = GLKVector4Make(1.0f, 1.0, 0.0, 1.0f);
+    _pointLightColors[3] = GLKVector4Make(0.2f, 0.2f, 1.0f, 1.0f);
+    
     // 1.创建灯光
     {
         glGenVertexArrays(1, &_lightVAO);
@@ -203,44 +225,44 @@ typedef struct _SpotLight SpotLight;
         // glBindBuffer(GL_ARRAY_BUFFER, 0); // 不可以解绑，此时VAO管理着它们
         glBindVertexArray(0); // 解绑VAO（这通常是一个很好的用来解绑任何缓存/数组并防止奇怪错误的方法）
     }
-    // 3.UBO
-    {
-        // 3.1.camera
-        GLuint camera_point = 1;
-        // 获取Uniform Block的索引值
-        GLuint camera_index = glGetUniformBlockIndex(self.modelProgram.program, "Camera");
-        //将Uniform Block的索引值和binding point关联
-        glUniformBlockBinding(self.modelProgram.program, camera_index, camera_point);
+    
+    // 摄像机
+    _camera.position = GLKVector4Make(0.0f, 0.0f, 3.0f, 1.0);
+    // 设置摄像机在(0.0, 0.0, 3.0)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
+    _camera.view = GLKMatrix4MakeLookAt(_camera.position.x, _camera.position.y, _camera.position.z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    // 使用透视投影矩阵，视场角设置为90°
+    _camera.projection = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
         
-        glGenBuffers(1, &_camera_buffer);
-        glBindBuffer(GL_UNIFORM_BUFFER, _camera_buffer);
-        // 设置UBO存储的数据（用来给Uniform Block中变量赋值）
-        glBufferData(GL_UNIFORM_BUFFER, sizeof(Camera), NULL, GL_DYNAMIC_DRAW);
-        // 将buffer与point关联
-        glBindBufferBase(GL_UNIFORM_BUFFER, camera_point, _camera_buffer);
-        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    // 灯光
+    // dirLight
+    _dirLight.direction = GLKVector4Make(-0.2f, -1.0f, -0.3f, 1.0f);
+    _dirLight.ambient = GLKVector4Make(0.05f, 0.05f, 0.05f, 1.0f);
+    _dirLight.diffuse = GLKVector4Make(0.4f, 0.4f, 0.4f, 1.0f);
+    _dirLight.specular = GLKVector4Make(0.5f, 0.5f, 0.5f, 1.0f);
+    
+    // pointLights
+    for (int i = 0; i < 4; i++) {
+        _pointLights[i].position = _pointLightPositions[i];
+        _pointLights[i].ambient = GLKVector4Make(_pointLightColors[i].x * 0.1, _pointLightColors[i].y * 0.1, _pointLightColors[i].z * 0.1, 1.0f); // GLKVector4Make(0.05f, 0.05f, 0.05f, 1.0f);
+        _pointLights[i].diffuse = _pointLightColors[i]; // GLKVector4Make(0.8f, 0.8f, 0.8f, 1.0f);
+        _pointLights[i].specular = _pointLightColors[i];// GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
+        _pointLights[i].constant = 1.0; // 衰减常数项
+        _pointLights[i].linear = 0.09; // 衰减一次项
+        _pointLights[i].quadratic = 0.032; // 衰减二次项
     }
     
-    // 初始化模型矩阵
-    _modelMatrix = GLKMatrix4Identity;
-    
-    // 灯光
-    _spotLight.position = GLKVector4Make(0.0, 1.0, -1.0, 1.0);
-    _spotLight.direction = GLKVector4Make(0.0, -1.0, 1.0, 0.0);
+    // spotLight
+    _spotLight.position = _camera.position;
+    _spotLight.direction = GLKVector4Negate(_camera.position);
+    _spotLight.ambient = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
+    _spotLight.diffuse = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
+    _spotLight.specular = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
     _spotLight.constant = 1.0; // 衰减常数项
     _spotLight.linear = 0.09; // 衰减一次项
     _spotLight.quadratic = 0.032; // 衰减二次项
     _spotLight.cutOff = cosf(GLKMathDegreesToRadians(12.5)); // 内切光角是12.5
     _spotLight.outerCutOff = cosf(GLKMathDegreesToRadians(17.5)); // 外切光角是17.5
-//    _lightMatrix = GLKMatrix4Multiply(GLKMatrix4MakeTranslation(_light.position.x, _light.position.y, _light.position.z), GLKMatrix4MakeScale(0.25, 0.25, 0.25));
-    
-    // 摄像机
-    _camera.position = GLKVector4Make(1.5, 1.5, 1.5, 1.0);
-    // 设置摄像机在(1.5, 1.5, 1.5)坐标，看向(0，0，0)点。Y轴正向为摄像机顶部指向的方向
-    _camera.view = GLKMatrix4MakeLookAt(_camera.position.x, _camera.position.y, _camera.position.z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    // 使用透视投影矩阵，视场角设置为90°
-    _camera.projection = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(90.0f), 1.0f, 0.1f, 100.0f);
-    
+        
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
     [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
 }
@@ -257,13 +279,12 @@ typedef struct _SpotLight SpotLight;
 {
     // 更新摄像机位置（沿Y轴顺时针转动摄像机，视野里箱子逆时针转动）
     CFTimeInterval mediaTime = CACurrentMediaTime() * 0.25;
-    _camera.position = GLKVector4Make(1.5 * cosf(mediaTime), 1.5, 1.5 * sinf(mediaTime), 1.0);
+    _camera.position = GLKVector4Make(3.0 * cosf(mediaTime), 0.0, 3.0 * sinf(mediaTime), 1.0);
     _camera.view = GLKMatrix4MakeLookAt(_camera.position.x, _camera.position.y, _camera.position.z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    
-    _spotLight.ambient = GLKVector4Make(0.1f, 0.1f, 0.1f, 1.0f);
-    _spotLight.diffuse = GLKVector4Make(0.5f, 0.5f, 0.5f, 1.0f);
-    _spotLight.specular = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
-    
+
+    _spotLight.position = _camera.position;
+    _spotLight.direction = GLKVector4Negate(_camera.position);
+
     [self.glkView display];
 }
 
@@ -281,24 +302,28 @@ typedef struct _SpotLight SpotLight;
     {
         [self.lightProgram use];
         // model、view、projection
-        glUniformMatrix4fv([self.lightProgram uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&_lightMatrix);
+        
         glUniformMatrix4fv([self.lightProgram uniformIndex:@"view"], 1, GL_FALSE, (GLfloat *)&_camera.view);
         glUniformMatrix4fv([self.lightProgram uniformIndex:@"projection"], 1, GL_FALSE, (GLfloat *)&_camera.projection);
         
-        // objectColor、ambientColor
-        glUniform3f([self.lightProgram uniformIndex:@"objectColor"], _spotLight.ambient.x, _spotLight.ambient.y, _spotLight.ambient.z);
-        glUniform3f([self.lightProgram uniformIndex:@"ambientColor"], 1.0, 1.0, 1.0);
-        
-        glBindVertexArray(_lightVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
+        for (int i = 0; i < 4; i++) {
+            GLKMatrix4 scale = GLKMatrix4MakeScale(0.2f, 0.2f, 0.2f);
+            GLKMatrix4 translation = GLKMatrix4MakeTranslation(_pointLightPositions[i].x, _pointLightPositions[i].y, _pointLightPositions[i].z);
+            GLKMatrix4 lightMatrix = GLKMatrix4Multiply(translation, scale);
+            glUniformMatrix4fv([self.lightProgram uniformIndex:@"model"], 1, GL_FALSE, (GLfloat *)&lightMatrix);
+            
+            // objectColor、ambientColor
+            glUniform3f([self.lightProgram uniformIndex:@"objectColor"], _pointLights[i].specular.x, _pointLights[i].specular.y, _pointLights[i].specular.z);
+            glUniform3f([self.lightProgram uniformIndex:@"ambientColor"], 1.0, 1.0, 1.0);
+            
+            glBindVertexArray(_lightVAO);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+            glBindVertexArray(0);
+        }
     }
     // 2.绘制物体
     {
         [self.modelProgram use];
-        
-        // model
-        glUniformMatrix4fv([self.modelProgram uniformIndex:@"model_matrix"], 1, GL_FALSE, (GLfloat *)&_modelMatrix);
         
         // bind texture
         glActiveTexture(GL_TEXTURE0);
@@ -311,15 +336,50 @@ typedef struct _SpotLight SpotLight;
         
         glUniform1f([self.modelProgram uniformIndex:@"material.shininess"], 32.0);
         
-        // bind ubo
-        glBindBuffer(GL_UNIFORM_BUFFER, _camera_buffer);
-        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Camera), &_camera);
-        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+        // light properties
+        glUniform4f([self.modelProgram uniformIndex:@"dirLight.direction"], _dirLight.direction.x, _dirLight.direction.y, _dirLight.direction.z, _dirLight.direction.w);
+        glUniform4f([self.modelProgram uniformIndex:@"dirLight.ambient"], _dirLight.ambient.x, _dirLight.ambient.y, _dirLight.ambient.z, _dirLight.ambient.w);
+        glUniform4f([self.modelProgram uniformIndex:@"dirLight.diffuse"], _dirLight.diffuse.x, _dirLight.diffuse.y, _dirLight.diffuse.z, _dirLight.diffuse.w);
+        glUniform4f([self.modelProgram uniformIndex:@"dirLight.specular"], _dirLight.specular.x, _dirLight.specular.y, _dirLight.specular.z, _dirLight.specular.w);
+        
+        for (int i = 0; i < 4; i++) {
+            glUniform4f([self.modelProgram uniformIndex:[NSString stringWithFormat:@"pointLights[%d].position", i]], _pointLights[i].position.x, _pointLights[i].position.y, _pointLights[i].position.z, _pointLights[i].position.w);
+            glUniform4f([self.modelProgram uniformIndex:[NSString stringWithFormat:@"pointLights[%d].ambient", i]], _pointLights[i].ambient.x, _pointLights[i].ambient.y, _pointLights[i].ambient.z, _pointLights[i].ambient.w);
+            glUniform4f([self.modelProgram uniformIndex:[NSString stringWithFormat:@"pointLights[%d].diffuse", i]], _pointLights[i].diffuse.x, _pointLights[i].diffuse.y, _pointLights[i].diffuse.z, _pointLights[i].diffuse.w);
+            glUniform4f([self.modelProgram uniformIndex:[NSString stringWithFormat:@"pointLights[%d].specular", i]], _pointLights[i].specular.x, _pointLights[i].specular.y, _pointLights[i].specular.z, _pointLights[i].specular.w);
+            glUniform1f([self.modelProgram uniformIndex:[NSString stringWithFormat:@"pointLights[%d].constant", i]], _pointLights[i].constant);
+            glUniform1f([self.modelProgram uniformIndex:[NSString stringWithFormat:@"pointLights[%d].linear", i]], _pointLights[i].linear);
+            glUniform1f([self.modelProgram uniformIndex:[NSString stringWithFormat:@"pointLights[%d].quadratic", i]], _pointLights[i].quadratic);
+        }
+        
+        glUniform4f([self.modelProgram uniformIndex:@"spotLight.position"], _spotLight.position.x, _spotLight.position.y, _spotLight.position.z, _spotLight.position.w);
+        glUniform4f([self.modelProgram uniformIndex:@"spotLight.direction"], _spotLight.direction.x, _spotLight.direction.y, _spotLight.direction.z, _spotLight.direction.w);
+        glUniform4f([self.modelProgram uniformIndex:@"spotLight.ambient"], _spotLight.ambient.x, _spotLight.ambient.y, _spotLight.ambient.z, _spotLight.ambient.w);
+        glUniform4f([self.modelProgram uniformIndex:@"spotLight.diffuse"], _spotLight.diffuse.x, _spotLight.diffuse.y, _spotLight.diffuse.z, _spotLight.diffuse.w);
+        glUniform4f([self.modelProgram uniformIndex:@"spotLight.specular"], _spotLight.specular.x, _spotLight.specular.y, _spotLight.specular.z, _spotLight.specular.w);
+        glUniform1f([self.modelProgram uniformIndex:@"spotLight.constant"], _spotLight.constant);
+        glUniform1f([self.modelProgram uniformIndex:@"spotLight.linear"], _spotLight.linear);
+        glUniform1f([self.modelProgram uniformIndex:@"spotLight.quadratic"], _spotLight.quadratic);
+        glUniform1f([self.modelProgram uniformIndex:@"spotLight.cutOff"], _spotLight.cutOff);
+        glUniform1f([self.modelProgram uniformIndex:@"spotLight.outerCutOff"], _spotLight.outerCutOff);
+        
+        // camera
+        glUniform3f([self.modelProgram uniformIndex:@"camera.position"], _camera.position.x, _camera.position.y, _camera.position.z);
+        glUniformMatrix4fv([self.modelProgram uniformIndex:@"camera.view"], 1, GL_FALSE, (GLfloat *)&_camera.view);
+        glUniformMatrix4fv([self.modelProgram uniformIndex:@"camera.projection"], 1, GL_FALSE, (GLfloat *)&_camera.projection);
         
         // draw
-        glBindVertexArray(_modelVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
+        for (int i = 0; i < 10; i++) {
+            float angle = 20.0f * i;
+            GLKMatrix4 rotation = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(angle), 1.0f, 0.3f, 0.5f);
+            GLKMatrix4 translation = GLKMatrix4MakeTranslation(_cubePositions[i].x, _cubePositions[i].y, _cubePositions[i].z);
+            GLKMatrix4 modelMatrix = GLKMatrix4Multiply(translation, rotation);
+            glUniformMatrix4fv([self.modelProgram uniformIndex:@"model_matrix"], 1, GL_FALSE, (GLfloat *)&modelMatrix);
+            
+            glBindVertexArray(_modelVAO);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+            glBindVertexArray(0);
+        }
     }
     
     glDisable(GL_DEPTH_TEST);
@@ -342,18 +402,6 @@ typedef struct _SpotLight SpotLight;
     if (_modelVBO) {
         glDeleteBuffers(1, &_modelVBO);
         _modelVBO = 0;
-    }
-    if (_material_buffer) {
-        glDeleteBuffers(1, &_material_buffer);
-        _material_buffer = 0;
-    }
-    if (_light_buffer) {
-        glDeleteBuffers(1, &_light_buffer);
-        _light_buffer = 0;
-    }
-    if (_camera_buffer) {
-        glDeleteBuffers(1, &_camera_buffer);
-        _camera_buffer = 0;
     }
 }
 
