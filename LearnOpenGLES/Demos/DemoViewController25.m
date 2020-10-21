@@ -81,7 +81,7 @@ struct _Light
     float constant;
     float linear;
     float quadratic;
-    float panding;
+    float padding;
 };
 typedef struct _Light Light;
 
@@ -195,7 +195,7 @@ typedef struct _Light Light;
         glGenBuffers(1, &_light_buffer);
         glBindBuffer(GL_UNIFORM_BUFFER, _light_buffer);
         // 设置UBO存储的数据（用来给Uniform Block中变量赋值）
-        glBufferData(GL_UNIFORM_BUFFER, offsetof(Light, panding), NULL, GL_DYNAMIC_DRAW);
+        glBufferData(GL_UNIFORM_BUFFER, offsetof(Light, padding), NULL, GL_DYNAMIC_DRAW);
         // 将buffer与point关联
         glBindBufferBase(GL_UNIFORM_BUFFER, light_point, _light_buffer);
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -310,7 +310,7 @@ typedef struct _Light Light;
         glBindBuffer(GL_UNIFORM_BUFFER, _camera_buffer);
         glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Camera), &_camera);
         glBindBuffer(GL_UNIFORM_BUFFER, _light_buffer);
-        glBufferSubData(GL_UNIFORM_BUFFER, 0, offsetof(Light, panding), &_light);
+        glBufferSubData(GL_UNIFORM_BUFFER, 0, offsetof(Light, padding), &_light);
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
         
         // draw

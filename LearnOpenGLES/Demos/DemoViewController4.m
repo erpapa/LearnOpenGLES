@@ -163,7 +163,11 @@ static const GLfloat noRotationTextureCoordinates[] = {
         if (self.scale <= 0.35 || self.scale >= 1.25) {
             self.scaleConstant = CGPointMake(-self.scaleConstant.x, -self.scaleConstant.y);
         }
-        self.matrix = GLKMatrix4MakeScale(self.scale, self.scale, 0.0);
+        // 设置锚点{0.0, -1.0, 0.0}，当前坐标点位置减去锚点坐标，得到平移的距离，当前坐标平移到锚点坐标即可
+        self.matrix = GLKMatrix4MakeTranslation(0.0, -1.0, 0.0);
+        self.matrix = GLKMatrix4Scale(self.matrix, self.scale, self.scale, 1.0);
+        self.matrix = GLKMatrix4Translate(self.matrix, 0.0, 1.0, 0.0);
+        // self.matrix = GLKMatrix4MakeScale(self.scale, self.scale, 0.0);
     } else if (self.segment.selectedSegmentIndex == 3) {
         // 缩放，便于查看
         CGFloat scale = 0.25;

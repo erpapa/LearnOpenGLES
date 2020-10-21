@@ -93,7 +93,7 @@ struct _PointLight
     float constant;
     float linear;
     float quadratic;
-    float panding;
+    float padding;
 };
 typedef struct _PointLight PointLight;
 
@@ -114,7 +114,7 @@ struct _SpotLight
     float quadratic;
     float cutOff;
     float outerCutOff;
-    float panding[3];
+    float padding[3];
 };
 typedef struct _SpotLight SpotLight;
 

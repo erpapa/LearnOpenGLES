@@ -93,10 +93,10 @@ static const GLfloat noRotationTextureCoordinates[] = {
 
     uint8_t *textureData1 = malloc(sizeof(uint8_t) * 256 * 256 * 4);
     for (int i = 0; i < 256 * 256 * 4; i+=4) {
-        textureData0[i + 0] = 255;
-        textureData0[i + 1] = 255;
-        textureData0[i + 2] = 0;
-        textureData0[i + 3] = 127;
+        textureData1[i + 0] = 255;
+        textureData1[i + 1] = 255;
+        textureData1[i + 2] = 0;
+        textureData1[i + 3] = 127;
     }
     glGenTextures(1, &_alphaTexture1);
     glBindTexture(GL_TEXTURE_2D, _alphaTexture1);
