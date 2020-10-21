@@ -193,7 +193,6 @@
 		1820EE3123BDCAAF00456ED6 /* CodeGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1820EDE523BDCAAF00456ED6 /* CodeGen.cpp */; };
 		1820EE3223BDCAAF00456ED6 /* Link.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1820EDE623BDCAAF00456ED6 /* Link.cpp */; };
 		1820EE4723BDCB9100456ED6 /* ossource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1820EE4023BDCB9100456ED6 /* ossource.cpp */; };
-		1820EE5123BDE21200456ED6 /* InitializeDll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1820EE4F23BDE21200456ED6 /* InitializeDll.cpp */; };
 		1820EF7A23BDE74C00456ED6 /* NameComponentManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1820EE9E23BDE74C00456ED6 /* NameComponentManager.cpp */; };
 		1820EF7B23BDE74C00456ED6 /* EntityManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1820EEA023BDE74C00456ED6 /* EntityManager.cpp */; };
 		1820EF7C23BDE74C00456ED6 /* ashmem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1820EEA123BDE74C00456ED6 /* ashmem.cpp */; };
@@ -376,6 +375,29 @@
 		184BAE8325402E4200955709 /* spirv_cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BAE6C25402E4200955709 /* spirv_cpp.cpp */; };
 		184BAE8425402E4200955709 /* spirv_cross_parsed_ir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BAE6D25402E4200955709 /* spirv_cross_parsed_ir.cpp */; };
 		184BAE8525402E4200955709 /* spirv_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BAE7625402E4200955709 /* spirv_parser.cpp */; };
+		184BB37225404BBC00955709 /* ShaderModuleGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB34125404BBC00955709 /* ShaderModuleGL.cpp */; };
+		184BB37325404BBC00955709 /* BufferGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB34525404BBC00955709 /* BufferGL.cpp */; };
+		184BB37425404BBC00955709 /* SwapChainGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB34725404BBC00955709 /* SwapChainGL.cpp */; };
+		184BB37525404BBC00955709 /* PipelineGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB34F25404BBC00955709 /* PipelineGL.cpp */; };
+		184BB37625404BBD00955709 /* BindGroupLayoutGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB35125404BBC00955709 /* BindGroupLayoutGL.cpp */; };
+		184BB37725404BBD00955709 /* GLFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB35525404BBC00955709 /* GLFormat.cpp */; };
+		184BB37825404BBD00955709 /* BackendGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB35625404BBC00955709 /* BackendGL.cpp */; };
+		184BB37925404BBD00955709 /* OpenGLFunctionsBase_autogen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB35725404BBC00955709 /* OpenGLFunctionsBase_autogen.cpp */; };
+		184BB37A25404BBD00955709 /* QueueGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB35925404BBC00955709 /* QueueGL.cpp */; };
+		184BB37B25404BBD00955709 /* ComputePipelineGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB35A25404BBC00955709 /* ComputePipelineGL.cpp */; };
+		184BB37C25404BBD00955709 /* OpenGLFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB35B25404BBC00955709 /* OpenGLFunctions.cpp */; };
+		184BB37D25404BBD00955709 /* NativeSwapChainImplGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB35C25404BBC00955709 /* NativeSwapChainImplGL.cpp */; };
+		184BB37E25404BBD00955709 /* RenderPipelineGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36025404BBC00955709 /* RenderPipelineGL.cpp */; };
+		184BB37F25404BBD00955709 /* CommandBufferGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36325404BBC00955709 /* CommandBufferGL.cpp */; };
+		184BB38025404BBD00955709 /* QuerySetGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36525404BBC00955709 /* QuerySetGL.cpp */; };
+		184BB38125404BBD00955709 /* PersistentPipelineStateGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36825404BBC00955709 /* PersistentPipelineStateGL.cpp */; };
+		184BB38225404BBD00955709 /* TextureGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36925404BBC00955709 /* TextureGL.cpp */; };
+		184BB38325404BBD00955709 /* SamplerGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36A25404BBC00955709 /* SamplerGL.cpp */; };
+		184BB38525404BBD00955709 /* UtilsGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36C25404BBC00955709 /* UtilsGL.cpp */; };
+		184BB38625404BBD00955709 /* BindGroupGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36D25404BBC00955709 /* BindGroupGL.cpp */; };
+		184BB38725404BBD00955709 /* DeviceGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36E25404BBC00955709 /* DeviceGL.cpp */; };
+		184BB38825404BBD00955709 /* PipelineLayoutGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36F25404BBC00955709 /* PipelineLayoutGL.cpp */; };
+		184BB38925404BBD00955709 /* OpenGLBackend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB37125404BBC00955709 /* OpenGLBackend.cpp */; };
 		1851C14D22EECAE800535AC3 /* shaderv_10.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1851C14B22EECAE800535AC3 /* shaderv_10.vsh */; };
 		1851C14E22EECAE800535AC3 /* shaderf_10.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1851C14C22EECAE800535AC3 /* shaderf_10.fsh */; };
 		1851C15122EEEAEA00535AC3 /* shaderv_11.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1851C14F22EEEAEA00535AC3 /* shaderv_11.vsh */; };
@@ -985,8 +1007,6 @@
 		1820EDE623BDCAAF00456ED6 /* Link.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Link.cpp; sourceTree = "<group>"; };
 		1820EE4023BDCB9100456ED6 /* ossource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ossource.cpp; sourceTree = "<group>"; };
 		1820EE4223BDCB9100456ED6 /* osinclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osinclude.h; sourceTree = "<group>"; };
-		1820EE4E23BDE21200456ED6 /* InitializeDll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitializeDll.h; sourceTree = "<group>"; };
-		1820EE4F23BDE21200456ED6 /* InitializeDll.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitializeDll.cpp; sourceTree = "<group>"; };
 		1820EE7023BDE74C00456ED6 /* BinaryTreeArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryTreeArray.h; sourceTree = "<group>"; };
 		1820EE7123BDE74C00456ED6 /* ostream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ostream.h; sourceTree = "<group>"; };
 		1820EE7223BDE74C00456ED6 /* memalign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memalign.h; sourceTree = "<group>"; };
@@ -1459,6 +1479,55 @@
 		184BAE7625402E4200955709 /* spirv_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spirv_parser.cpp; sourceTree = "<group>"; };
 		184BAE7725402E4200955709 /* spirv_common.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = spirv_common.hpp; sourceTree = "<group>"; };
 		184BAE7825402E4200955709 /* spirv_glsl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = spirv_glsl.hpp; sourceTree = "<group>"; };
+		184BB34125404BBC00955709 /* ShaderModuleGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderModuleGL.cpp; sourceTree = "<group>"; };
+		184BB34225404BBC00955709 /* GLFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLFormat.h; sourceTree = "<group>"; };
+		184BB34325404BBC00955709 /* PipelineLayoutGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PipelineLayoutGL.h; sourceTree = "<group>"; };
+		184BB34425404BBC00955709 /* opengl_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opengl_platform.h; sourceTree = "<group>"; };
+		184BB34525404BBC00955709 /* BufferGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BufferGL.cpp; sourceTree = "<group>"; };
+		184BB34625404BBC00955709 /* UtilsGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UtilsGL.h; sourceTree = "<group>"; };
+		184BB34725404BBC00955709 /* SwapChainGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwapChainGL.cpp; sourceTree = "<group>"; };
+		184BB34825404BBC00955709 /* RenderPipelineGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderPipelineGL.h; sourceTree = "<group>"; };
+		184BB34925404BBC00955709 /* BackendGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendGL.h; sourceTree = "<group>"; };
+		184BB34A25404BBC00955709 /* NativeSwapChainImplGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeSwapChainImplGL.h; sourceTree = "<group>"; };
+		184BB34B25404BBC00955709 /* ShaderModuleGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderModuleGL.h; sourceTree = "<group>"; };
+		184BB34C25404BBC00955709 /* BufferGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferGL.h; sourceTree = "<group>"; };
+		184BB34D25404BBC00955709 /* OpenGLFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLFunctions.h; sourceTree = "<group>"; };
+		184BB34E25404BBC00955709 /* SamplerGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamplerGL.h; sourceTree = "<group>"; };
+		184BB34F25404BBC00955709 /* PipelineGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PipelineGL.cpp; sourceTree = "<group>"; };
+		184BB35025404BBC00955709 /* PipelineGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PipelineGL.h; sourceTree = "<group>"; };
+		184BB35125404BBC00955709 /* BindGroupLayoutGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BindGroupLayoutGL.cpp; sourceTree = "<group>"; };
+		184BB35225404BBC00955709 /* TextureGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureGL.h; sourceTree = "<group>"; };
+		184BB35325404BBC00955709 /* DeviceGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceGL.h; sourceTree = "<group>"; };
+		184BB35425404BBC00955709 /* BindGroupLayoutGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindGroupLayoutGL.h; sourceTree = "<group>"; };
+		184BB35525404BBC00955709 /* GLFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLFormat.cpp; sourceTree = "<group>"; };
+		184BB35625404BBC00955709 /* BackendGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BackendGL.cpp; sourceTree = "<group>"; };
+		184BB35725404BBC00955709 /* OpenGLFunctionsBase_autogen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLFunctionsBase_autogen.cpp; sourceTree = "<group>"; };
+		184BB35825404BBC00955709 /* BindGroupGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindGroupGL.h; sourceTree = "<group>"; };
+		184BB35925404BBC00955709 /* QueueGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QueueGL.cpp; sourceTree = "<group>"; };
+		184BB35A25404BBC00955709 /* ComputePipelineGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComputePipelineGL.cpp; sourceTree = "<group>"; };
+		184BB35B25404BBC00955709 /* OpenGLFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLFunctions.cpp; sourceTree = "<group>"; };
+		184BB35C25404BBC00955709 /* NativeSwapChainImplGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeSwapChainImplGL.cpp; sourceTree = "<group>"; };
+		184BB35D25404BBC00955709 /* QuerySetGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuerySetGL.h; sourceTree = "<group>"; };
+		184BB35E25404BBC00955709 /* QueueGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueGL.h; sourceTree = "<group>"; };
+		184BB35F25404BBC00955709 /* PersistentPipelineStateGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersistentPipelineStateGL.h; sourceTree = "<group>"; };
+		184BB36025404BBC00955709 /* RenderPipelineGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPipelineGL.cpp; sourceTree = "<group>"; };
+		184BB36125404BBC00955709 /* ComputePipelineGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComputePipelineGL.h; sourceTree = "<group>"; };
+		184BB36225404BBC00955709 /* opengl_platform_autogen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opengl_platform_autogen.h; sourceTree = "<group>"; };
+		184BB36325404BBC00955709 /* CommandBufferGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommandBufferGL.cpp; sourceTree = "<group>"; };
+		184BB36425404BBC00955709 /* SwapChainGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwapChainGL.h; sourceTree = "<group>"; };
+		184BB36525404BBC00955709 /* QuerySetGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuerySetGL.cpp; sourceTree = "<group>"; };
+		184BB36625404BBC00955709 /* CommandBufferGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandBufferGL.h; sourceTree = "<group>"; };
+		184BB36725404BBC00955709 /* OpenGLFunctionsBase_autogen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLFunctionsBase_autogen.h; sourceTree = "<group>"; };
+		184BB36825404BBC00955709 /* PersistentPipelineStateGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PersistentPipelineStateGL.cpp; sourceTree = "<group>"; };
+		184BB36925404BBC00955709 /* TextureGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureGL.cpp; sourceTree = "<group>"; };
+		184BB36A25404BBC00955709 /* SamplerGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SamplerGL.cpp; sourceTree = "<group>"; };
+		184BB36C25404BBC00955709 /* UtilsGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UtilsGL.cpp; sourceTree = "<group>"; };
+		184BB36D25404BBC00955709 /* BindGroupGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BindGroupGL.cpp; sourceTree = "<group>"; };
+		184BB36E25404BBC00955709 /* DeviceGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeviceGL.cpp; sourceTree = "<group>"; };
+		184BB36F25404BBC00955709 /* PipelineLayoutGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PipelineLayoutGL.cpp; sourceTree = "<group>"; };
+		184BB37025404BBC00955709 /* Forward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Forward.h; sourceTree = "<group>"; };
+		184BB37125404BBC00955709 /* OpenGLBackend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLBackend.cpp; sourceTree = "<group>"; };
+		184BB396254051C000955709 /* khrplatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = khrplatform.h; sourceTree = "<group>"; };
 		1851C14B22EECAE800535AC3 /* shaderv_10.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_10.vsh; sourceTree = "<group>"; };
 		1851C14C22EECAE800535AC3 /* shaderf_10.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_10.fsh; sourceTree = "<group>"; };
 		1851C14F22EEEAEA00535AC3 /* shaderv_11.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_11.vsh; sourceTree = "<group>"; };
@@ -2006,6 +2075,7 @@
 				180765D325401FC000720CB4 /* Surface_metal.mm */,
 				1807659425401FC000720CB4 /* metal */,
 				180765ED25401FC000720CB4 /* null */,
+				184BB34025404BBC00955709 /* opengl */,
 			);
 			path = dawn_native;
 			sourceTree = "<group>";
@@ -2262,6 +2332,7 @@
 			children = (
 				1820ED7223BDCAAF00456ED6 /* glslang */,
 				18DCA92A23C094F1008704B6 /* jpeg */,
+				184BB393254051C000955709 /* khronos */,
 				1820EFF023BE0AC500456ED6 /* MoltenVK */,
 				1820F00923BE0AC500456ED6 /* MoltenVKShaderConverter */,
 				18DCA96623C094F1008704B6 /* png */,
@@ -2287,7 +2358,6 @@
 			isa = PBXGroup;
 			children = (
 				1820ED9623BDCAAF00456ED6 /* glslang */,
-				1820EE4C23BDE21200456ED6 /* OGLCompilersDLL */,
 				1820ED7B23BDCAAF00456ED6 /* SPIRV */,
 			);
 			path = glslang;
@@ -2450,15 +2520,6 @@
 				1820EE4023BDCB9100456ED6 /* ossource.cpp */,
 			);
 			path = Unix;
-			sourceTree = "<group>";
-		};
-		1820EE4C23BDE21200456ED6 /* OGLCompilersDLL */ = {
-			isa = PBXGroup;
-			children = (
-				1820EE4E23BDE21200456ED6 /* InitializeDll.h */,
-				1820EE4F23BDE21200456ED6 /* InitializeDll.cpp */,
-			);
-			path = OGLCompilersDLL;
 			sourceTree = "<group>";
 		};
 		1820EE5223BDE74C00456ED6 /* third_party */ = {
@@ -3527,6 +3588,77 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
+		184BB34025404BBC00955709 /* opengl */ = {
+			isa = PBXGroup;
+			children = (
+				184BB35625404BBC00955709 /* BackendGL.cpp */,
+				184BB34925404BBC00955709 /* BackendGL.h */,
+				184BB36D25404BBC00955709 /* BindGroupGL.cpp */,
+				184BB35825404BBC00955709 /* BindGroupGL.h */,
+				184BB35125404BBC00955709 /* BindGroupLayoutGL.cpp */,
+				184BB35425404BBC00955709 /* BindGroupLayoutGL.h */,
+				184BB34525404BBC00955709 /* BufferGL.cpp */,
+				184BB34C25404BBC00955709 /* BufferGL.h */,
+				184BB36325404BBC00955709 /* CommandBufferGL.cpp */,
+				184BB36625404BBC00955709 /* CommandBufferGL.h */,
+				184BB35A25404BBC00955709 /* ComputePipelineGL.cpp */,
+				184BB36125404BBC00955709 /* ComputePipelineGL.h */,
+				184BB36E25404BBC00955709 /* DeviceGL.cpp */,
+				184BB35325404BBC00955709 /* DeviceGL.h */,
+				184BB37025404BBC00955709 /* Forward.h */,
+				184BB35525404BBC00955709 /* GLFormat.cpp */,
+				184BB34225404BBC00955709 /* GLFormat.h */,
+				184BB35C25404BBC00955709 /* NativeSwapChainImplGL.cpp */,
+				184BB34A25404BBC00955709 /* NativeSwapChainImplGL.h */,
+				184BB36225404BBC00955709 /* opengl_platform_autogen.h */,
+				184BB34425404BBC00955709 /* opengl_platform.h */,
+				184BB37125404BBC00955709 /* OpenGLBackend.cpp */,
+				184BB35B25404BBC00955709 /* OpenGLFunctions.cpp */,
+				184BB34D25404BBC00955709 /* OpenGLFunctions.h */,
+				184BB35725404BBC00955709 /* OpenGLFunctionsBase_autogen.cpp */,
+				184BB36725404BBC00955709 /* OpenGLFunctionsBase_autogen.h */,
+				184BB36825404BBC00955709 /* PersistentPipelineStateGL.cpp */,
+				184BB35F25404BBC00955709 /* PersistentPipelineStateGL.h */,
+				184BB34F25404BBC00955709 /* PipelineGL.cpp */,
+				184BB35025404BBC00955709 /* PipelineGL.h */,
+				184BB36F25404BBC00955709 /* PipelineLayoutGL.cpp */,
+				184BB34325404BBC00955709 /* PipelineLayoutGL.h */,
+				184BB36525404BBC00955709 /* QuerySetGL.cpp */,
+				184BB35D25404BBC00955709 /* QuerySetGL.h */,
+				184BB35925404BBC00955709 /* QueueGL.cpp */,
+				184BB35E25404BBC00955709 /* QueueGL.h */,
+				184BB36025404BBC00955709 /* RenderPipelineGL.cpp */,
+				184BB34825404BBC00955709 /* RenderPipelineGL.h */,
+				184BB36A25404BBC00955709 /* SamplerGL.cpp */,
+				184BB34E25404BBC00955709 /* SamplerGL.h */,
+				184BB34125404BBC00955709 /* ShaderModuleGL.cpp */,
+				184BB34B25404BBC00955709 /* ShaderModuleGL.h */,
+				184BB34725404BBC00955709 /* SwapChainGL.cpp */,
+				184BB36425404BBC00955709 /* SwapChainGL.h */,
+				184BB36925404BBC00955709 /* TextureGL.cpp */,
+				184BB35225404BBC00955709 /* TextureGL.h */,
+				184BB36C25404BBC00955709 /* UtilsGL.cpp */,
+				184BB34625404BBC00955709 /* UtilsGL.h */,
+			);
+			path = opengl;
+			sourceTree = "<group>";
+		};
+		184BB393254051C000955709 /* khronos */ = {
+			isa = PBXGroup;
+			children = (
+				184BB395254051C000955709 /* KHR */,
+			);
+			path = khronos;
+			sourceTree = "<group>";
+		};
+		184BB395254051C000955709 /* KHR */ = {
+			isa = PBXGroup;
+			children = (
+				184BB396254051C000955709 /* khrplatform.h */,
+			);
+			path = KHR;
+			sourceTree = "<group>";
+		};
 		18D1B5752186F11C0071A7FE /* poly2tri */ = {
 			isa = PBXGroup;
 			children = (
@@ -4450,6 +4582,7 @@
 				1807681425401FC100720CB4 /* EncodingContext.cpp in Sources */,
 				1820F02E23BE2AB600456ED6 /* BackendUtils.cpp in Sources */,
 				18D1B7CF2186F14A0071A7FE /* cff.c in Sources */,
+				184BB37625404BBD00955709 /* BindGroupLayoutGL.cpp in Sources */,
 				1820EFA323BDE74D00456ED6 /* Handle.cpp in Sources */,
 				18D1B8532186F14A0071A7FE /* ftgxval.c in Sources */,
 				18DCA98923C094F1008704B6 /* jdmerge.c in Sources */,
@@ -4461,10 +4594,12 @@
 				1807685725401FC100720CB4 /* ApiProcs_autogen.cpp in Sources */,
 				18D1B83E2186F14A0071A7FE /* truetype.c in Sources */,
 				18DCA91D23C06F14008704B6 /* FilamentView.mm in Sources */,
+				184BB38925404BBD00955709 /* OpenGLBackend.cpp in Sources */,
 				18FBF3D223127EF8007B106D /* DemoViewController19.m in Sources */,
 				18D1B85A2186F14A0071A7FE /* ftglyph.c in Sources */,
 				180767BA25401FC100720CB4 /* DeviceNull.cpp in Sources */,
 				1807679025401FC100720CB4 /* BindGroupLayoutMTL.mm in Sources */,
+				184BB37225404BBC00955709 /* ShaderModuleGL.cpp in Sources */,
 				1820F43723BF3EC900456ED6 /* Material.cpp in Sources */,
 				1807678B25401FC100720CB4 /* Extensions.cpp in Sources */,
 				18D1B86C2186F14A0071A7FE /* ftbbox.c in Sources */,
@@ -4474,6 +4609,7 @@
 				1820F45323BF401100456ED6 /* UibGenerator.cpp in Sources */,
 				1807679225401FC100720CB4 /* SwapChainMTL.mm in Sources */,
 				1820F41A23BF3EC900456ED6 /* DFG.cpp in Sources */,
+				184BB38525404BBD00955709 /* UtilsGL.cpp in Sources */,
 				1820F43823BF3EC900456ED6 /* IndexBuffer.cpp in Sources */,
 				1820F4B023BF401E00456ED6 /* GLSLTools.cpp in Sources */,
 				18DCA9A823C094F1008704B6 /* jidctflt.c in Sources */,
@@ -4487,6 +4623,7 @@
 				1820EE0623BDCAAF00456ED6 /* SpvBuilder.cpp in Sources */,
 				18187CFC22E0C411004AF974 /* DemoViewController6.mm in Sources */,
 				1820F7B023BF54B400456ED6 /* smolv.cpp in Sources */,
+				184BB38125404BBD00955709 /* PersistentPipelineStateGL.cpp in Sources */,
 				184BAE8425402E4200955709 /* spirv_cross_parsed_ir.cpp in Sources */,
 				1820F4BF23BF401E00456ED6 /* ShaderGenerator.cpp in Sources */,
 				1820F45423BF401100456ED6 /* SamplerBindingMap.cpp in Sources */,
@@ -4494,6 +4631,7 @@
 				1820F41F23BF3EC900456ED6 /* Color.cpp in Sources */,
 				1820F43423BF3EC900456ED6 /* Engine.cpp in Sources */,
 				1807679D25401FC100720CB4 /* MetalBackend.mm in Sources */,
+				184BB37D25404BBD00955709 /* NativeSwapChainImplGL.cpp in Sources */,
 				180767C025401FC100720CB4 /* SpirvUtils.cpp in Sources */,
 				1820F02D23BE2AB600456ED6 /* Callable.cpp in Sources */,
 				1820EE1523BDCAAF00456ED6 /* propagateNoContraction.cpp in Sources */,
@@ -4524,8 +4662,11 @@
 				18DCA98623C094F1008704B6 /* jdapistd.c in Sources */,
 				1820F41C23BF3EC900456ED6 /* Frustum.cpp in Sources */,
 				18D1B8752186F14A0071A7FE /* ftbzip2.c in Sources */,
+				184BB37B25404BBD00955709 /* ComputePipelineGL.cpp in Sources */,
 				18DCA99323C094F1008704B6 /* jcarith.c in Sources */,
 				1820EF8B23BDE74D00456ED6 /* Systrace.cpp in Sources */,
+				184BB37E25404BBD00955709 /* RenderPipelineGL.cpp in Sources */,
+				184BB37C25404BBD00955709 /* OpenGLFunctions.cpp in Sources */,
 				1820F43123BF3EC900456ED6 /* FrameGraphHandle.cpp in Sources */,
 				1820EFA123BDE74D00456ED6 /* CommandBufferQueue.cpp in Sources */,
 				1820EE0423BDCAAF00456ED6 /* SpvTools.cpp in Sources */,
@@ -4533,6 +4674,7 @@
 				188D1B3222EE9A9900864A47 /* DemoViewController13.m in Sources */,
 				1820F42E23BF3EC900456ED6 /* PostProcessManager.cpp in Sources */,
 				1820EE4723BDCB9100456ED6 /* ossource.cpp in Sources */,
+				184BB38625404BBD00955709 /* BindGroupGL.cpp in Sources */,
 				1807684E25401FC100720CB4 /* ClientDoers.cpp in Sources */,
 				1820F42D23BF3EC900456ED6 /* MaterialInstance.cpp in Sources */,
 				18DCA99123C094F1008704B6 /* jchuff.c in Sources */,
@@ -4547,6 +4689,7 @@
 				18D1B8592186F14A0071A7FE /* ftcid.c in Sources */,
 				1807684925401FC100720CB4 /* ServerDoers_autogen.cpp in Sources */,
 				1820F41823BF3EC900456ED6 /* RenderPass.cpp in Sources */,
+				184BB37825404BBD00955709 /* BackendGL.cpp in Sources */,
 				18D1B8662186F14A0071A7FE /* ftwinfnt.c in Sources */,
 				1807678625401FC100720CB4 /* PooledResourceMemoryAllocator.cpp in Sources */,
 				1807679C25401FC100720CB4 /* CommandBufferMTL.mm in Sources */,
@@ -4558,6 +4701,8 @@
 				18D64E3723180DEC0047FFDE /* DemoViewController28.m in Sources */,
 				1820F45523BF401100456ED6 /* SamplerInterfaceBlock.cpp in Sources */,
 				18DCA9BA23C094F1008704B6 /* pngget.c in Sources */,
+				184BB37A25404BBD00955709 /* QueueGL.cpp in Sources */,
+				184BB37F25404BBD00955709 /* CommandBufferGL.cpp in Sources */,
 				18DCA99F23C094F1008704B6 /* jdmaster.c in Sources */,
 				1807681525401FC100720CB4 /* CommandEncoder.cpp in Sources */,
 				1807678425401FC100720CB4 /* ErrorData.cpp in Sources */,
@@ -4582,7 +4727,6 @@
 				1820EE1E23BDCAAF00456ED6 /* iomapper.cpp in Sources */,
 				180767BF25401FC100720CB4 /* PerStage.cpp in Sources */,
 				18DCA9AA23C094F1008704B6 /* jdmainct.c in Sources */,
-				1820EE5123BDE21200456ED6 /* InitializeDll.cpp in Sources */,
 				1820EF9E23BDE74D00456ED6 /* MetalBufferPool.mm in Sources */,
 				18DCA9A023C094F1008704B6 /* jcomapi.c in Sources */,
 				180767B125401FC100720CB4 /* DynamicUploader.cpp in Sources */,
@@ -4660,6 +4804,8 @@
 				1820F42823BF3EC900456ED6 /* MaterialParser.cpp in Sources */,
 				180767E625401FC100720CB4 /* Queue.cpp in Sources */,
 				1807684C25401FC100720CB4 /* ChunkedCommandSerializer.cpp in Sources */,
+				184BB37425404BBC00955709 /* SwapChainGL.cpp in Sources */,
+				184BB37725404BBD00955709 /* GLFormat.cpp in Sources */,
 				1820EE1823BDCAAF00456ED6 /* Initialize.cpp in Sources */,
 				18DCA99823C094F1008704B6 /* jquant1.c in Sources */,
 				1820F41723BF3EC900456ED6 /* Exposure.cpp in Sources */,
@@ -4703,6 +4849,7 @@
 				1820F6BD23BF4BAF00456ED6 /* ImageEncoder.cpp in Sources */,
 				1820EE1923BDCAAF00456ED6 /* glslang_tab.cpp in Sources */,
 				1807680F25401FC100720CB4 /* BindGroup.cpp in Sources */,
+				184BB38325404BBD00955709 /* SamplerGL.cpp in Sources */,
 				1820F4B923BF401E00456ED6 /* DictionarySpirvChunk.cpp in Sources */,
 				EA4603E8202C643D0037EC15 /* GLProgram.m in Sources */,
 				1820F43623BF3EC900456ED6 /* Viewport.cpp in Sources */,
@@ -4729,6 +4876,7 @@
 				18DCA9BE23C094F1008704B6 /* pngset.c in Sources */,
 				18DCA98E23C094F1008704B6 /* jfdctint.c in Sources */,
 				18D1B8032186F14A0071A7FE /* psaux.c in Sources */,
+				184BB38225404BBD00955709 /* TextureGL.cpp in Sources */,
 				18DCA9BB23C094F1008704B6 /* png.c in Sources */,
 				1820F42223BF3EC900456ED6 /* CameraManager.cpp in Sources */,
 				1820F41223BF3EC900456ED6 /* UniformBuffer.cpp in Sources */,
@@ -4738,11 +4886,13 @@
 				18D1B8542186F14A0071A7FE /* ftbase.c in Sources */,
 				1820F43323BF3EC900456ED6 /* ResourceEntry.cpp in Sources */,
 				1820EF8623BDE74C00456ED6 /* JobSystem.cpp in Sources */,
+				184BB37525404BBC00955709 /* PipelineGL.cpp in Sources */,
 				1820F46823BF401700456ED6 /* ShaderBuilder.cpp in Sources */,
 				EA4603C2202C64050037EC15 /* main.m in Sources */,
 				1820EE1A23BDCAAF00456ED6 /* limits.cpp in Sources */,
 				1807679125401FC100720CB4 /* BufferMTL.mm in Sources */,
 				18D1B88A2186FF0A0071A7FE /* Vectoriser.cpp in Sources */,
+				184BB38825404BBD00955709 /* PipelineLayoutGL.cpp in Sources */,
 				184BAE7B25402E4200955709 /* spirv_cfg.cpp in Sources */,
 				1820F41B23BF3EC900456ED6 /* RenderTarget.cpp in Sources */,
 				1820EF9F23BDE74D00456ED6 /* MetalDriver.mm in Sources */,
@@ -4789,6 +4939,7 @@
 				1807686525401FC200720CB4 /* RefCounted.cpp in Sources */,
 				1807684D25401FC100720CB4 /* WireDeserializeAllocator.cpp in Sources */,
 				18D1B8582186F14A0071A7FE /* ftbitmap.c in Sources */,
+				184BB37325404BBC00955709 /* BufferGL.cpp in Sources */,
 				1820F40923BF3EC900456ED6 /* VertexBuffer.cpp in Sources */,
 				1807678F25401FC100720CB4 /* BackendMTL.mm in Sources */,
 				1807686025401FC100720CB4 /* Assert.cpp in Sources */,
@@ -4804,6 +4955,7 @@
 				180767A425401FC100720CB4 /* ErrorScope.cpp in Sources */,
 				1820EFBE23BDE74D00456ED6 /* GLUtils.cpp in Sources */,
 				18DCA9B423C094F1008704B6 /* pngwutil.c in Sources */,
+				184BB38025404BBD00955709 /* QuerySetGL.cpp in Sources */,
 				180767A925401FC100720CB4 /* RenderBundle.cpp in Sources */,
 				180767B925401FC100720CB4 /* AttachmentState.cpp in Sources */,
 				1807683325401FC100720CB4 /* CommandBuffer.cpp in Sources */,
@@ -4876,6 +5028,7 @@
 				1820F4B223BF401E00456ED6 /* MaterialTextChunk.cpp in Sources */,
 				1820EE0723BDCAAF00456ED6 /* GlslangToSpv.cpp in Sources */,
 				1807685925401FC100720CB4 /* EventTracer.cpp in Sources */,
+				184BB37925404BBD00955709 /* OpenGLFunctionsBase_autogen.cpp in Sources */,
 				1807678825401FC100720CB4 /* ObjectBase.cpp in Sources */,
 				180767A825401FC100720CB4 /* Texture.cpp in Sources */,
 				1820EF9A23BDE74D00456ED6 /* MetalContext.mm in Sources */,
@@ -4883,6 +5036,7 @@
 				1807679725401FC100720CB4 /* PipelineLayoutMTL.mm in Sources */,
 				1820EE2723BDCAAF00456ED6 /* RemoveTree.cpp in Sources */,
 				180767A125401FC100720CB4 /* QueueMTL.mm in Sources */,
+				184BB38725404BBD00955709 /* DeviceGL.cpp in Sources */,
 				1820F71423BF4BB700456ED6 /* ImageSampler.cpp in Sources */,
 				18DCA99723C094F1008704B6 /* jerror.c in Sources */,
 				1820EF9423BDE74D00456ED6 /* Program.cpp in Sources */,
@@ -5060,6 +5214,7 @@
 					"FILAMENT_ENABLE_MATDBG=0",
 					"SYSTRACE_TAG=0",
 					"DAWN_ENABLE_BACKEND_METAL=1",
+					"DAWN_ENABLE_BACKEND_OPENGL=1",
 					"IOS=1",
 					"DEBUG=1",
 					"$(inherited)",
@@ -5096,6 +5251,7 @@
 					"\"$(SRCROOT)/LearnOpenGLES/third_party/smolv\"",
 					"\"$(SRCROOT)/LearnOpenGLES/third_party/MoltenVK\"",
 					"\"$(SRCROOT)/LearnOpenGLES/third_party/MoltenVKShaderConverter\"",
+					"\"$(SRCROOT)/LearnOpenGLES/third_party/khronos\"",
 					"\"$(SRCROOT)/LearnOpenGLES/dawn\"",
 					"\"$(SRCROOT)/LearnOpenGLES/dawn/include\"",
 				);
@@ -5127,6 +5283,7 @@
 					"FILAMENT_ENABLE_MATDBG=0",
 					"SYSTRACE_TAG=0",
 					"DAWN_ENABLE_BACKEND_METAL=1",
+					"DAWN_ENABLE_BACKEND_OPENGL=1",
 					"IOS=1",
 					"$(inherited)",
 				);
@@ -5162,6 +5319,7 @@
 					"\"$(SRCROOT)/LearnOpenGLES/third_party/smolv\"",
 					"\"$(SRCROOT)/LearnOpenGLES/third_party/MoltenVK\"",
 					"\"$(SRCROOT)/LearnOpenGLES/third_party/MoltenVKShaderConverter\"",
+					"\"$(SRCROOT)/LearnOpenGLES/third_party/khronos\"",
 					"\"$(SRCROOT)/LearnOpenGLES/dawn\"",
 					"\"$(SRCROOT)/LearnOpenGLES/dawn/include\"",
 				);
