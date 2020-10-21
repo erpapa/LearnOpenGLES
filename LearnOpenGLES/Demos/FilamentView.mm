@@ -74,7 +74,7 @@ static constexpr uint8_t BAKED_COLOR_PACKAGE[] = {
 {
     if (self = [super initWithFrame:frame]) {
         self.contentScaleFactor = [UIScreen mainScreen].scale;
-        self.layer.contentsScale = UIScreen.mainScreen.scale;
+        self.layer.contentsScale = [UIScreen mainScreen].scale;
 #if FILAMENT_APP_USE_OPENGL
         [self initializeGLLayer];
 #elif FILAMENT_APP_USE_METAL
@@ -100,13 +100,16 @@ static constexpr uint8_t BAKED_COLOR_PACKAGE[] = {
 
 - (void)dealloc
 {
-    if (engine != nullptr) {
-        [self destory];
-    }
+    [self destory];
 }
 
 - (void)destory
 {
+    if (!engine) {
+        return;
+    }
+    [displayLink invalidate];
+    displayLink = nil;
     engine->destroy(renderer);
     engine->destroy(scene);
     engine->destroy(filaView);
@@ -115,8 +118,6 @@ static constexpr uint8_t BAKED_COLOR_PACKAGE[] = {
     engine->destroy(&engine);
     engine = nullptr;
     
-    [displayLink invalidate];
-    displayLink = nil;
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

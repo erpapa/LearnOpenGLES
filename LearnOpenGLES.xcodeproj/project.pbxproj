@@ -398,6 +398,8 @@
 		184BB38725404BBD00955709 /* DeviceGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36E25404BBC00955709 /* DeviceGL.cpp */; };
 		184BB38825404BBD00955709 /* PipelineLayoutGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36F25404BBC00955709 /* PipelineLayoutGL.cpp */; };
 		184BB38925404BBD00955709 /* OpenGLBackend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB37125404BBC00955709 /* OpenGLBackend.cpp */; };
+		184BB3CD254061F900955709 /* webgpu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 184BB3CC254061F900955709 /* webgpu.mm */; settings = {COMPILER_FLAGS = "-x objective-c++ -fno-objc-arc"; }; };
+		184BB3D82540622C00955709 /* DawnView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 184BB3D72540622C00955709 /* DawnView.mm */; };
 		1851C14D22EECAE800535AC3 /* shaderv_10.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1851C14B22EECAE800535AC3 /* shaderv_10.vsh */; };
 		1851C14E22EECAE800535AC3 /* shaderf_10.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1851C14C22EECAE800535AC3 /* shaderf_10.fsh */; };
 		1851C15122EEEAEA00535AC3 /* shaderv_11.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1851C14F22EEEAEA00535AC3 /* shaderv_11.vsh */; };
@@ -1528,6 +1530,11 @@
 		184BB37025404BBC00955709 /* Forward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Forward.h; sourceTree = "<group>"; };
 		184BB37125404BBC00955709 /* OpenGLBackend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLBackend.cpp; sourceTree = "<group>"; };
 		184BB396254051C000955709 /* khrplatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = khrplatform.h; sourceTree = "<group>"; };
+		184BB3CA254061C400955709 /* webgpu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webgpu.h; sourceTree = "<group>"; };
+		184BB3CB254061CC00955709 /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		184BB3CC254061F900955709 /* webgpu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = webgpu.mm; sourceTree = "<group>"; };
+		184BB3D62540622C00955709 /* DawnView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DawnView.h; sourceTree = "<group>"; };
+		184BB3D72540622C00955709 /* DawnView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DawnView.mm; sourceTree = "<group>"; };
 		1851C14B22EECAE800535AC3 /* shaderv_10.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_10.vsh; sourceTree = "<group>"; };
 		1851C14C22EECAE800535AC3 /* shaderf_10.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf_10.fsh; sourceTree = "<group>"; };
 		1851C14F22EEEAEA00535AC3 /* shaderv_11.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv_11.vsh; sourceTree = "<group>"; };
@@ -2952,8 +2959,13 @@
 		1820F03F23BE329800456ED6 /* Demos */ = {
 			isa = PBXGroup;
 			children = (
+				184BB3CB254061CC00955709 /* defines.h */,
+				184BB3CA254061C400955709 /* webgpu.h */,
+				184BB3CC254061F900955709 /* webgpu.mm */,
 				18000735218AE9AC00BC0EFC /* sphere.h */,
 				18DCA91E23C06F55008704B6 /* bakedColor.inc */,
+				184BB3D62540622C00955709 /* DawnView.h */,
+				184BB3D72540622C00955709 /* DawnView.mm */,
 				18DCA91C23C06F14008704B6 /* FilamentView.h */,
 				18DCA91B23C06F14008704B6 /* FilamentView.mm */,
 				183C56AC23043AAF001DAEFC /* DemoUtils.h */,
@@ -4706,6 +4718,7 @@
 				18DCA99F23C094F1008704B6 /* jdmaster.c in Sources */,
 				1807681525401FC100720CB4 /* CommandEncoder.cpp in Sources */,
 				1807678425401FC100720CB4 /* ErrorData.cpp in Sources */,
+				184BB3CD254061F900955709 /* webgpu.mm in Sources */,
 				184BAE7C25402E4200955709 /* spirv_reflect.cpp in Sources */,
 				1820EE1C23BDCAAF00456ED6 /* IntermTraverse.cpp in Sources */,
 				180767B225401FC100720CB4 /* ShaderModule.cpp in Sources */,
@@ -4946,6 +4959,7 @@
 				1820EF8123BDE74C00456ED6 /* sstream.cpp in Sources */,
 				1820EE2623BDCAAF00456ED6 /* reflection.cpp in Sources */,
 				1820F42323BF3EC900456ED6 /* TransformManager.cpp in Sources */,
+				184BB3D82540622C00955709 /* DawnView.mm in Sources */,
 				1820EE2223BDCAAF00456ED6 /* Intermediate.cpp in Sources */,
 				1807686325401FC200720CB4 /* Result.cpp in Sources */,
 				1820F41D23BF3EC900456ED6 /* View.cpp in Sources */,
