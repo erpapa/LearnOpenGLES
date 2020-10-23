@@ -187,6 +187,7 @@ void FreeBufferCallback(void* buffer, size_t size, void* user)
                 break;
             }
         }
+        _driverApi.terminate();
     });
 }
 
@@ -332,20 +333,27 @@ void FreeBufferCallback(void* buffer, size_t size, void* user)
     if (!_platform) {
         return;
     }
+    // 注意代码调用顺序
     [self stopDisplayLink];
-    _driverApi.destroyRenderTarget(_render_target);
-    _render_target.clear();
-    _driverApi.destroySwapChain(_swap_chain);
-    _swap_chain.clear();
+    [self destoryDriver];
     [self flush];
-    [self requestExit];
+    _command_buffer_queue->requestExit();
     dispatch_sync(_driver_queue, ^{
-        [self destoryDriver];
+        delete _command_buffer_queue;
+        _command_buffer_queue = nullptr;
+        delete _driver;
+        _driver = nullptr;
+        delete _platform;
+        _platform = nullptr;
     });
 }
 
 - (void)destoryDriver
 {
+    _driverApi.destroyRenderTarget(_render_target);
+    _render_target.clear();
+    _driverApi.destroySwapChain(_swap_chain);
+    _swap_chain.clear();
     _driverApi.destroyProgram(_pipeline.program);
     _pipeline.program.clear();
     _driverApi.destroyUniformBuffer(_uniform_buffer);
@@ -360,13 +368,6 @@ void FreeBufferCallback(void* buffer, size_t size, void* user)
     _indexBuffer.clear();
     _driverApi.destroyRenderPrimitive(_primitive);
     _primitive.clear();
-    _driverApi.terminate();
-    delete _command_buffer_queue;
-    _command_buffer_queue = nullptr;
-    delete _driver;
-    _driver = nullptr;
-    delete _platform;
-    _platform = nullptr;
 }
 
 - (void)startDisplayLink
@@ -429,11 +430,6 @@ void FreeBufferCallback(void* buffer, size_t size, void* user)
 {
     _driver->purge();
     _command_buffer_queue->flush();
-}
-
-- (void)requestExit
-{
-    _command_buffer_queue->requestExit();
 }
 
 - (BOOL)execute
