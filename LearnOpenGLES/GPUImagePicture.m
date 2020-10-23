@@ -248,7 +248,7 @@
 
 - (CGSize)sizeThatFitsWithinATextureForSize:(CGSize)inputSize;
 {
-    GLint maxTextureSize = [self maximumTextureSizeForThisDevice];
+    const GLint maxTextureSize = 4086;
     if ( (inputSize.width < maxTextureSize) && (inputSize.height < maxTextureSize) )
     {
         return inputSize;
@@ -269,47 +269,14 @@
     return adjustedSize;
 }
 
-- (GLint)maximumTextureSizeForThisDevice;
-{
-    static dispatch_once_t pred;
-    static GLint maxTextureSize = 0;
-    
-    dispatch_once(&pred, ^{
-        glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
-    });
-    
-    return maxTextureSize;
-}
-
-- (GLint)maximumTextureUnitsForThisDevice;
-{
-    static dispatch_once_t pred;
-    static GLint maxTextureUnits = 0;
-    
-    dispatch_once(&pred, ^{
-        glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-    });
-    
-    return maxTextureUnits;
-}
-
-- (GLint)maximumVaryingVectorsForThisDevice;
-{
-    static dispatch_once_t pred;
-    static GLint maxVaryingVectors = 0;
-    
-    dispatch_once(&pred, ^{
-        glGetIntegerv(GL_MAX_VARYING_VECTORS, &maxVaryingVectors);
-    });
-    
-    return maxVaryingVectors;
-}
-
 - (void)dealloc
 {
     if (_shouldRedrawUsingCoreGraphics)
     {
-        free(_data);
+        if (_data)
+        {
+            free(_data);
+        }
     }
     else
     {

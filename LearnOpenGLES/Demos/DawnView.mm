@@ -115,7 +115,9 @@ static uint32_t const triangle_frag[] = {
     WGPUBuffer _uRotBuf; // uniform buffer (containing the rotation angle)
     WGPUBindGroup _bindGroup;
     
-    float _rotDeg;
+    float _rotationDegree;
+    uint32_t _drawableWidth;
+    uint32_t _drawableHeight;
     CADisplayLink *_displayLink;
 }
 
@@ -134,12 +136,12 @@ static uint32_t const triangle_frag[] = {
     if (self) {
         self.contentScaleFactor = [UIScreen mainScreen].scale;
         self.layer.contentsScale = [UIScreen mainScreen].scale;
-        uint32_t drawableWidth = frame.size.width * self.contentScaleFactor;
-        uint32_t drawableHeight = frame.size.width * self.contentScaleFactor;
+        _drawableWidth = frame.size.width * self.contentScaleFactor;
+        _drawableHeight = frame.size.height * self.contentScaleFactor;
         webgpu::Handle handle = (__bridge webgpu::Handle)(self);
         _device = webgpu::create(handle, WGPUBackendType_Metal);
         _queue = wgpuDeviceGetDefaultQueue(_device);
-        _swapchain = webgpu::createSwapChain(_device, drawableWidth, drawableHeight);
+        _swapchain = webgpu::createSwapChain(_device, _drawableWidth, _drawableHeight);
         [self createPipelineAndBuffers];
         [self startDisplayLink];
     }
@@ -149,6 +151,16 @@ static uint32_t const triangle_frag[] = {
 - (void)dealloc
 {
     [self destory];
+}
+
+- (void)pause
+{
+    _displayLink.paused = YES;
+}
+
+- (void)resume
+{
+    _displayLink.paused = NO;
 }
 
 - (void)destory
@@ -326,13 +338,13 @@ static uint32_t const triangle_frag[] = {
     _indxBuf = [self createBuffer:indxData size:sizeof(indxData) usage:WGPUBufferUsage_Index];
 
     // create the uniform bind group (note 'rotDeg' is copied here, not bound in any way)
-    _uRotBuf = [self createBuffer:&_rotDeg size:sizeof(_rotDeg) usage:WGPUBufferUsage_Uniform];
+    _uRotBuf = [self createBuffer:&_rotationDegree size:sizeof(_rotationDegree) usage:WGPUBufferUsage_Uniform];
 
     WGPUBindGroupEntry bgEntry = {};
     bgEntry.binding = 0;
     bgEntry.buffer = _uRotBuf;
     bgEntry.offset = 0;
-    bgEntry.size = sizeof(_rotDeg);
+    bgEntry.size = sizeof(_rotationDegree);
 
     WGPUBindGroupDescriptor bgDesc = {};
     bgDesc.layout = bindGroupLayout;
@@ -369,8 +381,8 @@ static uint32_t const triangle_frag[] = {
     WGPURenderPassEncoder pass = wgpuCommandEncoderBeginRenderPass(encoder, &renderPass);    // create pass
 
     // update the rotation
-    _rotDeg += 0.1f;
-    wgpuQueueWriteBuffer(_queue, _uRotBuf, 0, &_rotDeg, sizeof(_rotDeg));
+    _rotationDegree += 0.1f;
+    wgpuQueueWriteBuffer(_queue, _uRotBuf, 0, &_rotationDegree, sizeof(_rotationDegree));
 
     // draw the triangle (comment these five lines to simply clear the screen)
     wgpuRenderPassEncoderSetPipeline(pass, _pipeline);

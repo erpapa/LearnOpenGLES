@@ -54,7 +54,9 @@
                        @{@"title":@"25.Point Light（点光源）",@"class":@"DemoViewController25"},
                        @{@"title":@"26.Spot Light（聚光灯）",@"class":@"DemoViewController26"},
                        @{@"title":@"27.Multiple Lights（多光源）",@"class":@"DemoViewController27"},
-                       @{@"title":@"28.Fluid Simulation（流体模拟）",@"class":@"DemoViewController28"}];
+                       @{@"title":@"28.Fluid Simulation（流体模拟）",@"class":@"DemoViewController28"},
+                       @{@"title":@"29.Dawn Render（Dawn引擎）",@"class":@"DemoViewController29"},
+                       @{@"title":@"30.Filament Render（Filament引擎）",@"class":@"DemoViewController30"}];
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;

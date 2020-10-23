@@ -10,6 +10,8 @@
 
 @interface DawnView : UIView
 
+- (void)pause;
+- (void)resume;
 - (void)destory;
 
 @end

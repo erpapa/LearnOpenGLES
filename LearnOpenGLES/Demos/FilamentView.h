@@ -18,6 +18,8 @@
 
 @interface FilamentView : UIView
 
+- (void)pause;
+- (void)resume;
 - (void)destory;
 
 @end
