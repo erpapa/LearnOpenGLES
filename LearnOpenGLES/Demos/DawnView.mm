@@ -185,6 +185,7 @@ static uint32_t const triangle_frag[] = {
     _queue = NULL;
     wgpuDeviceRelease(_device);
     _device = NULL;
+    webgpu::destorySwapImpl();
 }
 
 - (void)startDisplayLink

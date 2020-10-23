@@ -23,4 +23,6 @@ WGPUSwapChain createSwapChain(WGPUDevice device, uint32_t width, uint32_t height
  * See \c #createSwapChain();
  */
 WGPUTextureFormat getSwapChainFormat(WGPUDevice device);
+
+void destorySwapImpl(void);
 }

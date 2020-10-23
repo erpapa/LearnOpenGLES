@@ -317,7 +317,7 @@
 		184BB38725404BBD00955709 /* DeviceGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36E25404BBC00955709 /* DeviceGL.cpp */; };
 		184BB38825404BBD00955709 /* PipelineLayoutGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB36F25404BBC00955709 /* PipelineLayoutGL.cpp */; };
 		184BB38925404BBD00955709 /* OpenGLBackend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184BB37125404BBC00955709 /* OpenGLBackend.cpp */; };
-		184BB3CD254061F900955709 /* webgpu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 184BB3CC254061F900955709 /* webgpu.mm */; settings = {COMPILER_FLAGS = "-x objective-c++ -fno-objc-arc"; }; };
+		184BB3CD254061F900955709 /* webgpu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 184BB3CC254061F900955709 /* webgpu.mm */; };
 		184BB3D82540622C00955709 /* DawnView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 184BB3D72540622C00955709 /* DawnView.mm */; };
 		1851C14D22EECAE800535AC3 /* shaderv_10.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 1851C14B22EECAE800535AC3 /* shaderv_10.vsh */; };
 		1851C14E22EECAE800535AC3 /* shaderf_10.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1851C14C22EECAE800535AC3 /* shaderf_10.fsh */; };

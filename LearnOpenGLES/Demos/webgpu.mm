@@ -98,13 +98,9 @@ public:
 		return DAWN_SWAP_CHAIN_NO_ERROR;
 	}
 	DawnSwapChainError getNextTexture(DawnSwapChainNextTexture* next) {
-		[drawable release];
         drawable = layer.nextDrawable;
-		[drawable retain];
-		[texture release];
         texture = drawable.texture;
-		[texture retain];
-		next->texture.ptr = reinterpret_cast<void*>(texture);
+        next->texture.ptr = (__bridge void *)(texture);
 		return DAWN_SWAP_CHAIN_NO_ERROR;
 	}
 	DawnSwapChainError present() {
@@ -188,7 +184,7 @@ static void initSwapChain(WGPUBackendType backend, WGPUDevice device, webgpu::Ha
 	switch (backend) {
 	case WGPUBackendType_Metal:
 		if (impl::swapImpl.userData == nullptr) {
-			impl::swapImpl = createMetalSwapChain(reinterpret_cast<UIView*>(window));
+            impl::swapImpl = createMetalSwapChain((__bridge UIView *)window);
 			impl::swapPref = WGPUTextureFormat_BGRA8Unorm;
 		}
 		break;
@@ -253,4 +249,14 @@ WGPUSwapChain webgpu::createSwapChain(WGPUDevice device, uint32_t width, uint32_
 
 WGPUTextureFormat webgpu::getSwapChainFormat(WGPUDevice /*device*/) {
 	return impl::swapPref;
+}
+
+void webgpu::destorySwapImpl(void)
+{
+    impl::swapImpl.Init = NULL;
+    impl::swapImpl.userData = NULL;
+    impl::swapImpl.Configure = NULL;
+    impl::swapImpl.GetNextTexture = NULL;
+    impl::swapImpl.Present = NULL;
+    impl::swapImpl.userData = NULL;
 }
