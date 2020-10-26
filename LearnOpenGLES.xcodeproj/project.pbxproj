@@ -428,7 +428,6 @@
 		18D64E3923182AFE0047FFDE /* fluid_dithering.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D64E3823182AFE0047FFDE /* fluid_dithering.png */; };
 		18D64E3C2318EEBE0047FFDE /* DemoFluidUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D64E3B2318EEBE0047FFDE /* DemoFluidUtils.m */; };
 		18DCA91D23C06F14008704B6 /* FilamentView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18DCA91B23C06F14008704B6 /* FilamentView.mm */; };
-		18DCA91F23C06F55008704B6 /* bakedColor.inc in Sources */ = {isa = PBXBuildFile; fileRef = 18DCA91E23C06F55008704B6 /* bakedColor.inc */; };
 		18DCA92123C08152008704B6 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DCA92023C08151008704B6 /* Metal.framework */; };
 		18DCA92323C0815C008704B6 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DCA92223C0815C008704B6 /* MetalKit.framework */; };
 		18DCA97F23C094F1008704B6 /* jddctmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = 18DCA92C23C094F1008704B6 /* jddctmgr.c */; };
@@ -1477,7 +1476,6 @@
 		18D64E3B2318EEBE0047FFDE /* DemoFluidUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoFluidUtils.m; sourceTree = "<group>"; };
 		18DCA91B23C06F14008704B6 /* FilamentView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FilamentView.mm; sourceTree = "<group>"; };
 		18DCA91C23C06F14008704B6 /* FilamentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilamentView.h; sourceTree = "<group>"; };
-		18DCA91E23C06F55008704B6 /* bakedColor.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = bakedColor.inc; sourceTree = "<group>"; };
 		18DCA92023C08151008704B6 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		18DCA92223C0815C008704B6 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		18DCA92B23C094F1008704B6 /* jpeglib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jpeglib.h; sourceTree = "<group>"; };
@@ -2670,7 +2668,6 @@
 				184BB3CA254061C400955709 /* webgpu.h */,
 				184BB3CC254061F900955709 /* webgpu.mm */,
 				18000735218AE9AC00BC0EFC /* sphere.h */,
-				18DCA91E23C06F55008704B6 /* bakedColor.inc */,
 				184BB3D62540622C00955709 /* DawnView.h */,
 				184BB3D72540622C00955709 /* DawnView.mm */,
 				18DCA91C23C06F14008704B6 /* FilamentView.h */,
@@ -3876,7 +3873,6 @@
 				180767B025401FC100720CB4 /* Pipeline.cpp in Sources */,
 				180767B325401FC100720CB4 /* Buffer.cpp in Sources */,
 				1807683925401FC100720CB4 /* webgpu_cpp.cpp in Sources */,
-				18DCA91F23C06F55008704B6 /* bakedColor.inc in Sources */,
 				18D1B7E12186F14A0071A7FE /* ftlzw.c in Sources */,
 				1820F03E23BE324F00456ED6 /* OpenGLContext.cpp in Sources */,
 				18D1B85F2186F14A0071A7FE /* ftbdf.c in Sources */,

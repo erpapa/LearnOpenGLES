@@ -138,9 +138,9 @@ static uint32_t const triangle_frag[] = {
         self.layer.contentsScale = [UIScreen mainScreen].scale;
         _drawableWidth = frame.size.width * self.contentScaleFactor;
         _drawableHeight = frame.size.height * self.contentScaleFactor;
-        webgpu::Handle handle = (__bridge webgpu::Handle)(self);
+        webgpu::WindowHandle handle = (__bridge webgpu::WindowHandle)(self);
         _device = webgpu::create(handle, WGPUBackendType_Metal);
-        _queue = wgpuDeviceGetDefaultQueue(_device);
+        _queue = webgpu::createDefaultQueue(_device);
         _swapchain = webgpu::createSwapChain(_device, _drawableWidth, _drawableHeight);
         [self createPipelineAndBuffers];
         [self startDisplayLink];
@@ -179,13 +179,15 @@ static uint32_t const triangle_frag[] = {
     _vertBuf = NULL;
     wgpuRenderPipelineRelease(_pipeline);
     _pipeline = NULL;
-    wgpuSwapChainRelease(_swapchain);
+    // wgpuSwapChainRelease(_swapchain);
+    webgpu::destorySwapChain(_swapchain);
     _swapchain = NULL;
-    wgpuQueueRelease(_queue);
+    // wgpuQueueRelease(_queue);
+    webgpu::destoryQueue(_queue);
     _queue = NULL;
-    wgpuDeviceRelease(_device);
+    // wgpuDeviceRelease(_device);
+    webgpu::destoryDevice(_device);
     _device = NULL;
-    webgpu::destorySwapImpl();
 }
 
 - (void)startDisplayLink

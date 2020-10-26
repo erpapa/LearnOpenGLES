@@ -15,7 +15,7 @@
 static const GLfloat vertices[] = {
     -1.0f, -1.0f, 0.0, // 左下
     1.0f, -1.0f, 0.0,  // 右下
-    -1.0f,  1.0f, 0.0 // 左上
+    0.0f,  1.0f, 0.0   // 上
 };
 
 @interface DemoViewController0 () <GLKViewDelegate>
@@ -55,7 +55,7 @@ static const GLfloat vertices[] = {
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    glClearColor(0.5, 0.5, 0.5, 1.0);
+    glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     [self.program use];
